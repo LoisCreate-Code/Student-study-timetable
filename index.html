@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudySmart Timetable</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <p class="greeting">😁 Good morning, Adrien</p>
+      <h1>Your Student Timetable</h1>
+      <p class="subtitle">
+        Stay organised. Stay consistent. Achieve your goals
+      </p>
+
+      <div class="card">
+        <label>Subject</label>
+        <input type="text" id="subject" placeholder="e.g. Mathematics" />
+
+        <label for="">Day</label>
+        <select name="" id="day">
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+          <option>Thursday</option>
+          <option>Friday</option>
+          <option>Saturday</option>
+        </select>
+
+        <label for="">Time</label>
+        <select name="" id="time">
+          <option value="8:00-9:00">8:00-9:00</option>
+          <option value="9:00-10:00">9:00-10:00</option>
+          <option value="10:00-11:00">10:00-11:00</option>
+          <option value="12:00- 1:00">12:00- 1:00</option>
+        </select>
+
+        <label for="">Venue</label>
+        <input type="text" id="venue" placeholder=" e.g. Science Lab" />
+
+        <button id="addButton">➕ Add class</button>
+
+        <h3>Weekly Timetable</h3>
+        <div id="classList"></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
