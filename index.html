@@ -1,3030 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>StudySmart</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
->
-
-<style>
-
-/* =========================================================
-   RESET
-========================================================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-:root{
-
-    --primary:#6246d8;
-    --primary-dark:#4528a8;
-
-    --sidebar:#11152f;
-
-    --bg:#f6f5fb;
-    --card:#ffffff;
-
-    --text:#181a35;
-    --muted:#77798d;
-
-    --border:#e7e5ef;
-
-    --green:#43a047;
-    --orange:#ef9d27;
-    --blue:#3e8de4;
-    --purple:#9b59d0;
-    --pink:#e66c91;
-    --teal:#27b5ad;
-
-    --shadow:0 8px 25px rgba(35,30,80,.06);
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family:"Inter",sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    min-height:100vh;
-}
-
-button,
-input,
-select,
-textarea{
-    font-family:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-button:focus,
-input:focus,
-select:focus,
-textarea:focus{
-    outline:3px solid rgba(98,70,216,.22);
-    outline-offset:2px;
-}
-
-
-/* =========================================================
-   APP
-========================================================= */
-
-.app{
-    display:flex;
-    min-height:100vh;
-}
-
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-.sidebar{
-    width:240px;
-    height:100vh;
-
-    position:fixed;
-    left:0;
-    top:0;
-
-    background:var(--sidebar);
-    color:white;
-
-    padding:24px 18px;
-
-    z-index:1000;
-
-    overflow-y:auto;
-
-    transition:transform .3s ease;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-
-    margin-bottom:35px;
-}
-
-.brand-icon{
-    font-size:38px;
-    color:#388bff;
-}
-
-.brand h1{
-    font-size:21px;
-}
-
-.brand p{
-    font-size:10px;
-    color:#c7c2ef;
-    margin-top:3px;
-}
-
-.navigation{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-.nav-item{
-    width:100%;
-
-    border:0;
-    background:transparent;
-
-    color:#efeff7;
-
-    display:flex;
-    align-items:center;
-
-    gap:15px;
-
-    padding:13px 14px;
-
-    border-radius:11px;
-
-    font-size:14px;
-
-    text-align:left;
-
-    transition:.2s;
-}
-
-.nav-item i{
-    width:22px;
-    text-align:center;
-    font-size:17px;
-}
-
-.nav-item:hover{
-    background:rgba(255,255,255,.09);
-}
-
-.nav-item.active{
-    background:linear-gradient(
-        135deg,
-        #3971ee,
-        #7140dc
-    );
-
-    box-shadow:0 8px 20px rgba(74,63,210,.3);
-}
-
-
-/* SIDEBAR QUOTE */
-
-.sidebar-bottom{
-    margin-top:50px;
-}
-
-.quote{
-    background:linear-gradient(
-        135deg,
-        #5b39bb,
-        #963dcc
-    );
-
-    border-radius:12px;
-
-    padding:18px 14px;
-
-    font-size:12px;
-    line-height:1.6;
-}
-
-.quote small{
-    display:block;
-    margin-top:10px;
-}
-
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-.main{
-    margin-left:240px;
-    width:calc(100% - 240px);
-    min-height:100vh;
-}
-
-
-/* =========================================================
-   TOPBAR
-========================================================= */
-
-.topbar{
-    height:72px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 30px;
-}
-
-.mobile-menu{
-    display:none;
-
-    border:0;
-    background:none;
-
-    font-size:22px;
-
-    color:var(--text);
-}
-
-.top-actions{
-    margin-left:auto;
-
-    display:flex;
-    align-items:center;
-
-    gap:20px;
-}
-
-.top-btn{
-    border:0;
-    background:transparent;
-
-    color:var(--text);
-
-    font-size:20px;
-
-    position:relative;
-}
-
-.notification-badge{
-    position:absolute;
-
-    top:-7px;
-    right:-8px;
-
-    width:18px;
-    height:18px;
-
-    border-radius:50%;
-
-    background:#e74768;
-
-    color:white;
-
-    font-size:9px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.avatar{
-    width:42px;
-    height:42px;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:linear-gradient(
-        135deg,
-        #bc719a,
-        #573957
-    );
-
-    color:white;
-
-    font-weight:700;
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.content{
-    padding:5px 32px 40px;
-}
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-.greeting{
-    color:#6147bd;
-    font-weight:700;
-    font-size:14px;
-    margin-bottom:10px;
-}
-
-.page-heading{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.page-heading h2{
-    font-size:37px;
-    letter-spacing:-1px;
-}
-
-.sparkle{
-    font-size:38px;
-    color:#f2ae2c;
-}
-
-.subtitle{
-    color:var(--muted);
-    margin-top:7px;
-    font-size:14px;
-}
-
-
-/* =========================================================
-   CARDS
-========================================================= */
-
-.card{
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:15px;
-
-    box-shadow:var(--shadow);
-}
-
-.card-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:15px;
-
-    margin-bottom:18px;
-}
-
-.card-header h3{
-    font-size:16px;
-}
-
-
-/* =========================================================
-   DASHBOARD STATS
-========================================================= */
-
-.stats{
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:15px;
-
-    margin-top:25px;
-}
-
-.stat-card{
-    padding:20px;
-
-    display:flex;
-    align-items:center;
-
-    gap:15px;
-}
-
-.stat-icon{
-    width:45px;
-    height:45px;
-
-    border-radius:11px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:20px;
-
-    background:#eeeaff;
-    color:var(--primary);
-}
-
-.stat-card h3{
-    font-size:24px;
-}
-
-.stat-card p{
-    font-size:11px;
-    color:var(--muted);
-    margin-top:3px;
-}
-
-
-/* =========================================================
-   ADD CLASS
-========================================================= */
-
-.add-class{
-    padding:18px;
-
-    margin-top:22px;
-}
-
-.form-grid{
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr)
-        auto;
-
-    gap:10px;
-}
-
-.input-group{
-    height:43px;
-
-    border:1px solid var(--border);
-
-    border-radius:9px;
-
-    display:flex;
-    align-items:center;
-
-    padding:0 11px;
-
-    background:var(--card);
-}
-
-.input-group i{
-    color:#777;
-    margin-right:8px;
-}
-
-.input-group input,
-.input-group select{
-    border:0;
-    outline:0;
-
-    width:100%;
-
-    background:transparent;
-
-    color:var(--text);
-}
-
-.primary-btn{
-    border:0;
-
-    background:linear-gradient(
-        135deg,
-        #6843d8,
-        #5832c7
-    );
-
-    color:white;
-
-    border-radius:9px;
-
-    padding:0 18px;
-
-    font-weight:700;
-}
-
-.secondary-btn{
-    border:0;
-
-    background:#eeeaff;
-
-    color:#5d42bd;
-
-    padding:10px 15px;
-
-    border-radius:8px;
-
-    font-weight:600;
-}
-
-.danger-btn{
-    border:0;
-
-    background:#ffe9ed;
-
-    color:#d44769;
-
-    padding:8px 11px;
-
-    border-radius:7px;
-}
-
-
-/* =========================================================
-   DASHBOARD GRID
-========================================================= */
-
-.dashboard-grid{
-    display:grid;
-
-    grid-template-columns:
-        minmax(0,1fr)
-        270px;
-
-    gap:18px;
-
-    margin-top:18px;
-}
-
-
-/* =========================================================
-   TIMETABLE
-========================================================= */
-
-.timetable-card{
-    padding:10px;
-
-    overflow:hidden;
-}
-
-.table-wrapper{
-    overflow-x:auto;
-
-    width:100%;
-}
-
-table{
-    width:100%;
-
-    border-collapse:separate;
-    border-spacing:4px;
-
-    min-width:720px;
-}
-
-th{
-    padding:11px 7px;
-
-    font-size:12px;
-
-    color:white;
-
-    border-radius:7px;
-}
-
-th:first-child{
-    background:#f1f0f6;
-    color:var(--text);
-}
-
-th:nth-child(2){background:#64bd60;}
-th:nth-child(3){background:#e8a437;}
-th:nth-child(4){background:#4c91dd;}
-th:nth-child(5){background:#a25bc9;}
-th:nth-child(6){background:#dd6c91;}
-th:nth-child(7){background:#2db2ac;}
-
-td{
-    padding:2px;
-}
-
-.time-cell{
-    text-align:center;
-
-    font-size:10px;
-
-    font-weight:600;
-
-    min-width:75px;
-}
-
-.class-box{
-    min-height:57px;
-
-    padding:8px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.class-box:hover{
-    transform:translateY(-2px);
-
-    box-shadow:0 5px 14px rgba(0,0,0,.1);
-}
-
-.class-box b{
-    display:block;
-
-    font-size:11px;
-}
-
-.class-box small{
-    display:block;
-
-    font-size:9px;
-
-    margin-top:4px;
-}
-
-.green{background:#e5f7e2;color:#287e31;}
-.orange{background:#fff0d5;color:#b76b0c;}
-.blue{background:#e3efff;color:#246dbd;}
-.purple{background:#f1e1fa;color:#8145af;}
-.pink{background:#ffe3eb;color:#c44c72;}
-.teal{background:#def5f2;color:#188b84;}
-
-.lunch{
-    background:#fff4da;
-    color:#a96c13;
-
-    text-align:center;
-
-    padding:9px;
-
-    border-radius:8px;
-
-    font-size:11px;
-
-    font-weight:700;
-}
-
-
-/* =========================================================
-   RIGHT SIDE
-========================================================= */
-
-.right-column{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-.schedule-card,
-.reminder-card,
-.motivation{
-    padding:17px;
-}
-
-.schedule-item{
-    display:grid;
-
-    grid-template-columns:65px 1fr;
-
-    border-left:2px solid #e4e2ed;
-
-    position:relative;
-
-    padding:9px 0;
-}
-
-.schedule-item:before{
-    content:"";
-
-    position:absolute;
-
-    left:-5px;
-    top:13px;
-
-    width:7px;
-    height:7px;
-
-    background:#3985e9;
-
-    border-radius:50%;
-}
-
-.schedule-item time{
-    font-size:9px;
-    padding-left:7px;
-}
-
-.schedule-item b{
-    font-size:11px;
-}
-
-.schedule-item small{
-    display:block;
-
-    color:var(--muted);
-
-    font-size:9px;
-
-    margin-top:3px;
-}
-
-
-/* =========================================================
-   MOTIVATION
-========================================================= */
-
-.motivation{
-    color:white;
-
-    text-align:center;
-
-    background:linear-gradient(
-        135deg,
-        #6041c8,
-        #bd3fce,
-        #ee9c44
-    );
-}
-
-.motivation .trophy{
-    font-size:30px;
-}
-
-.motivation h3{
-    margin-top:5px;
-}
-
-.motivation p{
-    font-size:10px;
-    margin-top:5px;
-}
-
-
-/* =========================================================
-   PAGE TOOLBAR
-========================================================= */
-
-.page-toolbar{
-    display:flex;
-
-    align-items:center;
-    justify-content:space-between;
-
-    gap:15px;
-
-    margin-top:25px;
-
-    margin-bottom:15px;
-}
-
-.search-box{
-    height:42px;
-
-    border:1px solid var(--border);
-
-    background:var(--card);
-
-    border-radius:8px;
-
-    display:flex;
-    align-items:center;
-
-    padding:0 12px;
-
-    max-width:300px;
-
-    width:100%;
-}
-
-.search-box i{
-    color:#888;
-    margin-right:8px;
-}
-
-.search-box input{
-    border:0;
-    outline:0;
-
-    width:100%;
-
-    background:transparent;
-
-    color:var(--text);
-}
-
-
-/* =========================================================
-   SUBJECTS
-========================================================= */
-
-.subject-grid{
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:15px;
-}
-
-.subject-card{
-    padding:18px;
-
-    position:relative;
-}
-
-.subject-icon{
-    width:45px;
-    height:45px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:10px;
-
-    background:#eeeaff;
-
-    color:var(--primary);
-
-    margin-bottom:12px;
-}
-
-.subject-card h3{
-    font-size:15px;
-}
-
-.subject-card p{
-    font-size:11px;
-    color:var(--muted);
-    margin-top:5px;
-}
-
-.progress{
-    height:7px;
-
-    background:#eeeef4;
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-    margin-top:13px;
-}
-
-.progress div{
-    height:100%;
-
-    background:var(--primary);
-
-    border-radius:20px;
-}
-
-
-/* =========================================================
-   TASKS
-========================================================= */
-
-.task-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.task{
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:10px;
-
-    padding:15px;
-
-    display:flex;
-    align-items:center;
-
-    gap:12px;
-}
-
-.task-check{
-    width:24px;
-    height:24px;
-
-    border-radius:50%;
-
-    border:2px solid var(--primary);
-
-    background:white;
-
-    color:white;
-}
-
-.task.completed .task-check{
-    background:var(--primary);
-}
-
-.task.completed .task-title{
-    text-decoration:line-through;
-    opacity:.5;
-}
-
-.task-info{
-    flex:1;
-}
-
-.task-title{
-    font-size:13px;
-    font-weight:700;
-}
-
-.task-meta{
-    font-size:10px;
-    color:var(--muted);
-    margin-top:4px;
-}
-
-
-/* =========================================================
-   REMINDERS
-========================================================= */
-
-.reminder-list{
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-}
-
-.reminder{
-    padding:15px;
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:10px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-}
-
-.reminder-icon{
-    width:38px;
-    height:38px;
-
-    border-radius:50%;
-
-    background:#eeeaff;
-
-    color:var(--primary);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.reminder-info{
-    flex:1;
-}
-
-.reminder-info b{
-    font-size:13px;
-}
-
-.reminder-info p{
-    color:var(--muted);
-
-    font-size:10px;
-
-    margin-top:4px;
-}
-
-
-/* =========================================================
-   CALENDAR
-========================================================= */
-
-.calendar{
-    padding:20px;
-}
-
-.calendar-header{
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:20px;
-}
-
-.calendar-header h3{
-    font-size:20px;
-}
-
-.calendar-controls{
-    display:flex;
-    gap:7px;
-}
-
-.calendar-controls button{
-    border:0;
-
-    width:35px;
-    height:35px;
-
-    border-radius:7px;
-
-    background:#eeeaff;
-
-    color:var(--primary);
-}
-
-.calendar-grid{
-    display:grid;
-
-    grid-template-columns:
-        repeat(7,1fr);
-
-    gap:6px;
-}
-
-.calendar-day-name{
-    text-align:center;
-
-    font-size:10px;
-
-    font-weight:700;
-
-    color:var(--muted);
-
-    padding:7px;
-}
-
-.calendar-day{
-    min-height:90px;
-
-    padding:8px;
-
-    border:1px solid var(--border);
-
-    border-radius:8px;
-
-    background:var(--card);
-
-    font-size:11px;
-}
-
-.calendar-day.today{
-    border:2px solid var(--primary);
-}
-
-.calendar-day span{
-    font-weight:700;
-}
-
-.calendar-event{
-    margin-top:8px;
-
-    padding:4px;
-
-    background:#eeeaff;
-
-    color:var(--primary);
-
-    border-radius:5px;
-
-    font-size:8px;
-}
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-.settings-grid{
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:15px;
-
-    margin-top:25px;
-}
-
-.settings-card{
-    padding:20px;
-}
-
-.setting-row{
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:15px 0;
-
-    border-bottom:1px solid var(--border);
-}
-
-.setting-row:last-child{
-    border-bottom:0;
-}
-
-.setting-info b{
-    font-size:13px;
-}
-
-.setting-info p{
-    font-size:10px;
-    color:var(--muted);
-    margin-top:4px;
-}
-
-.toggle{
-    width:42px;
-    height:23px;
-
-    border:0;
-
-    background:#ccc;
-
-    border-radius:20px;
-
-    position:relative;
-}
-
-.toggle:before{
-    content:"";
-
-    width:17px;
-    height:17px;
-
-    background:white;
-
-    border-radius:50%;
-
-    position:absolute;
-
-    top:3px;
-    left:3px;
-
-    transition:.2s;
-}
-
-.toggle.on{
-    background:var(--primary);
-}
-
-.toggle.on:before{
-    left:22px;
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.profile-card{
-    max-width:650px;
-
-    padding:25px;
-
-    margin-top:25px;
-}
-
-.profile-avatar{
-    width:80px;
-    height:80px;
-
-    background:linear-gradient(
-        135deg,
-        #bc719a,
-        #573957
-    );
-
-    color:white;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:25px;
-
-    font-weight:700;
-
-    margin-bottom:15px;
-}
-
-.profile-form{
-    display:grid;
-    gap:12px;
-}
-
-.profile-form label{
-    font-size:11px;
-    font-weight:600;
-}
-
-.profile-form input{
-    height:42px;
-
-    border:1px solid var(--border);
-
-    border-radius:8px;
-
-    padding:0 12px;
-
-    background:var(--card);
-
-    color:var(--text);
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-.modal-overlay{
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.45);
-
-    display:none;
-
-    align-items:center;
-    justify-content:center;
-
-    z-index:2000;
-
-    padding:20px;
-}
-
-.modal-overlay.show{
-    display:flex;
-}
-
-.modal{
-    width:100%;
-    max-width:430px;
-
-    background:var(--card);
-
-    border-radius:14px;
-
-    padding:22px;
-}
-
-.modal-header{
-    display:flex;
-
-    align-items:center;
-    justify-content:space-between;
-
-    margin-bottom:20px;
-}
-
-.modal-header button{
-    border:0;
-    background:transparent;
-
-    font-size:20px;
-
-    color:var(--text);
-}
-
-.modal-form{
-    display:grid;
-    gap:12px;
-}
-
-.modal-form input,
-.modal-form select{
-    height:42px;
-
-    border:1px solid var(--border);
-
-    border-radius:8px;
-
-    padding:0 10px;
-
-    background:var(--card);
-
-    color:var(--text);
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-.toast{
-    position:fixed;
-
-    right:20px;
-    bottom:20px;
-
-    background:#25243b;
-
-    color:white;
-
-    padding:12px 17px;
-
-    border-radius:8px;
-
-    opacity:0;
-
-    transform:translateY(30px);
-
-    transition:.3s;
-
-    z-index:3000;
-
-    font-size:12px;
-}
-
-.toast.show{
-    opacity:1;
-
-    transform:translateY(0);
-}
-
-
-/* =========================================================
-   DARK MODE
-========================================================= */
-
-body.dark{
-    --bg:#101125;
-    --card:#191a31;
-
-    --text:#f4f3fa;
-    --muted:#aaaabd;
-
-    --border:#2d2e47;
-}
-
-body.dark .input-group,
-body.dark .search-box,
-body.dark .profile-form input,
-body.dark .modal-form input,
-body.dark .modal-form select{
-    background:#121327;
-}
-
-body.dark .task-check{
-    background:#191a31;
-}
-
-
-/* =========================================================
-   RESPONSIVE TABLET
-========================================================= */
-
-@media(max-width:1100px){
-
-    .dashboard-grid{
-        grid-template-columns:1fr;
-    }
-
-    .right-column{
-        display:grid;
-
-        grid-template-columns:
-            repeat(3,1fr);
-    }
-
-    .stats{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .subject-grid{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .form-grid{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .primary-btn{
-        height:43px;
-    }
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:800px){
-
-    .sidebar{
-        transform:translateX(-100%);
-    }
-
-    .sidebar.open{
-        transform:translateX(0);
-    }
-
-    .main{
-        margin-left:0;
-
-        width:100%;
-    }
-
-    .mobile-menu{
-        display:block;
-    }
-
-    .topbar{
-        padding:0 18px;
-    }
-
-    .content{
-        padding:5px 15px 30px;
-    }
-
-    .page-heading h2{
-        font-size:27px;
-    }
-
-    .subtitle{
-        font-size:12px;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .right-column{
-        grid-template-columns:1fr;
-    }
-
-    .settings-grid{
-        grid-template-columns:1fr;
-    }
-
-    .page-toolbar{
-        align-items:stretch;
-        flex-direction:column;
-    }
-
-    .search-box{
-        max-width:none;
-    }
-
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media(max-width:520px){
-
-    .topbar{
-        height:62px;
-    }
-
-    .top-actions{
-        gap:12px;
-    }
-
-    .avatar{
-        width:35px;
-        height:35px;
-        font-size:10px;
-    }
-
-    .page-heading h2{
-        font-size:23px;
-    }
-
-    .sparkle{
-        font-size:27px;
-    }
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .stat-card{
-        padding:15px;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .subject-grid{
-        grid-template-columns:1fr;
-    }
-
-    .calendar-day{
-        min-height:60px;
-
-        font-size:9px;
-    }
-
-    .calendar-event{
-        display:none;
-    }
-
-    .calendar-grid{
-        gap:3px;
-    }
-
-}
-
-
-/* =========================================================
-   VERY SMALL
-========================================================= */
-
-@media(max-width:380px){
-
-    .content{
-        padding-left:10px;
-        padding-right:10px;
-    }
-
-    .page-heading h2{
-        font-size:20px;
-    }
-
-    .top-actions{
-        gap:8px;
-    }
-
-}
-
-</style>
-</head>
-
-
-<body>
-
-<div class="app">
-
-
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
-
-<aside class="sidebar" id="sidebar">
-
-    <div class="brand">
-
-        <div class="brand-icon">
-            <i class="fa-solid fa-graduation-cap"></i>
-        </div>
-
-        <div>
-            <h1>StudySmart</h1>
-            <p>Plan • Focus • Achieve</p>
-        </div>
-
-    </div>
-
-
-    <nav class="navigation" aria-label="Main navigation">
-
-        <button class="nav-item active" data-page="dashboard">
-            <i class="fa-solid fa-house"></i>
-            <span>Dashboard</span>
-        </button>
-
-        <button class="nav-item" data-page="timetable">
-            <i class="fa-solid fa-table-cells"></i>
-            <span>Timetable</span>
-        </button>
-
-        <button class="nav-item" data-page="subjects">
-            <i class="fa-solid fa-book-open"></i>
-            <span>Subjects</span>
-        </button>
-
-        <button class="nav-item" data-page="tasks">
-            <i class="fa-solid fa-square-check"></i>
-            <span>Tasks</span>
-        </button>
-
-        <button class="nav-item" data-page="reminders">
-            <i class="fa-regular fa-bell"></i>
-            <span>Reminders</span>
-        </button>
-
-        <button class="nav-item" data-page="calendar">
-            <i class="fa-regular fa-calendar"></i>
-            <span>Calendar</span>
-        </button>
-
-        <button class="nav-item" data-page="settings">
-            <i class="fa-solid fa-gear"></i>
-            <span>Settings</span>
-        </button>
-
-    </nav>
-
-
-    <div class="sidebar-bottom">
-
-        <div class="quote">
-
-            <strong>
-                “Discipline today leads to freedom tomorrow.”
-            </strong>
-
-            <small>– Unknown</small>
-
-        </div>
-
-    </div>
-
-</aside>
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<main class="main">
-
-
-<header class="topbar">
-
-    <button
-        class="mobile-menu"
-        id="mobileMenu"
-        aria-label="Open navigation menu"
-    >
-        <i class="fa-solid fa-bars"></i>
-    </button>
-
-
-    <div class="top-actions">
-
-        <button
-            class="top-btn"
-            id="themeToggle"
-            aria-label="Toggle dark mode"
-        >
-            <i class="fa-regular fa-sun"></i>
-        </button>
-
-
-        <button
-            class="top-btn"
-            id="notificationButton"
-            aria-label="Notifications"
-        >
-
-            <i class="fa-regular fa-bell"></i>
-
-            <span
-                class="notification-badge"
-                id="notificationCount"
-            >
-                3
-            </span>
-
-        </button>
-
-
-        <button
-            class="avatar"
-            id="profileButton"
-            aria-label="Open profile"
-        >
-            DA
-        </button>
-
-    </div>
-
-</header>
-
-
-<section class="content">
-
-
-<!-- =====================================================
-     DASHBOARD PAGE
-===================================================== -->
-
-<div class="page active" id="dashboard">
-
-    <p class="greeting">
-        Good morning, David! 👋
-    </p>
-
-    <div class="page-heading">
-
-        <h2>Your Student Timetable</h2>
-
-        <span class="sparkle">✧</span>
-
-    </div>
-
-    <p class="subtitle">
-        Stay organized. Stay consistent. Make it happen! 🚀
-    </p>
-
-
-    <!-- STATS -->
-
-    <div class="stats">
-
-        <div class="card stat-card">
-
-            <div class="stat-icon">
-                <i class="fa-solid fa-book"></i>
-            </div>
-
-            <div>
-                <h3 id="statSubjects">10</h3>
-                <p>Subjects</p>
-            </div>
-
-        </div>
-
-
-        <div class="card stat-card">
-
-            <div class="stat-icon">
-                <i class="fa-solid fa-calendar-days"></i>
-            </div>
-
-            <div>
-                <h3 id="statClasses">54</h3>
-                <p>Classes</p>
-            </div>
-
-        </div>
-
-
-        <div class="card stat-card">
-
-            <div class="stat-icon">
-                <i class="fa-solid fa-list-check"></i>
-            </div>
-
-            <div>
-                <h3 id="statTasks">4</h3>
-                <p>Pending Tasks</p>
-            </div>
-
-        </div>
-
-
-        <div class="card stat-card">
-
-            <div class="stat-icon">
-                <i class="fa-solid fa-bell"></i>
-            </div>
-
-            <div>
-                <h3 id="statReminders">3</h3>
-                <p>Reminders</p>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ADD CLASS -->
-
-    <div class="card add-class">
-
-        <div class="card-header">
-
-            <h3>
-                <i class="fa-regular fa-square-plus"></i>
-                Add New Class
-            </h3>
-
-            <button
-                class="secondary-btn"
-                onclick="showPage('timetable')"
-            >
-                View Weekly
-            </button>
-
-        </div>
-
-
-        <div class="form-grid">
-
-            <div class="input-group">
-
-                <i class="fa-solid fa-book"></i>
-
-                <select id="classSubject">
-
-                    <option value="">Subject</option>
-
-                    <option>Mathematics</option>
-                    <option>English</option>
-                    <option>Physics</option>
-                    <option>Chemistry</option>
-                    <option>Biology</option>
-                    <option>French</option>
-                    <option>History</option>
-                    <option>Geography</option>
-                    <option>ICT</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="input-group">
-
-                <i class="fa-regular fa-calendar"></i>
-
-                <select id="classDay">
-
-                    <option value="">Day</option>
-
-                    <option>Monday</option>
-                    <option>Tuesday</option>
-                    <option>Wednesday</option>
-                    <option>Thursday</option>
-                    <option>Friday</option>
-                    <option>Saturday</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="input-group">
-
-                <i class="fa-regular fa-clock"></i>
-
-                <input
-                    id="classTime"
-                    placeholder="7:00 - 8:00"
-                >
-
-            </div>
-
-
-            <div class="input-group">
-
-                <i class="fa-solid fa-location-dot"></i>
-
-                <input
-                    id="classRoom"
-                    placeholder="Room"
-                >
-
-            </div>
-
-
-            <button
-                class="primary-btn"
-                id="addClassButton"
-            >
-                <i class="fa-solid fa-plus"></i>
-                Add Class
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- DASHBOARD GRID -->
-
-    <div class="dashboard-grid">
-
-
-        <!-- TABLE -->
-
-        <div class="card timetable-card">
-
-            <div class="table-wrapper">
-
-                <table id="dashboardTable">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>Time</th>
-                            <th>Monday</th>
-                            <th>Tuesday</th>
-                            <th>Wednesday</th>
-                            <th>Thursday</th>
-                            <th>Friday</th>
-                            <th>Saturday</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                        <tr data-time="7:00 - 8:00">
-
-                            <td class="time-cell">
-                                7:00 – 8:00
-                            </td>
-
-                            <td>
-                                <div class="class-box green">
-                                    <b>Mathematics</b>
-                                    <small>Room 12A</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box orange">
-                                    <b>English</b>
-                                    <small>Room 15B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box blue">
-                                    <b>Physics</b>
-                                    <small>Room 21C</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box purple">
-                                    <b>French</b>
-                                    <small>Room 18D</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box pink">
-                                    <b>Mathematics</b>
-                                    <small>Room 12A</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box teal">
-                                    <b>Sports</b>
-                                    <small>Field</small>
-                                </div>
-                            </td>
-
-                        </tr>
-
-
-                        <tr data-time="8:00 - 9:00">
-
-                            <td class="time-cell">
-                                8:00 – 9:00
-                            </td>
-
-                            <td>
-                                <div class="class-box green">
-                                    <b>Chemistry</b>
-                                    <small>Lab 3</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box orange">
-                                    <b>Biology</b>
-                                    <small>Lab 2</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box blue">
-                                    <b>History</b>
-                                    <small>Room 9B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box purple">
-                                    <b>Geography</b>
-                                    <small>Room 10C</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box pink">
-                                    <b>English</b>
-                                    <small>Room 15B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box teal">
-                                    <b>Study Time</b>
-                                    <small>Library</small>
-                                </div>
-                            </td>
-
-                        </tr>
-
-
-                        <tr data-time="9:00 - 10:00">
-
-                            <td class="time-cell">
-                                9:00 – 10:00
-                            </td>
-
-                            <td>
-                                <div class="class-box green">
-                                    <b>English</b>
-                                    <small>Room 15B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box orange">
-                                    <b>Mathematics</b>
-                                    <small>Room 12A</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box blue">
-                                    <b>Chemistry</b>
-                                    <small>Lab 3</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box purple">
-                                    <b>Physics</b>
-                                    <small>Room 21C</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box pink">
-                                    <b>ICT</b>
-                                    <small>Computer Lab</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box teal">
-                                    <b>Free Time</b>
-                                    <small>—</small>
-                                </div>
-                            </td>
-
-                        </tr>
-
-
-                        <tr data-time="10:00 - 11:00">
-
-                            <td class="time-cell">
-                                10:00 – 11:00
-                            </td>
-
-                            <td>
-                                <div class="class-box green">
-                                    <b>Physics</b>
-                                    <small>Room 21C</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box orange">
-                                    <b>French</b>
-                                    <small>Room 18D</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box blue">
-                                    <b>Mathematics</b>
-                                    <small>Room 12A</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box purple">
-                                    <b>English</b>
-                                    <small>Room 15B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box pink">
-                                    <b>History</b>
-                                    <small>Room 9B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box teal">
-                                    <b>Club Activity</b>
-                                    <small>—</small>
-                                </div>
-                            </td>
-
-                        </tr>
-
-
-                        <tr data-time="11:00 - 12:00">
-
-                            <td class="time-cell">
-                                11:00 – 12:00
-                            </td>
-
-                            <td>
-                                <div class="class-box green">
-                                    <b>Geography</b>
-                                    <small>Room 10C</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box orange">
-                                    <b>ICT</b>
-                                    <small>Computer Lab</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box blue">
-                                    <b>French</b>
-                                    <small>Room 18D</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box purple">
-                                    <b>Chemistry</b>
-                                    <small>Lab 3</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box pink">
-                                    <b>Biology</b>
-                                    <small>Lab 2</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box teal">
-                                    <b>Debate Club</b>
-                                    <small>Room 7A</small>
-                                </div>
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td class="time-cell">
-                                12:00 – 1:00
-                            </td>
-
-                            <td colspan="6">
-
-                                <div class="lunch">
-                                    🍴 Lunch Break
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr data-time="1:00 - 2:00">
-
-                            <td class="time-cell">
-                                1:00 – 2:00
-                            </td>
-
-                            <td>
-                                <div class="class-box green">
-                                    <b>Biology</b>
-                                    <small>Lab 2</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box orange">
-                                    <b>History</b>
-                                    <small>Room 9B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box blue">
-                                    <b>ICT</b>
-                                    <small>Computer Lab</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box purple">
-                                    <b>Mathematics</b>
-                                    <small>Room 12A</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box pink">
-                                    <b>French</b>
-                                    <small>Room 18D</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box teal">
-                                    <b>Study Time</b>
-                                    <small>Library</small>
-                                </div>
-                            </td>
-
-                        </tr>
-
-
-                        <tr data-time="2:00 - 3:00">
-
-                            <td class="time-cell">
-                                2:00 – 3:00
-                            </td>
-
-                            <td>
-                                <div class="class-box green">
-                                    <b>French</b>
-                                    <small>Room 18D</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box orange">
-                                    <b>Physics</b>
-                                    <small>Room 21C</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box blue">
-                                    <b>English</b>
-                                    <small>Room 15B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box purple">
-                                    <b>History</b>
-                                    <small>Room 9B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box pink">
-                                    <b>Geography</b>
-                                    <small>Room 10C</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box teal">
-                                    <b>Free Time</b>
-                                    <small>—</small>
-                                </div>
-                            </td>
-
-                        </tr>
-
-
-                        <tr data-time="3:00 - 4:00">
-
-                            <td class="time-cell">
-                                3:00 – 4:00
-                            </td>
-
-                            <td>
-                                <div class="class-box green">
-                                    <b>ICT</b>
-                                    <small>Computer Lab</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box orange">
-                                    <b>Geography</b>
-                                    <small>Room 10C</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box blue">
-                                    <b>Biology</b>
-                                    <small>Lab 2</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box purple">
-                                    <b>French</b>
-                                    <small>Room 18D</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box pink">
-                                    <b>Mathematics</b>
-                                    <small>Room 12A</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box teal">
-                                    <b>Sports</b>
-                                    <small>Field</small>
-                                </div>
-                            </td>
-
-                        </tr>
-
-
-                        <tr data-time="4:00 - 5:00">
-
-                            <td class="time-cell">
-                                4:00 – 5:00
-                            </td>
-
-                            <td>
-                                <div class="class-box green">
-                                    <b>Study Time</b>
-                                    <small>Library</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box orange">
-                                    <b>Debate Club</b>
-                                    <small>Room 7A</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box blue">
-                                    <b>Quiz Club</b>
-                                    <small>Room 7B</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box purple">
-                                    <b>Music</b>
-                                    <small>Room 4A</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box pink">
-                                    <b>Coding Club</b>
-                                    <small>Lab 1</small>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="class-box teal">
-                                    <b>Free Time</b>
-                                    <small>—</small>
-                                </div>
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-
-        <!-- RIGHT -->
-
-        <div class="right-column">
-
-
-            <div class="card schedule-card">
-
-                <div class="card-header">
-
-                    <h3>
-                        <i class="fa-regular fa-calendar"></i>
-                        Today's Schedule
-                    </h3>
-
-                </div>
-
-                <div class="schedule-item">
-
-                    <time>8:00 AM</time>
-
-                    <div>
-                        <b>Physics</b>
-                        <small>Room 21C</small>
-                    </div>
-
-                </div>
-
-                <div class="schedule-item">
-
-                    <time>9:00 AM</time>
-
-                    <div>
-                        <b>History</b>
-                        <small>Room 9B</small>
-                    </div>
-
-                </div>
-
-                <div class="schedule-item">
-
-                    <time>10:00 AM</time>
-
-                    <div>
-                        <b>Mathematics</b>
-                        <small>Room 12A</small>
-                    </div>
-
-                </div>
-
-                <div class="schedule-item">
-
-                    <time>11:00 AM</time>
-
-                    <div>
-                        <b>French</b>
-                        <small>Room 18D</small>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="card motivation">
-
-                <div class="trophy">
-                    🏆
-                </div>
-
-                <h3>
-                    Keep going, David!
-                </h3>
-
-                <p>
-                    You're building your future<br>
-                    one day at a time.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     TIMETABLE PAGE
-===================================================== -->
-
-<div class="page" id="timetable">
-
-    <div class="page-heading">
-
-        <h2>My Timetable</h2>
-
-        <span class="sparkle">📅</span>
-
-    </div>
-
-    <p class="subtitle">
-        Manage your weekly classes and study periods.
-    </p>
-
-
-    <div class="card timetable-card" style="margin-top:25px">
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>Time</th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="timetablePageBody"></tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     SUBJECTS PAGE
-===================================================== -->
-
-<div class="page" id="subjects">
-
-    <div class="page-heading">
-
-        <h2>My Subjects</h2>
-
-        <span class="sparkle">📚</span>
-
-    </div>
-
-    <p class="subtitle">
-        Track all your subjects and your study progress.
-    </p>
-
-
-    <div class="page-toolbar">
-
-        <div class="search-box">
-
-            <i class="fa-solid fa-search"></i>
-
-            <input
-                id="subjectSearch"
-                placeholder="Search subjects..."
-            >
-
-        </div>
-
-        <button
-            class="primary-btn"
-            id="addSubjectButton"
-        >
-            <i class="fa-solid fa-plus"></i>
-            Add Subject
-        </button>
-
-    </div>
-
-
-    <div
-        class="subject-grid"
-        id="subjectGrid"
-    ></div>
-
-</div>
-
-
-<!-- =====================================================
-     TASKS PAGE
-===================================================== -->
-
-<div class="page" id="tasks">
-
-    <div class="page-heading">
-
-        <h2>My Tasks</h2>
-
-        <span class="sparkle">✅</span>
-
-    </div>
-
-    <p class="subtitle">
-        Keep track of assignments, projects and revision.
-    </p>
-
-
-    <div class="page-toolbar">
-
-        <div class="search-box">
-
-            <i class="fa-solid fa-search"></i>
-
-            <input
-                id="taskSearch"
-                placeholder="Search tasks..."
-            >
-
-        </div>
-
-        <button
-            class="primary-btn"
-            id="addTaskButton"
-        >
-            <i class="fa-solid fa-plus"></i>
-            Add Task
-        </button>
-
-    </div>
-
-
-    <div
-        class="task-list"
-        id="taskList"
-    ></div>
-
-</div>
-
-
-<!-- =====================================================
-     REMINDERS PAGE
-===================================================== -->
-
-<div class="page" id="reminders">
-
-    <div class="page-heading">
-
-        <h2>Reminders</h2>
-
-        <span class="sparkle">🔔</span>
-
-    </div>
-
-    <p class="subtitle">
-        Never forget an important school activity.
-    </p>
-
-
-    <div class="page-toolbar">
-
-        <div></div>
-
-        <button
-            class="primary-btn"
-            id="addReminderButton"
-        >
-            <i class="fa-solid fa-plus"></i>
-            Add Reminder
-        </button>
-
-    </div>
-
-
-    <div
-        class="reminder-list"
-        id="reminderList"
-    ></div>
-
-</div>
-
-
-<!-- =====================================================
-     CALENDAR PAGE
-===================================================== -->
-
-<div class="page" id="calendar">
-
-    <div class="page-heading">
-
-        <h2>Calendar</h2>
-
-        <span class="sparkle">🗓️</span>
-
-    </div>
-
-    <p class="subtitle">
-        View your school activities and important dates.
-    </p>
-
-
-    <div class="card calendar" style="margin-top:25px">
-
-        <div class="calendar-header">
-
-            <h3 id="calendarMonth">
-                September 2026
-            </h3>
-
-            <div class="calendar-controls">
-
-                <button id="previousMonth">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-
-                <button id="nextMonth">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="calendar-grid" id="calendarGrid"></div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     SETTINGS PAGE
-===================================================== -->
-
-<div class="page" id="settings">
-
-    <div class="page-heading">
-
-        <h2>Settings</h2>
-
-        <span class="sparkle">⚙️</span>
-
-    </div>
-
-    <p class="subtitle">
-        Customize your StudySmart experience.
-    </p>
-
-
-    <div class="settings-grid">
-
-
-        <div class="card settings-card">
-
-            <h3>Preferences</h3>
-
-
-            <div class="setting-row">
-
-                <div class="setting-info">
-
-                    <b>Dark Mode</b>
-
-                    <p>
-                        Use a darker appearance.
-                    </p>
-
-                </div>
-
-                <button
-                    class="toggle"
-                    id="darkToggle"
-                ></button>
-
-            </div>
-
-
-            <div class="setting-row">
-
-                <div class="setting-info">
-
-                    <b>Notifications</b>
-
-                    <p>
-                        Receive reminder notifications.
-                    </p>
-
-                </div>
-
-                <button
-                    class="toggle on"
-                    id="notificationToggle"
-                ></button>
-
-            </div>
-
-
-            <div class="setting-row">
-
-                <div class="setting-info">
-
-                    <b>Auto Save</b>
-
-                    <p>
-                        Automatically save your changes.
-                    </p>
-
-                </div>
-
-                <button
-                    class="toggle on"
-                ></button>
-
-            </div>
-
-        </div>
-
-
-        <div class="card settings-card">
-
-            <h3>Account</h3>
-
-
-            <div class="setting-row">
-
-                <div class="setting-info">
-
-                    <b>Profile</b>
-
-                    <p>
-                        Update your student information.
-                    </p>
-
-                </div>
-
-                <button
-                    class="secondary-btn"
-                    onclick="showProfile()"
-                >
-                    Edit
-                </button>
-
-            </div>
-
-
-            <div class="setting-row">
-
-                <div class="setting-info">
-
-                    <b>Clear Data</b>
-
-                    <p>
-                        Delete saved StudySmart data.
-                    </p>
-
-                </div>
-
-                <button
-                    class="danger-btn"
-                    id="clearData"
-                >
-                    Clear
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-</section>
-
-</main>
-
-</div>
-
-
-<!-- =====================================================
-     MODAL
-===================================================== -->
-
-<div
-    class="modal-overlay"
-    id="modalOverlay"
->
-
-    <div
-        class="modal"
-        role="dialog"
-        aria-modal="true"
-    >
-
-        <div class="modal-header">
-
-            <h3 id="modalTitle">
-                Add Item
-            </h3>
-
-            <button id="closeModal">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-        </div>
-
-        <div
-            class="modal-form"
-            id="modalForm"
-        ></div>
-
-    </div>
-
-</div>
-
-
-<!-- TOAST -->
-
-<div
-    class="toast"
-    id="toast"
-></div>
-
-
 <script>
-
 /* =========================================================
-   GLOBAL DATA
+   STUDYSMART - COMPLETE FUNCTIONAL JAVASCRIPT
 ========================================================= */
 
-let subjects =
-JSON.parse(
-    localStorage.getItem("studysmartSubjects")
-) || [
+"use strict";
 
-    {
-        name:"Mathematics",
-        teacher:"Mr. Ade",
-        progress:85
-    },
+/* =========================================================
+   DEFAULT DATA
+========================================================= */
 
-    {
-        name:"English",
-        teacher:"Mrs. James",
-        progress:72
-    },
-
-    {
-        name:"Physics",
-        teacher:"Mr. Bello",
-        progress:65
-    },
-
-    {
-        name:"Chemistry",
-        teacher:"Mrs. Grace",
-        progress:70
-    },
-
-    {
-        name:"Biology",
-        teacher:"Mr. Samuel",
-        progress:78
-    },
-
-    {
-        name:"French",
-        teacher:"Mme. Marie",
-        progress:55
-    },
-
-    {
-        name:"Economics",
-        teacher:"Mr. John",
-        progress:82
-    },
-
-    {
-        name:"Further Mathematics",
-        teacher:"Mr. Peter",
-        progress:60
-    }
-
+const DEFAULT_SUBJECTS = [
+    { name:"Mathematics", teacher:"Mr. Ade", progress:85 },
+    { name:"English", teacher:"Mrs. James", progress:72 },
+    { name:"Physics", teacher:"Mr. Bello", progress:65 },
+    { name:"Chemistry", teacher:"Mrs. Grace", progress:70 },
+    { name:"Biology", teacher:"Mr. Samuel", progress:78 },
+    { name:"French", teacher:"Mme. Marie", progress:55 },
+    { name:"Economics", teacher:"Mr. John", progress:82 },
+    { name:"Further Mathematics", teacher:"Mr. Peter", progress:60 }
 ];
 
-
-let tasks =
-JSON.parse(
-    localStorage.getItem("studysmartTasks")
-) || [
-
+const DEFAULT_TASKS = [
     {
         id:1,
         title:"Complete Mathematics Assignment",
@@ -3032,7 +28,6 @@ JSON.parse(
         due:"Tomorrow",
         completed:false
     },
-
     {
         id:2,
         title:"Revise Physics",
@@ -3040,7 +35,6 @@ JSON.parse(
         due:"Friday",
         completed:false
     },
-
     {
         id:3,
         title:"Read English Chapter",
@@ -3048,7 +42,6 @@ JSON.parse(
         due:"Thursday",
         completed:true
     },
-
     {
         id:4,
         title:"Prepare Chemistry Notes",
@@ -3056,41 +49,213 @@ JSON.parse(
         due:"Monday",
         completed:false
     }
-
 ];
 
-
-let reminders =
-JSON.parse(
-    localStorage.getItem("studysmartReminders")
-) || [
-
+const DEFAULT_REMINDERS = [
     {
         id:1,
         title:"Math Assignment",
         date:"Tomorrow",
         completed:false
     },
-
     {
         id:2,
         title:"Physics Revision",
         date:"Friday",
         completed:false
     },
-
     {
         id:3,
         title:"Science Project",
         date:"Next Monday",
         completed:false
     }
-
 ];
 
 
-let currentCalendarDate =
-new Date();
+/* =========================================================
+   APPLICATION STATE
+========================================================= */
+
+let subjects = loadData(
+    "studysmartSubjects",
+    DEFAULT_SUBJECTS
+);
+
+let tasks = loadData(
+    "studysmartTasks",
+    DEFAULT_TASKS
+);
+
+let reminders = loadData(
+    "studysmartReminders",
+    DEFAULT_REMINDERS
+);
+
+let profile = loadData(
+    "studysmartProfile",
+    {
+        name:"David",
+        school:"Destiny International College",
+        grade:"Grade 10"
+    }
+);
+
+let settings = loadData(
+    "studysmartSettings",
+    {
+        darkMode:false,
+        notifications:true,
+        autoSave:true
+    }
+);
+
+let timetable = loadData(
+    "studysmartTimetable",
+    null
+);
+
+let calendarEvents = loadData(
+    "studysmartCalendarEvents",
+    {
+        "2026-09-10":["Physics Test"],
+        "2026-09-20":["Assignment"]
+    }
+);
+
+let currentCalendarDate = new Date();
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function loadData(key, fallback){
+
+    try{
+
+        const saved = localStorage.getItem(key);
+
+        if(saved !== null){
+            return JSON.parse(saved);
+        }
+
+    }catch(error){
+
+        console.error(
+            "Could not load:",
+            key,
+            error
+        );
+
+    }
+
+    return JSON.parse(
+        JSON.stringify(fallback)
+    );
+}
+
+
+function saveData(key, value){
+
+    try{
+
+        localStorage.setItem(
+            key,
+            JSON.stringify(value)
+        );
+
+    }catch(error){
+
+        console.error(
+            "Could not save:",
+            key,
+            error
+        );
+
+        showToast(
+            "Unable to save your changes."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function getInitials(name){
+
+    if(!name){
+        return "DA";
+    }
+
+    return name
+        .trim()
+        .split(/\s+/)
+        .slice(0,2)
+        .map(word => word.charAt(0))
+        .join("")
+        .toUpperCase();
+
+}
+
+
+function updateProfileUI(){
+
+    const initials =
+        getInitials(profile.name);
+
+
+    document
+        .querySelectorAll(".avatar")
+        .forEach(avatar => {
+
+            avatar.textContent =
+                initials;
+
+        });
+
+
+    const greeting =
+        document.querySelector(".greeting");
+
+
+    if(greeting){
+
+        const hour =
+            new Date().getHours();
+
+        let greetingText =
+            "Good morning";
+
+        if(hour >= 12 && hour < 18){
+            greetingText = "Good afternoon";
+        }
+
+        if(hour >= 18){
+            greetingText = "Good evening";
+        }
+
+        greeting.textContent =
+            `${greetingText}, ${profile.name}! 👋`;
+
+    }
+
+
+    const motivation =
+        document.querySelector(".motivation h3");
+
+    if(motivation){
+
+        motivation.textContent =
+            `Keep going, ${profile.name}!`;
+
+    }
+
+}
 
 
 /* =========================================================
@@ -3098,16 +263,21 @@ new Date();
 ========================================================= */
 
 const navItems =
-document.querySelectorAll(".nav-item");
+    document.querySelectorAll(".nav-item");
 
 
 navItems.forEach(item => {
 
-    item.addEventListener("click", () => {
+    item.addEventListener(
+        "click",
+        () => {
 
-        showPage(item.dataset.page);
+            showPage(
+                item.dataset.page
+            );
 
-    });
+        }
+    );
 
 });
 
@@ -3118,20 +288,25 @@ function showPage(pageName){
         .querySelectorAll(".page")
         .forEach(page => {
 
-            page.classList.remove("active");
+            page.classList.remove(
+                "active"
+            );
 
         });
 
 
     const page =
-        document.getElementById(pageName);
+        document.getElementById(
+            pageName
+        );
 
 
-    if(page){
-
-        page.classList.add("active");
-
+    if(!page){
+        return;
     }
+
+
+    page.classList.add("active");
 
 
     navItems.forEach(item => {
@@ -3177,14 +352,17 @@ function showPage(pageName){
 ========================================================= */
 
 document
-.getElementById("mobileMenu")
-.addEventListener("click", () => {
+    .getElementById("mobileMenu")
+    .addEventListener(
+        "click",
+        () => {
 
-    document
-        .getElementById("sidebar")
-        .classList.toggle("open");
+            document
+                .getElementById("sidebar")
+                .classList.toggle("open");
 
-});
+        }
+    );
 
 
 /* =========================================================
@@ -3192,23 +370,20 @@ document
 ========================================================= */
 
 const themeToggle =
-document.getElementById("themeToggle");
+    document.getElementById("themeToggle");
 
 const darkToggle =
-document.getElementById("darkToggle");
+    document.getElementById("darkToggle");
 
 
 function applyDarkMode(enabled){
 
+    settings.darkMode =
+        Boolean(enabled);
+
     document.body.classList.toggle(
         "dark",
-        enabled
-    );
-
-
-    localStorage.setItem(
-        "studysmartDark",
-        enabled
+        settings.darkMode
     );
 
 
@@ -3216,26 +391,24 @@ function applyDarkMode(enabled){
 
         darkToggle.classList.toggle(
             "on",
-            enabled
+            settings.darkMode
         );
 
     }
 
 
     themeToggle.innerHTML =
-        enabled
+        settings.darkMode
         ? '<i class="fa-regular fa-moon"></i>'
         : '<i class="fa-regular fa-sun"></i>';
 
+
+    saveData(
+        "studysmartSettings",
+        settings
+    );
+
 }
-
-
-const savedDark =
-localStorage.getItem("studysmartDark")
-=== "true";
-
-
-applyDarkMode(savedDark);
 
 
 themeToggle.addEventListener(
@@ -3243,7 +416,7 @@ themeToggle.addEventListener(
     () => {
 
         applyDarkMode(
-            !document.body.classList.contains("dark")
+            !settings.darkMode
         );
 
     }
@@ -3255,11 +428,111 @@ darkToggle.addEventListener(
     () => {
 
         applyDarkMode(
-            !document.body.classList.contains("dark")
+            !settings.darkMode
         );
 
     }
 );
+
+
+/* =========================================================
+   NOTIFICATION SETTINGS
+========================================================= */
+
+const notificationToggle =
+    document.getElementById(
+        "notificationToggle"
+    );
+
+
+function applyNotificationSetting(
+    enabled
+){
+
+    settings.notifications =
+        Boolean(enabled);
+
+
+    notificationToggle.classList.toggle(
+        "on",
+        settings.notifications
+    );
+
+
+    updateStats();
+
+    saveData(
+        "studysmartSettings",
+        settings
+    );
+
+
+    showToast(
+        settings.notifications
+        ? "Notifications enabled."
+        : "Notifications disabled."
+    );
+
+}
+
+
+notificationToggle.addEventListener(
+    "click",
+    () => {
+
+        applyNotificationSetting(
+            !settings.notifications
+        );
+
+    }
+);
+
+
+/* =========================================================
+   AUTO SAVE
+========================================================= */
+
+const autoSaveToggle =
+    document.querySelector(
+        ".settings-card .setting-row:nth-of-type(3) .toggle"
+    );
+
+
+if(autoSaveToggle){
+
+    autoSaveToggle.classList.toggle(
+        "on",
+        settings.autoSave
+    );
+
+
+    autoSaveToggle.addEventListener(
+        "click",
+        () => {
+
+            settings.autoSave =
+                !settings.autoSave;
+
+            autoSaveToggle.classList.toggle(
+                "on",
+                settings.autoSave
+            );
+
+            saveData(
+                "studysmartSettings",
+                settings
+            );
+
+            showToast(
+                settings.autoSave
+                ? "Auto-save enabled."
+                : "Auto-save disabled."
+            );
+
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -3272,7 +545,9 @@ let toastTimeout;
 function showToast(message){
 
     const toast =
-        document.getElementById("toast");
+        document.getElementById(
+            "toast"
+        );
 
 
     toast.textContent =
@@ -3286,11 +561,16 @@ function showToast(message){
 
 
     toastTimeout =
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            toast.classList.remove("show");
+                toast.classList.remove(
+                    "show"
+                );
 
-        },2500);
+            },
+            2500
+        );
 
 }
 
@@ -3300,28 +580,37 @@ function showToast(message){
 ========================================================= */
 
 const modalOverlay =
-document.getElementById("modalOverlay");
+    document.getElementById(
+        "modalOverlay"
+    );
 
 const modalTitle =
-document.getElementById("modalTitle");
+    document.getElementById(
+        "modalTitle"
+    );
 
 const modalForm =
-document.getElementById("modalForm");
+    document.getElementById(
+        "modalForm"
+    );
 
 
 document
-.getElementById("closeModal")
-.addEventListener(
-    "click",
-    closeModal
-);
+    .getElementById("closeModal")
+    .addEventListener(
+        "click",
+        closeModal
+    );
 
 
 modalOverlay.addEventListener(
     "click",
-    e => {
+    event => {
 
-        if(e.target === modalOverlay){
+        if(
+            event.target ===
+            modalOverlay
+        ){
 
             closeModal();
 
@@ -3331,7 +620,24 @@ modalOverlay.addEventListener(
 );
 
 
-function openModal(title,content){
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+function openModal(
+    title,
+    content
+){
 
     modalTitle.textContent =
         title;
@@ -3339,7 +645,25 @@ function openModal(title,content){
     modalForm.innerHTML =
         content;
 
-    modalOverlay.classList.add("show");
+    modalOverlay.classList.add(
+        "show"
+    );
+
+
+    const firstInput =
+        modalForm.querySelector(
+            "input, select, textarea, button"
+        );
+
+
+    if(firstInput){
+
+        setTimeout(
+            () => firstInput.focus(),
+            50
+        );
+
+    }
 
 }
 
@@ -3354,33 +678,439 @@ function closeModal(){
 
 
 /* =========================================================
-   ADD CLASS
+   TIMETABLE DATA
+========================================================= */
+
+const defaultTimetable = {
+
+    "7:00 - 8:00":{
+        Monday:["Mathematics","Room 12A","green"],
+        Tuesday:["English","Room 15B","orange"],
+        Wednesday:["Physics","Room 21C","blue"],
+        Thursday:["French","Room 18D","purple"],
+        Friday:["Mathematics","Room 12A","pink"],
+        Saturday:["Sports","Field","teal"]
+    },
+
+    "8:00 - 9:00":{
+        Monday:["Chemistry","Lab 3","green"],
+        Tuesday:["Biology","Lab 2","orange"],
+        Wednesday:["History","Room 9B","blue"],
+        Thursday:["Geography","Room 10C","purple"],
+        Friday:["English","Room 15B","pink"],
+        Saturday:["Study Time","Library","teal"]
+    },
+
+    "9:00 - 10:00":{
+        Monday:["English","Room 15B","green"],
+        Tuesday:["Mathematics","Room 12A","orange"],
+        Wednesday:["Chemistry","Lab 3","blue"],
+        Thursday:["Physics","Room 21C","purple"],
+        Friday:["ICT","Computer Lab","pink"],
+        Saturday:["Free Time","—","teal"]
+    },
+
+    "10:00 - 11:00":{
+        Monday:["Physics","Room 21C","green"],
+        Tuesday:["French","Room 18D","orange"],
+        Wednesday:["Mathematics","Room 12A","blue"],
+        Thursday:["English","Room 15B","purple"],
+        Friday:["History","Room 9B","pink"],
+        Saturday:["Club Activity","—","teal"]
+    },
+
+    "11:00 - 12:00":{
+        Monday:["Geography","Room 10C","green"],
+        Tuesday:["ICT","Computer Lab","orange"],
+        Wednesday:["French","Room 18D","blue"],
+        Thursday:["Chemistry","Lab 3","purple"],
+        Friday:["Biology","Lab 2","pink"],
+        Saturday:["Debate Club","Room 7A","teal"]
+    },
+
+    "1:00 - 2:00":{
+        Monday:["Biology","Lab 2","green"],
+        Tuesday:["History","Room 9B","orange"],
+        Wednesday:["ICT","Computer Lab","blue"],
+        Thursday:["Mathematics","Room 12A","purple"],
+        Friday:["French","Room 18D","pink"],
+        Saturday:["Study Time","Library","teal"]
+    },
+
+    "2:00 - 3:00":{
+        Monday:["French","Room 18D","green"],
+        Tuesday:["Physics","Room 21C","orange"],
+        Wednesday:["English","Room 15B","blue"],
+        Thursday:["History","Room 9B","purple"],
+        Friday:["Geography","Room 10C","pink"],
+        Saturday:["Free Time","—","teal"]
+    },
+
+    "3:00 - 4:00":{
+        Monday:["ICT","Computer Lab","green"],
+        Tuesday:["Geography","Room 10C","orange"],
+        Wednesday:["Biology","Lab 2","blue"],
+        Thursday:["French","Room 18D","purple"],
+        Friday:["Mathematics","Room 12A","pink"],
+        Saturday:["Sports","Field","teal"]
+    },
+
+    "4:00 - 5:00":{
+        Monday:["Study Time","Library","green"],
+        Tuesday:["Debate Club","Room 7A","orange"],
+        Wednesday:["Quiz Club","Room 7B","blue"],
+        Thursday:["Music","Room 4A","purple"],
+        Friday:["Coding Club","Lab 1","pink"],
+        Saturday:["Free Time","—","teal"]
+    }
+
+};
+
+
+if(!timetable){
+
+    timetable =
+        JSON.parse(
+            JSON.stringify(
+                defaultTimetable
+            )
+        );
+
+    saveData(
+        "studysmartTimetable",
+        timetable
+    );
+
+}
+
+
+/* =========================================================
+   TIMETABLE RENDERING
+========================================================= */
+
+const timetableTimes =
+    Object.keys(timetable);
+
+
+const timetableDays = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+];
+
+
+function renderTimetableBody(
+    target
+){
+
+    target.innerHTML = "";
+
+
+    timetableTimes.forEach(
+        time => {
+
+            const tr =
+                document.createElement("tr");
+
+
+            tr.dataset.time =
+                time;
+
+
+            const timeCell =
+                document.createElement("td");
+
+
+            timeCell.className =
+                "time-cell";
+
+
+            timeCell.textContent =
+                time;
+
+
+            tr.appendChild(
+                timeCell
+            );
+
+
+            timetableDays.forEach(
+                day => {
+
+                    const td =
+                        document.createElement(
+                            "td"
+                        );
+
+
+                    const data =
+                        timetable[time]?.[day];
+
+
+                    if(data){
+
+                        td.innerHTML = `
+
+                            <div
+                                class="class-box ${escapeHTML(data[2])}"
+                                data-time="${escapeHTML(time)}"
+                                data-day="${escapeHTML(day)}"
+                                title="Click to edit this class"
+                            >
+
+                                <b>
+                                    ${escapeHTML(data[0])}
+                                </b>
+
+                                <small>
+                                    ${escapeHTML(data[1])}
+                                </small>
+
+                            </div>
+
+                        `;
+
+                    }
+
+
+                    tr.appendChild(td);
+
+                }
+            );
+
+
+            target.appendChild(tr);
+
+        }
+    );
+
+}
+
+
+function renderDashboardTimetable(){
+
+    const tbody =
+        document.querySelector(
+            "#dashboardTable tbody"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    timetableTimes.forEach(
+        time => {
+
+            const tr =
+                document.createElement("tr");
+
+
+            tr.dataset.time =
+                time;
+
+
+            const timeCell =
+                document.createElement("td");
+
+
+            timeCell.className =
+                "time-cell";
+
+
+            timeCell.textContent =
+                time;
+
+
+            tr.appendChild(
+                timeCell
+            );
+
+
+            timetableDays.forEach(
+                day => {
+
+                    const td =
+                        document.createElement(
+                            "td"
+                        );
+
+
+                    const data =
+                        timetable[time]?.[day];
+
+
+                    if(data){
+
+                        td.innerHTML = `
+
+                            <div
+                                class="class-box ${escapeHTML(data[2])}"
+                                data-time="${escapeHTML(time)}"
+                                data-day="${escapeHTML(day)}"
+                                title="Click to edit class"
+                            >
+
+                                <b>
+                                    ${escapeHTML(data[0])}
+                                </b>
+
+                                <small>
+                                    ${escapeHTML(data[1])}
+                                </small>
+
+                            </div>
+
+                        `;
+
+                    }
+
+
+                    tr.appendChild(td);
+
+                }
+            );
+
+
+            tbody.appendChild(tr);
+
+        }
+    );
+
+
+    /*
+       Lunch row
+    */
+
+    const lunchRow =
+        document.createElement("tr");
+
+
+    const lunchTime =
+        document.createElement("td");
+
+
+    lunchTime.className =
+        "time-cell";
+
+
+    lunchTime.textContent =
+        "12:00 – 1:00";
+
+
+    lunchRow.appendChild(
+        lunchTime
+    );
+
+
+    const lunchCell =
+        document.createElement("td");
+
+
+    lunchCell.colSpan = 6;
+
+
+    lunchCell.innerHTML =
+        `<div class="lunch">🍴 Lunch Break</div>`;
+
+
+    lunchRow.appendChild(
+        lunchCell
+    );
+
+
+    const elevenRow =
+        [...tbody.children]
+        .find(
+            row =>
+                row.dataset.time ===
+                "11:00 - 12:00"
+        );
+
+
+    if(elevenRow){
+
+        elevenRow.after(
+            lunchRow
+        );
+
+    }else{
+
+        tbody.appendChild(
+            lunchRow
+        );
+
+    }
+
+}
+
+
+function renderTimetable(){
+
+    renderTimetableBody(
+        document.getElementById(
+            "timetablePageBody"
+        )
+    );
+
+}
+
+
+/* =========================================================
+   ADD / EDIT CLASS
 ========================================================= */
 
 document
-.getElementById("addClassButton")
-.addEventListener(
-    "click",
-    addClass
-);
+    .getElementById("addClassButton")
+    .addEventListener(
+        "click",
+        addClass
+    );
 
 
 function addClass(){
 
     const subject =
-        document.getElementById("classSubject").value;
+        document
+            .getElementById(
+                "classSubject"
+            )
+            .value;
+
 
     const day =
-        document.getElementById("classDay").value;
+        document
+            .getElementById(
+                "classDay"
+            )
+            .value;
+
 
     const time =
-        document.getElementById("classTime").value.trim();
+        document
+            .getElementById(
+                "classTime"
+            )
+            .value
+            .trim();
+
 
     const room =
-        document.getElementById("classRoom").value.trim();
+        document
+            .getElementById(
+                "classRoom"
+            )
+            .value
+            .trim();
 
 
-    if(!subject || !day || !time){
+    if(
+        !subject ||
+        !day ||
+        !time
+    ){
 
         showToast(
             "Please complete subject, day and time."
@@ -3391,77 +1121,19 @@ function addClass(){
     }
 
 
-    const dayIndex = {
-
-        Monday:1,
-        Tuesday:2,
-        Wednesday:3,
-        Thursday:4,
-        Friday:5,
-        Saturday:6
-
-    };
+    const normalizedTime =
+        normalizeTime(time);
 
 
-    const rows =
-        document.querySelectorAll(
-            "#dashboardTable tbody tr[data-time]"
+    const matchingTime =
+        timetableTimes.find(
+            t =>
+                normalizeTime(t) ===
+                normalizedTime
         );
 
 
-    let found = false;
-
-
-    rows.forEach(row => {
-
-        const rowTime =
-            row.dataset.time
-                .replace(/\s/g,"")
-                .replace("–","-");
-
-
-        const enteredTime =
-            time
-                .replace(/\s/g,"")
-                .replace("–","-");
-
-
-        if(rowTime === enteredTime){
-
-            const cell =
-                row.children[
-                    dayIndex[day]
-                ];
-
-
-            if(cell){
-
-                cell.innerHTML = `
-
-                    <div class="class-box blue">
-
-                        <b>${escapeHTML(subject)}</b>
-
-                        <small>
-                            ${escapeHTML(
-                                room || "No room"
-                            )}
-                        </small>
-
-                    </div>
-
-                `;
-
-                found = true;
-
-            }
-
-        }
-
-    });
-
-
-    if(!found){
+    if(!matchingTime){
 
         showToast(
             "Use a timetable time such as 7:00 - 8:00."
@@ -3472,27 +1144,57 @@ function addClass(){
     }
 
 
-    document
-        .getElementById("classSubject")
-        .value = "";
+    if(
+        !timetable[matchingTime]
+    ){
 
-    document
-        .getElementById("classDay")
-        .value = "";
+        timetable[matchingTime] = {};
 
-    document
-        .getElementById("classTime")
-        .value = "";
-
-    document
-        .getElementById("classRoom")
-        .value = "";
+    }
 
 
-    saveTable();
+    timetable[matchingTime][day] = [
 
+        subject,
+
+        room || "No room",
+
+        getSubjectColor(subject)
+
+    ];
+
+
+    saveData(
+        "studysmartTimetable",
+        timetable
+    );
+
+
+    renderDashboardTimetable();
+
+    renderTimetable();
 
     updateStats();
+
+
+    document.getElementById(
+        "classSubject"
+    ).value = "";
+
+
+    document.getElementById(
+        "classDay"
+    ).value = "";
+
+
+    document.getElementById(
+        "classTime"
+    ).value = "";
+
+
+    document.getElementById(
+        "classRoom"
+    ).value = "";
 
 
     showToast(
@@ -3502,62 +1204,253 @@ function addClass(){
 }
 
 
-/* =========================================================
-   SAVE TABLE
-========================================================= */
+function normalizeTime(value){
 
-function saveTable(){
+    return value
+        .replace(/[–—]/g,"-")
+        .replace(/\s+/g,"")
+        .toLowerCase();
 
-    localStorage.setItem(
-        "studysmartTable",
-        document
-            .querySelector("#dashboardTable tbody")
-            .innerHTML
+}
+
+
+function getSubjectColor(subject){
+
+    const colors = [
+        "green",
+        "orange",
+        "blue",
+        "purple",
+        "pink",
+        "teal"
+    ];
+
+
+    let hash = 0;
+
+
+    for(
+        let i=0;
+        i<subject.length;
+        i++
+    ){
+
+        hash =
+            subject.charCodeAt(i) +
+            ((hash << 5) - hash);
+
+    }
+
+
+    return colors[
+        Math.abs(hash) %
+        colors.length
+    ];
+
+}
+
+
+/* CLASS CLICK */
+
+document.addEventListener(
+    "click",
+    event => {
+
+        const classBox =
+            event.target.closest(
+                ".class-box"
+            );
+
+
+        if(!classBox){
+            return;
+        }
+
+
+        const time =
+            classBox.dataset.time;
+
+
+        const day =
+            classBox.dataset.day;
+
+
+        if(
+            time &&
+            day
+        ){
+
+            editClass(
+                time,
+                day
+            );
+
+        }
+
+    }
+);
+
+
+function editClass(
+    time,
+    day
+){
+
+    const data =
+        timetable[time]?.[day];
+
+
+    if(!data){
+        return;
+    }
+
+
+    openModal(
+        "Edit Class",
+
+        `
+
+        <input
+            id="editClassSubject"
+            value="${escapeAttribute(data[0])}"
+            placeholder="Subject"
+        >
+
+        <input
+            id="editClassRoom"
+            value="${escapeAttribute(data[1])}"
+            placeholder="Room"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="saveEditedClass(
+                '${escapeAttribute(time)}',
+                '${escapeAttribute(day)}'
+            )"
+        >
+            Save Changes
+        </button>
+
+        <button
+            class="danger-btn"
+            style="height:42px"
+            onclick="deleteClass(
+                '${escapeAttribute(time)}',
+                '${escapeAttribute(day)}'
+            )"
+        >
+            Delete Class
+        </button>
+
+        `
     );
 
 }
 
 
-function loadTable(){
+function saveEditedClass(
+    time,
+    day
+){
 
-    const saved =
-        localStorage.getItem(
-            "studysmartTable"
+    const subject =
+        document
+            .getElementById(
+                "editClassSubject"
+            )
+            .value
+            .trim();
+
+
+    const room =
+        document
+            .getElementById(
+                "editClassRoom"
+            )
+            .value
+            .trim();
+
+
+    if(!subject){
+
+        showToast(
+            "Enter a subject."
         );
 
-
-    if(saved){
-
-        document
-            .querySelector("#dashboardTable tbody")
-            .innerHTML =
-                saved;
+        return;
 
     }
+
+
+    timetable[time][day] = [
+
+        subject,
+
+        room || "No room",
+
+        getSubjectColor(subject)
+
+    ];
+
+
+    saveData(
+        "studysmartTimetable",
+        timetable
+    );
+
+
+    renderDashboardTimetable();
+
+    renderTimetable();
+
+    updateStats();
+
+    closeModal();
+
+    showToast(
+        "Class updated!"
+    );
 
 }
 
 
-/* =========================================================
-   TIMETABLE PAGE
-========================================================= */
+function deleteClass(
+    time,
+    day
+){
 
-function renderTimetable(){
+    if(
+        !confirm(
+            `Delete the ${day} ${time} class?`
+        )
+    ){
 
-    const source =
-        document.querySelector(
-            "#dashboardTable tbody"
-        );
+        return;
 
-
-    const target =
-        document.getElementById(
-            "timetablePageBody"
-        );
+    }
 
 
-    target.innerHTML =
-        source.innerHTML;
+    delete timetable[time][day];
+
+
+    saveData(
+        "studysmartTimetable",
+        timetable
+    );
+
+
+    renderDashboardTimetable();
+
+    renderTimetable();
+
+    updateStats();
+
+    closeModal();
+
+    showToast(
+        "Class deleted."
+    );
 
 }
 
@@ -3568,9 +1461,9 @@ function renderTimetable(){
 
 function saveSubjects(){
 
-    localStorage.setItem(
+    saveData(
         "studysmartSubjects",
-        JSON.stringify(subjects)
+        subjects
     );
 
 }
@@ -3587,11 +1480,18 @@ function renderSubjects(){
     grid.innerHTML = "";
 
 
-    subjects.forEach((subject,index) => {
+    subjects.forEach(
+        (subject,index) => {
 
-        grid.innerHTML += `
+            const card =
+                document.createElement("div");
 
-            <div class="card subject-card">
+
+            card.className =
+                "card subject-card";
+
+
+            card.innerHTML = `
 
                 <div class="subject-icon">
 
@@ -3610,28 +1510,44 @@ function renderSubjects(){
                 <div class="progress">
 
                     <div
-                        style="width:${subject.progress}%"
+                        style="width:${Number(subject.progress)}%"
                     ></div>
 
                 </div>
 
                 <p>
-                    ${subject.progress}% progress
+                    ${Number(subject.progress)}% progress
                 </p>
 
-                <button
-                    class="danger-btn"
-                    style="margin-top:10px"
-                    onclick="deleteSubject(${index})"
-                >
-                    Delete
-                </button>
+                <div style="
+                    display:flex;
+                    gap:7px;
+                    margin-top:10px;
+                ">
 
-            </div>
+                    <button
+                        class="secondary-btn"
+                        onclick="editSubject(${index})"
+                    >
+                        Edit
+                    </button>
 
-        `;
+                    <button
+                        class="danger-btn"
+                        onclick="deleteSubject(${index})"
+                    >
+                        Delete
+                    </button>
 
-    });
+                </div>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        }
+    );
 
 
     updateStats();
@@ -3640,67 +1556,77 @@ function renderSubjects(){
 
 
 document
-.getElementById("addSubjectButton")
-.addEventListener(
-    "click",
-    () => {
+    .getElementById(
+        "addSubjectButton"
+    )
+    .addEventListener(
+        "click",
+        () => {
 
-        openModal(
-            "Add Subject",
+            openModal(
+                "Add Subject",
 
-            `
+                `
 
-            <input
-                id="newSubjectName"
-                placeholder="Subject name"
-            >
+                <input
+                    id="newSubjectName"
+                    placeholder="Subject name"
+                >
 
-            <input
-                id="newSubjectTeacher"
-                placeholder="Teacher"
-            >
+                <input
+                    id="newSubjectTeacher"
+                    placeholder="Teacher"
+                >
 
-            <input
-                id="newSubjectProgress"
-                type="number"
-                min="0"
-                max="100"
-                placeholder="Progress %"
-            >
+                <input
+                    id="newSubjectProgress"
+                    type="number"
+                    min="0"
+                    max="100"
+                    placeholder="Progress %"
+                >
 
-            <button
-                class="primary-btn"
-                onclick="createSubject()"
-            >
-                Add Subject
-            </button>
+                <button
+                    class="primary-btn"
+                    onclick="createSubject()"
+                >
+                    Add Subject
+                </button>
 
-            `
-        );
+                `
+            );
 
-    }
-);
+        }
+    );
 
 
 function createSubject(){
 
     const name =
-        document.getElementById(
-            "newSubjectName"
-        ).value.trim();
+        document
+            .getElementById(
+                "newSubjectName"
+            )
+            .value
+            .trim();
 
 
     const teacher =
-        document.getElementById(
-            "newSubjectTeacher"
-        ).value.trim();
+        document
+            .getElementById(
+                "newSubjectTeacher"
+            )
+            .value
+            .trim();
 
 
     const progress =
         Number(
-            document.getElementById(
-                "newSubjectProgress"
-            ).value
+            document
+                .getElementById(
+                    "newSubjectProgress"
+                )
+                .value
         ) || 0;
 
 
@@ -3715,14 +1641,42 @@ function createSubject(){
     }
 
 
+    const exists =
+        subjects.some(
+            subject =>
+                subject.name
+                    .toLowerCase() ===
+                name.toLowerCase()
+        );
+
+
+    if(exists){
+
+        showToast(
+            "That subject already exists."
+        );
+
+        return;
+
+    }
+
+
     subjects.push({
 
         name,
-        teacher:teacher || "Teacher not assigned",
-        progress:Math.min(
-            Math.max(progress,0),
-            100
-        )
+
+        teacher:
+            teacher ||
+            "Teacher not assigned",
+
+        progress:
+            Math.min(
+                100,
+                Math.max(
+                    0,
+                    progress
+                )
+            )
 
     });
 
@@ -3740,25 +1694,155 @@ function createSubject(){
 }
 
 
+function editSubject(index){
+
+    const subject =
+        subjects[index];
+
+
+    openModal(
+        "Edit Subject",
+
+        `
+
+        <input
+            id="editSubjectName"
+            value="${escapeAttribute(subject.name)}"
+            placeholder="Subject name"
+        >
+
+        <input
+            id="editSubjectTeacher"
+            value="${escapeAttribute(subject.teacher)}"
+            placeholder="Teacher"
+        >
+
+        <input
+            id="editSubjectProgress"
+            type="number"
+            min="0"
+            max="100"
+            value="${Number(subject.progress)}"
+            placeholder="Progress"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="saveEditedSubject(${index})"
+        >
+            Save Changes
+        </button>
+
+        `
+    );
+
+}
+
+
+function saveEditedSubject(index){
+
+    const name =
+        document
+            .getElementById(
+                "editSubjectName"
+            )
+            .value
+            .trim();
+
+
+    const teacher =
+        document
+            .getElementById(
+                "editSubjectTeacher"
+            )
+            .value
+            .trim();
+
+
+    const progress =
+        Number(
+            document
+                .getElementById(
+                    "editSubjectProgress"
+                )
+                .value
+        );
+
+
+    if(!name){
+
+        showToast(
+            "Enter a subject name."
+        );
+
+        return;
+
+    }
+
+
+    subjects[index] = {
+
+        name,
+
+        teacher:
+            teacher ||
+            "Teacher not assigned",
+
+        progress:
+            Math.min(
+                100,
+                Math.max(
+                    0,
+                    Number.isFinite(progress)
+                    ? progress
+                    : 0
+                )
+            )
+
+    };
+
+
+    saveSubjects();
+
+    renderSubjects();
+
+    closeModal();
+
+    showToast(
+        "Subject updated!"
+    );
+
+}
+
+
 function deleteSubject(index){
 
     if(
-        confirm(
+        !confirm(
             "Delete this subject?"
         )
     ){
 
-        subjects.splice(index,1);
-
-        saveSubjects();
-
-        renderSubjects();
-
-        showToast(
-            "Subject deleted."
-        );
+        return;
 
     }
+
+
+    subjects.splice(
+        index,
+        1
+    );
+
+
+    saveSubjects();
+
+    renderSubjects();
+
+    updateStats();
+
+    showToast(
+        "Subject deleted."
+    );
 
 }
 
@@ -3766,30 +1850,36 @@ function deleteSubject(index){
 /* SUBJECT SEARCH */
 
 document
-.getElementById("subjectSearch")
-.addEventListener(
-    "input",
-    e => {
+    .getElementById(
+        "subjectSearch"
+    )
+    .addEventListener(
+        "input",
+        event => {
 
-        const search =
-            e.target.value.toLowerCase();
+            const search =
+                event.target.value
+                    .toLowerCase()
+                    .trim();
 
 
-        document
-            .querySelectorAll(".subject-card")
-            .forEach(card => {
+            document
+                .querySelectorAll(
+                    ".subject-card"
+                )
+                .forEach(card => {
 
-                card.style.display =
-                    card.textContent
-                        .toLowerCase()
-                        .includes(search)
-                        ? ""
-                        : "none";
+                    card.style.display =
+                        card.textContent
+                            .toLowerCase()
+                            .includes(search)
+                            ? ""
+                            : "none";
 
-            });
+                });
 
-    }
-);
+        }
+    );
 
 
 /* =========================================================
@@ -3798,9 +1888,9 @@ document
 
 function saveTasks(){
 
-    localStorage.setItem(
+    saveData(
         "studysmartTasks",
-        JSON.stringify(tasks)
+        tasks
     );
 
 }
@@ -3817,55 +1907,109 @@ function renderTasks(){
     list.innerHTML = "";
 
 
-    tasks.forEach(task => {
+    if(tasks.length === 0){
 
-        list.innerHTML += `
+        list.innerHTML = `
 
-            <div
-                class="task ${
-                    task.completed
-                    ? "completed"
-                    : ""
-                }"
-            >
+            <div class="card" style="
+                padding:30px;
+                text-align:center;
+                color:var(--muted);
+            ">
 
-                <button
-                    class="task-check"
-                    onclick="toggleTask(${task.id})"
-                    aria-label="Complete task"
-                >
-                    ${
-                        task.completed
-                        ? "✓"
-                        : ""
-                    }
-                </button>
+                <i
+                    class="fa-solid fa-list-check"
+                    style="
+                        font-size:35px;
+                        margin-bottom:10px;
+                    "
+                ></i>
 
-
-                <div class="task-info">
-
-                    <div class="task-title">
-                        ${escapeHTML(task.title)}
-                    </div>
-
-                    <div class="task-meta">
-                        ${escapeHTML(task.subject)}
-                        • Due ${escapeHTML(task.due)}
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="danger-btn"
-                    onclick="deleteTask(${task.id})"
-                >
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+                <p>No tasks yet.</p>
 
             </div>
 
         `;
+
+        updateStats();
+
+        return;
+
+    }
+
+
+    tasks.forEach(task => {
+
+        const element =
+            document.createElement("div");
+
+
+        element.className =
+            `task ${
+                task.completed
+                ? "completed"
+                : ""
+            }`;
+
+
+        element.innerHTML = `
+
+            <button
+                class="task-check"
+                onclick="toggleTask(${task.id})"
+                aria-label="${
+                    task.completed
+                    ? "Reopen task"
+                    : "Complete task"
+                }"
+            >
+                ${
+                    task.completed
+                    ? "✓"
+                    : ""
+                }
+            </button>
+
+            <div class="task-info">
+
+                <div class="task-title">
+
+                    ${escapeHTML(task.title)}
+
+                </div>
+
+                <div class="task-meta">
+
+                    ${escapeHTML(task.subject)}
+
+                    • Due
+
+                    ${escapeHTML(task.due)}
+
+                </div>
+
+            </div>
+
+            <button
+                class="secondary-btn"
+                onclick="editTask(${task.id})"
+            >
+                <i class="fa-solid fa-pen"></i>
+            </button>
+
+            <button
+                class="danger-btn"
+                onclick="deleteTask(${task.id})"
+            >
+                <i class="fa-solid fa-trash"></i>
+            </button>
+
+        `;
+
+
+        list.appendChild(
+            element
+        );
 
     });
 
@@ -3876,63 +2020,74 @@ function renderTasks(){
 
 
 document
-.getElementById("addTaskButton")
-.addEventListener(
-    "click",
-    () => {
+    .getElementById(
+        "addTaskButton"
+    )
+    .addEventListener(
+        "click",
+        () => {
 
-        openModal(
-            "Add Task",
+            openModal(
+                "Add Task",
 
-            `
+                `
 
-            <input
-                id="newTaskTitle"
-                placeholder="Task title"
-            >
+                <input
+                    id="newTaskTitle"
+                    placeholder="Task title"
+                >
 
-            <input
-                id="newTaskSubject"
-                placeholder="Subject"
-            >
+                <input
+                    id="newTaskSubject"
+                    placeholder="Subject"
+                >
 
-            <input
-                id="newTaskDue"
-                placeholder="Due date"
-            >
+                <input
+                    id="newTaskDue"
+                    placeholder="Due date"
+                >
 
-            <button
-                class="primary-btn"
-                onclick="createTask()"
-            >
-                Add Task
-            </button>
+                <button
+                    class="primary-btn"
+                    onclick="createTask()"
+                >
+                    Add Task
+                </button>
 
-            `
-        );
+                `
+            );
 
-    }
-);
+        }
+    );
 
 
 function createTask(){
 
     const title =
         document
-            .getElementById("newTaskTitle")
-            .value.trim();
+            .getElementById(
+                "newTaskTitle"
+            )
+            .value
+            .trim();
 
 
     const subject =
         document
-            .getElementById("newTaskSubject")
-            .value.trim();
+            .getElementById(
+                "newTaskSubject"
+            )
+            .value
+            .trim();
 
 
     const due =
         document
-            .getElementById("newTaskDue")
-            .value.trim();
+            .getElementById(
+                "newTaskDue"
+            )
+            .value
+            .trim();
 
 
     if(!title){
@@ -3976,39 +2131,176 @@ function createTask(){
 }
 
 
+function editTask(id){
+
+    const task =
+        tasks.find(
+            item =>
+                item.id === id
+        );
+
+
+    if(!task){
+        return;
+    }
+
+
+    openModal(
+        "Edit Task",
+
+        `
+
+        <input
+            id="editTaskTitle"
+            value="${escapeAttribute(task.title)}"
+            placeholder="Task title"
+        >
+
+        <input
+            id="editTaskSubject"
+            value="${escapeAttribute(task.subject)}"
+            placeholder="Subject"
+        >
+
+        <input
+            id="editTaskDue"
+            value="${escapeAttribute(task.due)}"
+            placeholder="Due date"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="saveEditedTask(${id})"
+        >
+            Save Changes
+        </button>
+
+        `
+    );
+
+}
+
+
+function saveEditedTask(id){
+
+    const task =
+        tasks.find(
+            item =>
+                item.id === id
+        );
+
+
+    if(!task){
+        return;
+    }
+
+
+    const title =
+        document
+            .getElementById(
+                "editTaskTitle"
+            )
+            .value
+            .trim();
+
+
+    if(!title){
+
+        showToast(
+            "Task title cannot be empty."
+        );
+
+        return;
+
+    }
+
+
+    task.title =
+        title;
+
+
+    task.subject =
+        document
+            .getElementById(
+                "editTaskSubject"
+            )
+            .value
+            .trim() ||
+        "General";
+
+
+    task.due =
+        document
+            .getElementById(
+                "editTaskDue"
+            )
+            .value
+            .trim() ||
+        "No due date";
+
+
+    saveTasks();
+
+    renderTasks();
+
+    closeModal();
+
+    showToast(
+        "Task updated!"
+    );
+
+}
+
+
 function toggleTask(id){
 
     const task =
         tasks.find(
-            t => t.id === id
+            item =>
+                item.id === id
         );
 
 
-    if(task){
-
-        task.completed =
-            !task.completed;
-
-        saveTasks();
-
-        renderTasks();
-
-        showToast(
-            task.completed
-            ? "Task completed!"
-            : "Task reopened."
-        );
-
+    if(!task){
+        return;
     }
+
+
+    task.completed =
+        !task.completed;
+
+
+    saveTasks();
+
+    renderTasks();
+
+
+    showToast(
+        task.completed
+        ? "Task completed!"
+        : "Task reopened."
+    );
 
 }
 
 
 function deleteTask(id){
 
+    if(
+        !confirm(
+            "Delete this task?"
+        )
+    ){
+
+        return;
+
+    }
+
+
     tasks =
         tasks.filter(
-            t => t.id !== id
+            task =>
+                task.id !== id
         );
 
 
@@ -4026,30 +2318,36 @@ function deleteTask(id){
 /* TASK SEARCH */
 
 document
-.getElementById("taskSearch")
-.addEventListener(
-    "input",
-    e => {
+    .getElementById(
+        "taskSearch"
+    )
+    .addEventListener(
+        "input",
+        event => {
 
-        const search =
-            e.target.value.toLowerCase();
+            const search =
+                event.target.value
+                    .toLowerCase()
+                    .trim();
 
 
-        document
-            .querySelectorAll(".task")
-            .forEach(task => {
+            document
+                .querySelectorAll(
+                    ".task"
+                )
+                .forEach(task => {
 
-                task.style.display =
-                    task.textContent
-                        .toLowerCase()
-                        .includes(search)
-                        ? ""
-                        : "none";
+                    task.style.display =
+                        task.textContent
+                            .toLowerCase()
+                            .includes(search)
+                            ? ""
+                            : "none";
 
-            });
+                });
 
-    }
-);
+        }
+    );
 
 
 /* =========================================================
@@ -4058,9 +2356,9 @@ document
 
 function saveReminders(){
 
-    localStorage.setItem(
+    saveData(
         "studysmartReminders",
-        JSON.stringify(reminders)
+        reminders
     );
 
 }
@@ -4077,31 +2375,83 @@ function renderReminders(){
     list.innerHTML = "";
 
 
-    reminders.forEach(reminder => {
+    if(reminders.length === 0){
 
-        list.innerHTML += `
+        list.innerHTML = `
 
-            <div class="reminder">
+            <div class="card" style="
+                padding:30px;
+                text-align:center;
+                color:var(--muted);
+            ">
+
+                <i
+                    class="fa-regular fa-bell"
+                    style="
+                        font-size:35px;
+                        margin-bottom:10px;
+                    "
+                ></i>
+
+                <p>No reminders yet.</p>
+
+            </div>
+
+        `;
+
+        updateStats();
+
+        return;
+
+    }
+
+
+    reminders.forEach(
+        reminder => {
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "reminder";
+
+
+            if(reminder.completed){
+
+                element.style.opacity =
+                    ".55";
+
+            }
+
+
+            element.innerHTML = `
 
                 <div class="reminder-icon">
 
-                    <i class="fa-regular fa-bell"></i>
+                    <i
+                        class="fa-regular fa-bell"
+                    ></i>
 
                 </div>
-
 
                 <div class="reminder-info">
 
                     <b>
-                        ${escapeHTML(reminder.title)}
+                        ${escapeHTML(
+                            reminder.title
+                        )}
                     </b>
 
                     <p>
-                        ${escapeHTML(reminder.date)}
+                        ${escapeHTML(
+                            reminder.date
+                        )}
                     </p>
 
                 </div>
-
 
                 <button
                     class="secondary-btn"
@@ -4114,6 +2464,12 @@ function renderReminders(){
                     }
                 </button>
 
+                <button
+                    class="secondary-btn"
+                    onclick="editReminder(${reminder.id})"
+                >
+                    <i class="fa-solid fa-pen"></i>
+                </button>
 
                 <button
                     class="danger-btn"
@@ -4122,11 +2478,15 @@ function renderReminders(){
                     <i class="fa-solid fa-trash"></i>
                 </button>
 
-            </div>
+            `;
 
-        `;
 
-    });
+            list.appendChild(
+                element
+            );
+
+        }
+    );
 
 
     updateStats();
@@ -4135,38 +2495,40 @@ function renderReminders(){
 
 
 document
-.getElementById("addReminderButton")
-.addEventListener(
-    "click",
-    () => {
+    .getElementById(
+        "addReminderButton"
+    )
+    .addEventListener(
+        "click",
+        () => {
 
-        openModal(
-            "Add Reminder",
+            openModal(
+                "Add Reminder",
 
-            `
+                `
 
-            <input
-                id="newReminderTitle"
-                placeholder="Reminder"
-            >
+                <input
+                    id="newReminderTitle"
+                    placeholder="Reminder"
+                >
 
-            <input
-                id="newReminderDate"
-                placeholder="Date or time"
-            >
+                <input
+                    id="newReminderDate"
+                    type="datetime-local"
+                >
 
-            <button
-                class="primary-btn"
-                onclick="createReminder()"
-            >
-                Add Reminder
-            </button>
+                <button
+                    class="primary-btn"
+                    onclick="createReminder()"
+                >
+                    Add Reminder
+                </button>
 
-            `
-        );
+                `
+            );
 
-    }
-);
+        }
+    );
 
 
 function createReminder(){
@@ -4176,7 +2538,8 @@ function createReminder(){
             .getElementById(
                 "newReminderTitle"
             )
-            .value.trim();
+            .value
+            .trim();
 
 
     const date =
@@ -4184,7 +2547,7 @@ function createReminder(){
             .getElementById(
                 "newReminderDate"
             )
-            .value.trim();
+            .value;
 
 
     if(!title){
@@ -4205,7 +2568,9 @@ function createReminder(){
         title,
 
         date:
-            date || "No date",
+            date
+            ? formatDateTime(date)
+            : "No date",
 
         completed:false
 
@@ -4225,37 +2590,159 @@ function createReminder(){
 }
 
 
+function editReminder(id){
+
+    const reminder =
+        reminders.find(
+            item =>
+                item.id === id
+        );
+
+
+    if(!reminder){
+        return;
+    }
+
+
+    openModal(
+        "Edit Reminder",
+
+        `
+
+        <input
+            id="editReminderTitle"
+            value="${escapeAttribute(reminder.title)}"
+            placeholder="Reminder"
+        >
+
+        <input
+            id="editReminderDate"
+            value="${escapeAttribute(reminder.date)}"
+            placeholder="Date or time"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="saveEditedReminder(${id})"
+        >
+            Save Changes
+        </button>
+
+        `
+    );
+
+}
+
+
+function saveEditedReminder(id){
+
+    const reminder =
+        reminders.find(
+            item =>
+                item.id === id
+        );
+
+
+    if(!reminder){
+        return;
+    }
+
+
+    const title =
+        document
+            .getElementById(
+                "editReminderTitle"
+            )
+            .value
+            .trim();
+
+
+    if(!title){
+
+        showToast(
+            "Reminder cannot be empty."
+        );
+
+        return;
+
+    }
+
+
+    reminder.title =
+        title;
+
+
+    reminder.date =
+        document
+            .getElementById(
+                "editReminderDate"
+            )
+            .value
+            .trim() ||
+        "No date";
+
+
+    saveReminders();
+
+    renderReminders();
+
+    closeModal();
+
+    showToast(
+        "Reminder updated!"
+    );
+
+}
+
+
 function completeReminder(id){
 
     const reminder =
         reminders.find(
-            r => r.id === id
+            item =>
+                item.id === id
         );
 
 
-    if(reminder){
-
-        reminder.completed =
-            !reminder.completed;
-
-        saveReminders();
-
-        renderReminders();
-
-        showToast(
-            "Reminder updated."
-        );
-
+    if(!reminder){
+        return;
     }
+
+
+    reminder.completed =
+        !reminder.completed;
+
+
+    saveReminders();
+
+    renderReminders();
+
+    showToast(
+        reminder.completed
+        ? "Reminder completed."
+        : "Reminder reopened."
+    );
 
 }
 
 
 function deleteReminder(id){
 
+    if(
+        !confirm(
+            "Delete this reminder?"
+        )
+    ){
+
+        return;
+
+    }
+
+
     reminders =
         reminders.filter(
-            r => r.id !== id
+            reminder =>
+                reminder.id !== id
         );
 
 
@@ -4274,6 +2761,44 @@ function deleteReminder(id){
    CALENDAR
 ========================================================= */
 
+function formatDateKey(
+    year,
+    month,
+    day
+){
+
+    return [
+
+        year,
+
+        String(month + 1)
+            .padStart(2,"0"),
+
+        String(day)
+            .padStart(2,"0")
+
+    ].join("-");
+
+}
+
+
+function formatDateTime(value){
+
+    const date =
+        new Date(value);
+
+
+    return date.toLocaleString(
+        "en-US",
+        {
+            dateStyle:"medium",
+            timeStyle:"short"
+        }
+    );
+
+}
+
+
 function renderCalendar(){
 
     const grid =
@@ -4289,30 +2814,29 @@ function renderCalendar(){
 
 
     const year =
-        currentCalendarDate.getFullYear();
+        currentCalendarDate
+            .getFullYear();
 
 
     const month =
-        currentCalendarDate.getMonth();
-
-
-    const monthName =
-        currentCalendarDate.toLocaleString(
-            "en-US",
-            {
-                month:"long"
-            }
-        );
+        currentCalendarDate
+            .getMonth();
 
 
     monthTitle.textContent =
-        `${monthName} ${year}`;
+        currentCalendarDate.toLocaleString(
+            "en-US",
+            {
+                month:"long",
+                year:"numeric"
+            }
+        );
 
 
     grid.innerHTML = "";
 
 
-    const days = [
+    [
         "Sun",
         "Mon",
         "Tue",
@@ -4320,20 +2844,29 @@ function renderCalendar(){
         "Thu",
         "Fri",
         "Sat"
-    ];
+    ].forEach(
+        day => {
+
+            const element =
+                document.createElement(
+                    "div"
+                );
 
 
-    days.forEach(day => {
+            element.className =
+                "calendar-day-name";
 
-        grid.innerHTML += `
 
-            <div class="calendar-day-name">
-                ${day}
-            </div>
+            element.textContent =
+                day;
 
-        `;
 
-    });
+            grid.appendChild(
+                element
+            );
+
+        }
+    );
 
 
     const firstDay =
@@ -4359,7 +2892,7 @@ function renderCalendar(){
     ){
 
         grid.innerHTML +=
-            `<div></div>`;
+            "<div></div>";
 
     }
 
@@ -4374,87 +2907,245 @@ function renderCalendar(){
         day++
     ){
 
+        const key =
+            formatDateKey(
+                year,
+                month,
+                day
+            );
+
+
         const isToday =
-            day === today.getDate()
+            day ===
+            today.getDate()
             &&
-            month === today.getMonth()
+            month ===
+            today.getMonth()
             &&
-            year === today.getFullYear();
+            year ===
+            today.getFullYear();
 
 
-        grid.innerHTML += `
+        const element =
+            document.createElement(
+                "div"
+            );
 
-            <div
-                class="calendar-day ${
-                    isToday ? "today" : ""
-                }"
-            >
 
-                <span>${day}</span>
+        element.className =
+            `calendar-day ${
+                isToday
+                ? "today"
+                : ""
+            }`;
 
-                ${
-                    day === 10
-                    ? `
-                        <div class="calendar-event">
-                            Physics Test
-                        </div>
-                    `
-                    : ""
-                }
 
-                ${
-                    day === 20
-                    ? `
-                        <div class="calendar-event">
-                            Assignment
-                        </div>
-                    `
-                    : ""
-                }
+        element.dataset.date =
+            key;
 
-            </div>
+
+        element.innerHTML = `
+
+            <span>${day}</span>
 
         `;
+
+
+        const events =
+            calendarEvents[key] || [];
+
+
+        events.forEach(
+            event => {
+
+                const eventElement =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                eventElement.className =
+                    "calendar-event";
+
+
+                eventElement.textContent =
+                    event;
+
+
+                element.appendChild(
+                    eventElement
+                );
+
+            }
+        );
+
+
+        element.addEventListener(
+            "click",
+            () => {
+
+                addCalendarEvent(
+                    key
+                );
+
+            }
+        );
+
+
+        grid.appendChild(
+            element
+        );
 
     }
 
 }
 
 
-document
-.getElementById("previousMonth")
-.addEventListener(
-    "click",
-    () => {
+function addCalendarEvent(dateKey){
 
-        currentCalendarDate.setMonth(
-            currentCalendarDate.getMonth()-1
+    const existing =
+        calendarEvents[dateKey] || [];
+
+
+    openModal(
+        "Add Calendar Event",
+
+        `
+
+        <input
+            id="calendarEventName"
+            placeholder="Event name"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="saveCalendarEvent('${dateKey}')"
+        >
+            Add Event
+        </button>
+
+        ${
+            existing.length
+            ? `
+                <div style="
+                    margin-top:10px;
+                    font-size:11px;
+                    color:var(--muted);
+                ">
+                    Existing events:
+                    ${existing
+                        .map(
+                            escapeHTML
+                        )
+                        .join(", ")
+                    }
+                </div>
+            `
+            : ""
+        }
+
+        `
+    );
+
+}
+
+
+function saveCalendarEvent(dateKey){
+
+    const name =
+        document
+            .getElementById(
+                "calendarEventName"
+            )
+            .value
+            .trim();
+
+
+    if(!name){
+
+        showToast(
+            "Enter an event name."
         );
 
-        renderCalendar();
+        return;
 
     }
-);
+
+
+    if(
+        !calendarEvents[dateKey]
+    ){
+
+        calendarEvents[dateKey] =
+            [];
+
+    }
+
+
+    calendarEvents[dateKey].push(
+        name
+    );
+
+
+    saveData(
+        "studysmartCalendarEvents",
+        calendarEvents
+    );
+
+
+    renderCalendar();
+
+    closeModal();
+
+    showToast(
+        "Calendar event added!"
+    );
+
+}
 
 
 document
-.getElementById("nextMonth")
-.addEventListener(
-    "click",
-    () => {
+    .getElementById(
+        "previousMonth"
+    )
+    .addEventListener(
+        "click",
+        () => {
 
-        currentCalendarDate.setMonth(
-            currentCalendarDate.getMonth()+1
-        );
+            currentCalendarDate
+                .setMonth(
+                    currentCalendarDate
+                        .getMonth() - 1
+                );
 
-        renderCalendar();
+            renderCalendar();
 
-    }
-);
+        }
+    );
+
+
+document
+    .getElementById(
+        "nextMonth"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            currentCalendarDate
+                .setMonth(
+                    currentCalendarDate
+                        .getMonth() + 1
+                );
+
+            renderCalendar();
+
+        }
+    );
 
 
 /* =========================================================
-   PROFILE
+   PROFILE MODAL
 ========================================================= */
 
 function showProfile(){
@@ -4464,26 +3155,43 @@ function showProfile(){
 
         `
 
-        <div class="profile-avatar">
-            DA
+        <div
+            class="profile-avatar"
+            style="margin:0 auto 15px"
+        >
+            ${escapeHTML(
+                getInitials(profile.name)
+            )}
         </div>
+
+        <label>
+            Your Name
+        </label>
 
         <input
             id="profileName"
             placeholder="Your name"
-            value="David"
+            value="${escapeAttribute(profile.name)}"
         >
+
+        <label>
+            School
+        </label>
 
         <input
             id="profileSchool"
             placeholder="School"
-            value="Destiny International College"
+            value="${escapeAttribute(profile.school)}"
         >
+
+        <label>
+            Grade
+        </label>
 
         <input
             id="profileGrade"
             placeholder="Grade"
-            value="Grade 10"
+            value="${escapeAttribute(profile.grade)}"
         >
 
         <button
@@ -4500,30 +3208,83 @@ function showProfile(){
 
 
 document
-.getElementById("profileButton")
-.addEventListener(
-    "click",
-    showProfile
-);
+    .getElementById(
+        "profileButton"
+    )
+    .addEventListener(
+        "click",
+        showProfile
+    );
 
 
 function saveProfile(){
 
     const name =
         document
-            .getElementById("profileName")
-            .value.trim();
+            .getElementById(
+                "profileName"
+            )
+            .value
+            .trim();
 
 
-    if(name){
+    const school =
+        document
+            .getElementById(
+                "profileSchool"
+            )
+            .value
+            .trim();
+
+
+    const grade =
+        document
+            .getElementById(
+                "profileGrade"
+            )
+            .value
+            .trim();
+
+
+    if(!name){
 
         showToast(
-            `Profile saved for ${name}!`
+            "Please enter your name."
         );
+
+        return;
 
     }
 
+
+    profile = {
+
+        name,
+
+        school:
+            school ||
+            "School not specified",
+
+        grade:
+            grade ||
+            "Grade not specified"
+
+    };
+
+
+    saveData(
+        "studysmartProfile",
+        profile
+    );
+
+
+    updateProfileUI();
+
     closeModal();
+
+    showToast(
+        `Profile saved for ${name}!`
+    );
 
 }
 
@@ -4533,17 +3294,51 @@ function saveProfile(){
 ========================================================= */
 
 document
-.getElementById("notificationButton")
-.addEventListener(
-    "click",
-    () => {
+    .getElementById(
+        "notificationButton"
+    )
+    .addEventListener(
+        "click",
+        () => {
 
-        showToast(
-            "You have 3 pending reminders."
-        );
+            if(!settings.notifications){
 
-    }
-);
+                showToast(
+                    "Notifications are disabled."
+                );
+
+                return;
+
+            }
+
+
+            const pending =
+                reminders.filter(
+                    reminder =>
+                        !reminder.completed
+                ).length;
+
+
+            if(pending === 0){
+
+                showToast(
+                    "You have no pending reminders."
+                );
+
+            }else{
+
+                showToast(
+                    `You have ${pending} pending reminder${
+                        pending === 1
+                        ? ""
+                        : "s"
+                    }.`
+                );
+
+            }
+
+        }
+    );
 
 
 /* =========================================================
@@ -4551,118 +3346,447 @@ document
 ========================================================= */
 
 document
-.getElementById("clearData")
-.addEventListener(
-    "click",
-    () => {
+    .getElementById(
+        "clearData"
+    )
+    .addEventListener(
+        "click",
+        () => {
 
-        const confirmDelete =
-            confirm(
-                "Clear all saved StudySmart data?"
+            const confirmed =
+                confirm(
+                    "This will reset your subjects, tasks, reminders, timetable, profile and settings. Continue?"
+                );
+
+
+            if(!confirmed){
+                return;
+            }
+
+
+            const keys = [
+
+                "studysmartSubjects",
+                "studysmartTasks",
+                "studysmartReminders",
+                "studysmartProfile",
+                "studysmartSettings",
+                "studysmartTimetable",
+                "studysmartCalendarEvents"
+
+            ];
+
+
+            keys.forEach(
+                key =>
+                    localStorage.removeItem(
+                        key
+                    )
             );
 
 
-        if(!confirmDelete){
-            return;
+            subjects =
+                JSON.parse(
+                    JSON.stringify(
+                        DEFAULT_SUBJECTS
+                    )
+                );
+
+
+            tasks =
+                JSON.parse(
+                    JSON.stringify(
+                        DEFAULT_TASKS
+                    )
+                );
+
+
+            reminders =
+                JSON.parse(
+                    JSON.stringify(
+                        DEFAULT_REMINDERS
+                    )
+                );
+
+
+            profile = {
+
+                name:"David",
+                school:
+                    "Destiny International College",
+                grade:"Grade 10"
+
+            };
+
+
+            settings = {
+
+                darkMode:false,
+                notifications:true,
+                autoSave:true
+
+            };
+
+
+            timetable =
+                JSON.parse(
+                    JSON.stringify(
+                        defaultTimetable
+                    )
+                );
+
+
+            calendarEvents = {
+
+                "2026-09-10":[
+                    "Physics Test"
+                ],
+
+                "2026-09-20":[
+                    "Assignment"
+                ]
+
+            };
+
+
+            saveData(
+                "studysmartSubjects",
+                subjects
+            );
+
+            saveData(
+                "studysmartTasks",
+                tasks
+            );
+
+            saveData(
+                "studysmartReminders",
+                reminders
+            );
+
+            saveData(
+                "studysmartProfile",
+                profile
+            );
+
+            saveData(
+                "studysmartSettings",
+                settings
+            );
+
+            saveData(
+                "studysmartTimetable",
+                timetable
+            );
+
+            saveData(
+                "studysmartCalendarEvents",
+                calendarEvents
+            );
+
+
+            applyDarkMode(false);
+
+            applyNotificationSetting(true);
+
+
+            if(autoSaveToggle){
+
+                autoSaveToggle.classList.add(
+                    "on"
+                );
+
+            }
+
+
+            renderDashboardTimetable();
+
+            renderSubjects();
+
+            renderTasks();
+
+            renderReminders();
+
+            renderCalendar();
+
+            updateProfileUI();
+
+            updateStats();
+
+
+            showToast(
+                "StudySmart has been reset."
+            );
+
         }
-
-
-        localStorage.removeItem(
-            "studysmartSubjects"
-        );
-
-        localStorage.removeItem(
-            "studysmartTasks"
-        );
-
-        localStorage.removeItem(
-            "studysmartReminders"
-        );
-
-        localStorage.removeItem(
-            "studysmartTable"
-        );
-
-
-        location.reload();
-
-    }
-);
+    );
 
 
 /* =========================================================
-   UPDATE STATISTICS
+   STATISTICS
 ========================================================= */
 
 function updateStats(){
 
-    document
-        .getElementById("statSubjects")
-        .textContent =
+    const subjectElement =
+        document.getElementById(
+            "statSubjects"
+        );
+
+
+    const classElement =
+        document.getElementById(
+            "statClasses"
+        );
+
+
+    const taskElement =
+        document.getElementById(
+            "statTasks"
+        );
+
+
+    const reminderElement =
+        document.getElementById(
+            "statReminders"
+        );
+
+
+    if(subjectElement){
+
+        subjectElement.textContent =
             subjects.length;
 
-
-    const classes =
-        document.querySelectorAll(
-            "#dashboardTable .class-box"
-        ).length;
+    }
 
 
-    document
-        .getElementById("statClasses")
-        .textContent =
-            classes;
+    let classCount = 0;
+
+
+    Object.values(
+        timetable
+    ).forEach(
+        row => {
+
+            classCount +=
+                Object.keys(row)
+                    .length;
+
+        }
+    );
+
+
+    if(classElement){
+
+        classElement.textContent =
+            classCount;
+
+    }
 
 
     const pendingTasks =
         tasks.filter(
-            task => !task.completed
+            task =>
+                !task.completed
         ).length;
 
 
-    document
-        .getElementById("statTasks")
-        .textContent =
+    if(taskElement){
+
+        taskElement.textContent =
             pendingTasks;
+
+    }
 
 
     const pendingReminders =
-        reminders.filter(
+        settings.notifications
+        ? reminders.filter(
             reminder =>
                 !reminder.completed
-        ).length;
+        ).length
+        : 0;
 
 
-    document
-        .getElementById("statReminders")
-        .textContent =
+    if(reminderElement){
+
+        reminderElement.textContent =
             pendingReminders;
+
+    }
+
+
+    const badge =
+        document.getElementById(
+            "notificationCount"
+        );
+
+
+    if(badge){
+
+        badge.textContent =
+            pendingReminders;
+
+
+        badge.style.display =
+            pendingReminders > 0 &&
+            settings.notifications
+            ? "flex"
+            : "none";
+
+    }
 
 }
 
 
 /* =========================================================
-   ESCAPE HTML
+   HTML SECURITY
 ========================================================= */
 
 function escapeHTML(value){
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.textContent =
-        value;
+        String(value ?? "");
+
 
     return div.innerHTML;
 
 }
 
 
+function escapeAttribute(value){
+
+    return String(
+        value ?? ""
+    )
+        .replace(/&/g,"&amp;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;");
+
+}
+
+
 /* =========================================================
-   INITIALIZE
+   KEYBOARD ACCESSIBILITY
 ========================================================= */
 
-loadTable();
+document.addEventListener(
+    "keydown",
+    event => {
+
+        /*
+         * Ctrl/Cmd + K
+         * opens subject search
+         */
+
+        if(
+            (event.ctrlKey ||
+             event.metaKey)
+            &&
+            event.key.toLowerCase() ===
+            "k"
+        ){
+
+            event.preventDefault();
+
+
+            showPage("subjects");
+
+
+            const search =
+                document.getElementById(
+                    "subjectSearch"
+                );
+
+
+            if(search){
+
+                search.focus();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE SIDEBAR WHEN CLICKING OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    event => {
+
+        const sidebar =
+            document.getElementById(
+                "sidebar"
+            );
+
+
+        const mobileMenu =
+            document.getElementById(
+                "mobileMenu"
+            );
+
+
+        if(
+            window.innerWidth <= 800
+            &&
+            sidebar.classList.contains(
+                "open"
+            )
+            &&
+            !sidebar.contains(event.target)
+            &&
+            !mobileMenu.contains(event.target)
+        ){
+
+            sidebar.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE APPLICATION
+========================================================= */
+
+applyDarkMode(
+    settings.darkMode
+);
+
+
+notificationToggle.classList.toggle(
+    "on",
+    settings.notifications
+);
+
+
+if(autoSaveToggle){
+
+    autoSaveToggle.classList.toggle(
+        "on",
+        settings.autoSave
+    );
+
+}
+
+
+renderDashboardTimetable();
 
 renderSubjects();
 
@@ -4672,9 +3796,24 @@ renderReminders();
 
 renderCalendar();
 
+updateProfileUI();
+
 updateStats();
 
-</script>
 
-</body>
-</html>
+/* =========================================================
+   WELCOME
+========================================================= */
+
+setTimeout(
+    () => {
+
+        showToast(
+            `Welcome back, ${profile.name}!`
+        );
+
+    },
+    600
+);
+
+</script>
