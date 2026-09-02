@@ -1,53 +1,966 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StudySmart Timetable</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
+    <title>StudySmart - Student Timetable</title>
 
-  <body>
-    <div class="container">
-      <p class="greeting">😁 Good morning, Adrien</p>
-      <h1>Your Student Timetable</h1>
-      <p class="subtitle">
-        Stay organised. Stay consistent. Achieve your goals
-      </p>
+    <link rel="stylesheet" href="style.css">
 
-      <div class="card">
-        <label>Subject</label>
-        <input type="text" id="subject" placeholder="e.g. Mathematics" />
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        <label for="">Day</label>
-        <select name="" id="day">
-          <option>Monday</option>
-          <option>Tuesday</option>
-          <option>Wednesday</option>
-          <option>Thursday</option>
-          <option>Friday</option>
-          <option>Saturday</option>
-        </select>
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
 
-        <label for="">Time</label>
-        <select name="" id="time">
-          <option value="8:00-9:00">8:00-9:00</option>
-          <option value="9:00-10:00">9:00-10:00</option>
-          <option value="10:00-11:00">10:00-11:00</option>
-          <option value="12:00- 1:00">12:00- 1:00</option>
-        </select>
+<body>
 
-        <label for="">Venue</label>
-        <input type="text" id="venue" placeholder=" e.g. Science Lab" />
+<div class="app">
 
-        <button id="addButton">➕ Add class</button>
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar" id="sidebar">
 
-        <h3>Weekly Timetable</h3>
-        <div id="classList"></div>
-      </div>
-    </div>
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
 
-    <script src="script.js"></script>
-  </body>
+            <div>
+                <h1>StudySmart</h1>
+                <p>Plan • Focus • Achieve</p>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <button class="nav-item active" data-page="dashboard">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </button>
+
+            <button class="nav-item" data-page="timetable">
+                <i class="fa-solid fa-table-cells"></i>
+                <span>Timetable</span>
+            </button>
+
+            <button class="nav-item" data-page="subjects">
+                <i class="fa-solid fa-book-open"></i>
+                <span>Subjects</span>
+            </button>
+
+            <button class="nav-item" data-page="tasks">
+                <i class="fa-solid fa-square-check"></i>
+                <span>Tasks</span>
+            </button>
+
+            <button class="nav-item" data-page="reminders">
+                <i class="fa-regular fa-bell"></i>
+                <span>Reminders</span>
+            </button>
+
+            <button class="nav-item" data-page="calendar">
+                <i class="fa-regular fa-calendar"></i>
+                <span>Calendar</span>
+            </button>
+
+            <button class="nav-item" data-page="settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-decoration">
+
+            <div class="floating-star star1">✦</div>
+            <div class="floating-star star2">✦</div>
+
+            <div class="pencil-cup">
+                <div class="pencils">
+                    <span>✏️</span>
+                    <span>🖍️</span>
+                    <span>✏️</span>
+                    <span>🖊️</span>
+                </div>
+
+                <div class="cup"></div>
+            </div>
+
+            <div class="books">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <div class="quote">
+                <strong>
+                    “Discipline today<br>
+                    leads to freedom<br>
+                    tomorrow.”
+                </strong>
+
+                <small>– Unknown</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <button class="mobile-menu" id="mobileMenu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="top-actions">
+
+                <button class="icon-button" id="themeToggle">
+                    <i class="fa-regular fa-sun"></i>
+                </button>
+
+                <button class="notification-button">
+                    <i class="fa-regular fa-bell"></i>
+                    <span>3</span>
+                </button>
+
+                <div class="profile">
+                    <div class="avatar">
+                        DA
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= PAGE CONTENT ================= -->
+
+        <section class="content">
+
+            <div class="welcome">
+
+                <p class="greeting">
+                    Good morning, Adeola! 👋
+                </p>
+
+                <div class="title-row">
+                    <h2>Your Student Timetable</h2>
+                    <span class="sparkle">✧</span>
+                </div>
+
+                <p class="subtitle">
+                    Stay organized. Stay consistent. Make it happen! 🚀
+                </p>
+
+            </div>
+
+
+            <!-- ================= ADD CLASS ================= -->
+
+            <section class="add-class-card">
+
+                <div class="add-class-header">
+
+                    <h3>
+                        <i class="fa-regular fa-square-plus"></i>
+                        Add New Class
+                    </h3>
+
+                    <button class="weekly-button" id="weeklyButton">
+                        <i class="fa-regular fa-calendar"></i>
+                        View Weekly
+                    </button>
+
+                </div>
+
+                <div class="class-form">
+
+                    <div class="select-wrapper">
+
+                        <i class="fa-solid fa-book-open"></i>
+
+                        <select id="subject">
+                            <option value="">Subject</option>
+                            <option>Mathematics</option>
+                            <option>English</option>
+                            <option>Physics</option>
+                            <option>Chemistry</option>
+                            <option>Biology</option>
+                            <option>French</option>
+                            <option>History</option>
+                            <option>Geography</option>
+                            <option>ICT</option>
+                            <option>Study Time</option>
+                            <option>Sports</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="select-wrapper">
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <select id="day">
+
+                            <option value="">Day</option>
+                            <option>Monday</option>
+                            <option>Tuesday</option>
+                            <option>Wednesday</option>
+                            <option>Thursday</option>
+                            <option>Friday</option>
+                            <option>Saturday</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="time-input">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                        <input
+                            type="text"
+                            id="time"
+                            placeholder="Time e.g. 7:00 - 8:00"
+                        >
+
+                    </div>
+
+
+                    <div class="room-input">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <input
+                            type="text"
+                            id="room"
+                            placeholder="Room (Optional)"
+                        >
+
+                    </div>
+
+
+                    <button class="add-button" id="addClass">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Class
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= DASHBOARD GRID ================= -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- ================= TIMETABLE ================= -->
+
+                <section class="timetable-card">
+
+                    <div class="table-scroll">
+
+                        <table id="timetable">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Time</th>
+
+                                    <th>Monday</th>
+                                    <th>Tuesday</th>
+                                    <th>Wednesday</th>
+                                    <th>Thursday</th>
+                                    <th>Friday</th>
+                                    <th>Saturday</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr data-time="7:00 – 8:00">
+
+                                    <td>7:00 – 8:00</td>
+
+                                    <td>
+                                        <div class="class-box green">
+                                            <b>Mathematics</b>
+                                            <small>Room 12A</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box orange">
+                                            <b>English</b>
+                                            <small>Room 15B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box blue">
+                                            <b>Physics</b>
+                                            <small>Room 21C</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box purple">
+                                            <b>French</b>
+                                            <small>Room 18D</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box pink">
+                                            <b>Mathematics</b>
+                                            <small>Room 12A</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box teal">
+                                            <b>Sports</b>
+                                            <small>Field</small>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr data-time="8:00 – 9:00">
+
+                                    <td>8:00 – 9:00</td>
+
+                                    <td>
+                                        <div class="class-box green">
+                                            <b>Chemistry</b>
+                                            <small>Lab 3</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box orange">
+                                            <b>Biology</b>
+                                            <small>Lab 2</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box blue">
+                                            <b>History</b>
+                                            <small>Room 9B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box purple">
+                                            <b>Geography</b>
+                                            <small>Room 10C</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box pink">
+                                            <b>English</b>
+                                            <small>Room 15B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box teal">
+                                            <b>Study Time</b>
+                                            <small>Library</small>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr data-time="9:00 – 10:00">
+
+                                    <td>9:00 – 10:00</td>
+
+                                    <td>
+                                        <div class="class-box green">
+                                            <b>English</b>
+                                            <small>Room 15B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box orange">
+                                            <b>Mathematics</b>
+                                            <small>Room 12A</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box blue">
+                                            <b>Chemistry</b>
+                                            <small>Lab 3</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box purple">
+                                            <b>Physics</b>
+                                            <small>Room 21C</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box pink">
+                                            <b>ICT</b>
+                                            <small>Computer Lab</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box teal">
+                                            <b>Free Time</b>
+                                            <small>–</small>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr data-time="10:00 – 11:00">
+
+                                    <td>10:00 – 11:00</td>
+
+                                    <td>
+                                        <div class="class-box green">
+                                            <b>Physics</b>
+                                            <small>Room 21C</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box orange">
+                                            <b>French</b>
+                                            <small>Room 18D</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box blue">
+                                            <b>Mathematics</b>
+                                            <small>Room 12A</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box purple">
+                                            <b>English</b>
+                                            <small>Room 15B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box pink">
+                                            <b>History</b>
+                                            <small>Room 9B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box teal">
+                                            <b>Club Activity</b>
+                                            <small>–</small>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr data-time="11:00 – 12:00">
+
+                                    <td>11:00 – 12:00</td>
+
+                                    <td>
+                                        <div class="class-box green">
+                                            <b>Geography</b>
+                                            <small>Room 10C</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box orange">
+                                            <b>ICT</b>
+                                            <small>Computer Lab</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box blue">
+                                            <b>French</b>
+                                            <small>Room 18D</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box purple">
+                                            <b>Chemistry</b>
+                                            <small>Lab 3</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box pink">
+                                            <b>Biology</b>
+                                            <small>Lab 2</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box teal">
+                                            <b>Debate Club</b>
+                                            <small>Room 7A</small>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr class="lunch-row">
+
+                                    <td>12:00 – 1:00</td>
+
+                                    <td colspan="6">
+
+                                        🍴 Lunch Break
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr data-time="1:00 – 2:00">
+
+                                    <td>1:00 – 2:00</td>
+
+                                    <td>
+                                        <div class="class-box green">
+                                            <b>Biology</b>
+                                            <small>Lab 2</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box orange">
+                                            <b>History</b>
+                                            <small>Room 9B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box blue">
+                                            <b>ICT</b>
+                                            <small>Computer Lab</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box purple">
+                                            <b>Mathematics</b>
+                                            <small>Room 12A</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box pink">
+                                            <b>French</b>
+                                            <small>Room 18D</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box teal">
+                                            <b>Study Time</b>
+                                            <small>Library</small>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr data-time="2:00 – 3:00">
+
+                                    <td>2:00 – 3:00</td>
+
+                                    <td>
+                                        <div class="class-box green">
+                                            <b>French</b>
+                                            <small>Room 18D</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box orange">
+                                            <b>Physics</b>
+                                            <small>Room 21C</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box blue">
+                                            <b>English</b>
+                                            <small>Room 15B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box purple">
+                                            <b>History</b>
+                                            <small>Room 9B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box pink">
+                                            <b>Geography</b>
+                                            <small>Room 10C</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box teal">
+                                            <b>Free Time</b>
+                                            <small>–</small>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr data-time="3:00 – 4:00">
+
+                                    <td>3:00 – 4:00</td>
+
+                                    <td>
+                                        <div class="class-box green">
+                                            <b>ICT</b>
+                                            <small>Computer Lab</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box orange">
+                                            <b>Geography</b>
+                                            <small>Room 10C</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box blue">
+                                            <b>Biology</b>
+                                            <small>Lab 2</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box purple">
+                                            <b>French</b>
+                                            <small>Room 18D</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box pink">
+                                            <b>Mathematics</b>
+                                            <small>Room 12A</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box teal">
+                                            <b>Sports</b>
+                                            <small>Field</small>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr data-time="4:00 – 5:00">
+
+                                    <td>4:00 – 5:00</td>
+
+                                    <td>
+                                        <div class="class-box green">
+                                            <b>Study Time</b>
+                                            <small>Library</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box orange">
+                                            <b>Debate Club</b>
+                                            <small>Room 7A</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box blue">
+                                            <b>Quiz Club</b>
+                                            <small>Room 7B</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box purple">
+                                            <b>Music</b>
+                                            <small>Room 4A</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box pink">
+                                            <b>Coding Club</b>
+                                            <small>Lab 1</small>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="class-box teal">
+                                            <b>Free Time</b>
+                                            <small>–</small>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================= RIGHT COLUMN ================= -->
+
+                <aside class="right-column">
+
+
+                    <!-- TODAY -->
+
+                    <section class="side-card">
+
+                        <div class="side-card-title">
+
+                            <h3>
+                                <i class="fa-regular fa-calendar"></i>
+                                Today's Schedule
+                            </h3>
+
+                            <small>Wednesday, 15 May</small>
+
+                        </div>
+
+
+                        <div class="schedule-list">
+
+                            <div class="schedule-item">
+
+                                <time>8:00 AM</time>
+
+                                <div>
+                                    <b>Physics</b>
+                                    <small>Room 21C</small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="schedule-item">
+
+                                <time>9:00 AM</time>
+
+                                <div>
+                                    <b>History</b>
+                                    <small>Room 9B</small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="schedule-item">
+
+                                <time>10:00 AM</time>
+
+                                <div>
+                                    <b>Mathematics</b>
+                                    <small>Room 12A</small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="schedule-item">
+
+                                <time>11:00 AM</time>
+
+                                <div>
+                                    <b>French</b>
+                                    <small>Room 18D</small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="schedule-item">
+
+                                <time>1:00 PM</time>
+
+                                <div>
+                                    <b>ICT</b>
+                                    <small>Computer Lab</small>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <button class="full-day">
+                            View Full Day
+                        </button>
+
+                    </section>
+
+
+                    <!-- REMINDERS -->
+
+                    <section class="side-card">
+
+                        <div class="side-card-title">
+
+                            <h3>
+                                <i class="fa-regular fa-bell"></i>
+                                Reminders
+                            </h3>
+
+                        </div>
+
+
+                        <div class="reminders">
+
+                            <div class="reminder green-reminder">
+
+                                <div class="reminder-icon">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+
+                                <div>
+                                    <b>Math Assignment</b>
+                                    <small>Due tomorrow</small>
+                                </div>
+
+                                <button>○</button>
+
+                            </div>
+
+
+                            <div class="reminder orange-reminder">
+
+                                <div class="reminder-icon">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+
+                                <div>
+                                    <b>French Speaking Test</b>
+                                    <small>May 20, 2024</small>
+                                </div>
+
+                                <button>○</button>
+
+                            </div>
+
+
+                            <div class="reminder pink-reminder">
+
+                                <div class="reminder-icon">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+
+                                <div>
+                                    <b>Science Project</b>
+                                    <small>May 25, 2024</small>
+                                </div>
+
+                                <button>○</button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- MOTIVATION -->
+
+                    <section class="motivation">
+
+                        <div class="trophy">
+                            🏆
+                        </div>
+
+                        <h3>
+                            Keep going, Adeola!
+                        </h3>
+
+                        <p>
+                            You're building your<br>
+                            future one day at a time.
+                        </p>
+
+                    </section>
+
+                </aside>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div class="toast" id="toast">
+    <i class="fa-solid fa-check"></i>
+    <span>Class added successfully!</span>
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
 </html>
