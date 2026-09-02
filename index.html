@@ -6,28 +6,1280 @@
 
     <title>StudySmart - Student Timetable</title>
 
-    <link rel="stylesheet" href="style.css">
-
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Icons -->
+    <!-- Font Awesome Icons -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
+
+    <style>
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #5d3fd3;
+            --primary-dark: #39218e;
+            --sidebar: #11152f;
+
+            --background: #f5f4fb;
+            --card: #ffffff;
+
+            --text: #151936;
+            --muted: #74758b;
+
+            --border: #e9e7f1;
+
+            --green: #45a853;
+            --orange: #ef9d27;
+            --blue: #3f8ee8;
+            --purple: #9b56d4;
+            --pink: #e96a91;
+            --teal: #2bb7af;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+            transition: background .3s, color .3s;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            width: 238px;
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 30% 10%,
+                    rgba(90, 55, 190, .18),
+                    transparent 30%
+                ),
+                var(--sidebar);
+
+            color: white;
+
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            z-index: 100;
+
+            padding: 25px 20px;
+
+            overflow: hidden;
+
+            transition: transform .3s ease;
+        }
+
+
+        /* BRAND */
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 42px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+            color: #3287ff;
+        }
+
+        .brand h1 {
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .brand p {
+            color: #d4caff;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+
+        /* NAVIGATION */
+
+        .navigation {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .nav-item {
+            border: none;
+            background: transparent;
+
+            color: #f0eff7;
+
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            gap: 17px;
+
+            padding: 13px 15px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+            font-weight: 500;
+
+            text-align: left;
+
+            transition: .25s;
+        }
+
+        .nav-item i {
+            width: 20px;
+            font-size: 19px;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,.08);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(
+                135deg,
+                #3868ee,
+                #7041df
+            );
+
+            box-shadow:
+                0 8px 22px rgba(74, 62, 206, .35);
+        }
+
+
+        /* =====================================================
+           SIDEBAR DECORATION
+        ===================================================== */
+
+        .sidebar-decoration {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 25px;
+        }
+
+        .floating-star {
+            position: absolute;
+            color: #ffc93c;
+        }
+
+        .star1 {
+            top: -70px;
+            left: 12px;
+        }
+
+        .star2 {
+            top: -100px;
+            right: 12px;
+        }
+
+        .pencil-cup {
+            width: 120px;
+            height: 105px;
+            margin: auto;
+            position: relative;
+        }
+
+        .pencils {
+            position: absolute;
+            top: -40px;
+            left: 20px;
+
+            font-size: 32px;
+
+            display: flex;
+            gap: 2px;
+
+            transform: rotate(-5deg);
+        }
+
+        .pencils span:nth-child(2) {
+            transform: translateY(-12px);
+        }
+
+        .pencils span:nth-child(3) {
+            transform: translateY(4px);
+        }
+
+        .cup {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+
+            width: 100px;
+            height: 70px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d73dc9,
+                    #7030cf
+                );
+
+            border-radius: 15px 15px 35px 35px;
+
+            box-shadow:
+                inset 0 5px 10px rgba(255,255,255,.2),
+                0 12px 30px rgba(0,0,0,.25);
+        }
+
+        .books {
+            margin: -5px auto 20px;
+            width: 160px;
+        }
+
+        .books div {
+            height: 18px;
+            border-radius: 5px;
+            margin-top: 4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #353a8e,
+                    #7755cf
+                );
+        }
+
+        .books div:nth-child(2) {
+            width: 140px;
+            margin-left: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #4b337c,
+                    #8c60dc
+                );
+        }
+
+        .books div:nth-child(3) {
+            width: 170px;
+            margin-left: -5px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #293475,
+                    #534ca8
+                );
+        }
+
+        .quote {
+            padding: 18px 14px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #5c38bd,
+                    #913bca
+                );
+
+            text-align: left;
+
+            box-shadow:
+                0 15px 30px rgba(0,0,0,.2);
+        }
+
+        .quote strong {
+            display: block;
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .quote small {
+            display: block;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            margin-left: 238px;
+            width: calc(100% - 238px);
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 70% 0%,
+                    rgba(174, 141, 255, .15),
+                    transparent 30%
+                );
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ===================================================== */
+
+        .topbar {
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            padding: 0 30px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-button,
+        .notification-button {
+            border: none;
+            background: transparent;
+
+            font-size: 22px;
+            color: var(--text);
+
+            position: relative;
+        }
+
+        .notification-button span {
+            position: absolute;
+
+            top: -9px;
+            right: -9px;
+
+            width: 18px;
+            height: 18px;
+
+            border-radius: 50%;
+
+            background: #e43e67;
+            color: white;
+
+            font-size: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #be739d,
+                    #54375d
+                );
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 700;
+        }
+
+        .mobile-menu {
+            display: none;
+
+            border: none;
+            background: transparent;
+
+            font-size: 22px;
+            color: var(--text);
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+            padding: 0 35px 35px;
+        }
+
+        .greeting {
+            color: #6045bd;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .title-row h2 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .sparkle {
+            color: #f5ad28;
+            font-size: 43px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin-top: 7px;
+        }
+
+
+        /* =====================================================
+           ADD CLASS
+        ===================================================== */
+
+        .add-class-card {
+            background: rgba(255,255,255,.9);
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 15px 20px;
+
+            margin-top: 22px;
+
+            box-shadow:
+                0 5px 20px rgba(40,35,90,.05);
+        }
+
+        .add-class-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 12px;
+        }
+
+        .add-class-header h3 {
+            font-size: 16px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-class-header h3 i {
+            color: var(--primary);
+        }
+
+        .weekly-button {
+            border: none;
+
+            background: #f1edff;
+
+            color: #5740bd;
+
+            padding: 10px 14px;
+
+            border-radius: 9px;
+
+            font-weight: 600;
+        }
+
+        .class-form {
+            display: grid;
+
+            grid-template-columns:
+                1.15fr
+                1fr
+                1fr
+                1.15fr
+                auto;
+
+            gap: 12px;
+        }
+
+        .select-wrapper,
+        .time-input,
+        .room-input {
+            height: 43px;
+
+            border: 1px solid #dddbe8;
+
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 12px;
+
+            color: #737487;
+
+            background: white;
+        }
+
+        .select-wrapper i,
+        .time-input i,
+        .room-input i {
+            margin-right: 9px;
+        }
+
+        select,
+        input {
+            border: none;
+            outline: none;
+
+            background: transparent;
+
+            width: 100%;
+
+            color: #55576b;
+        }
+
+        .add-button {
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6940d9,
+                    #6236ce
+                );
+
+            color: white;
+
+            padding: 0 19px;
+
+            border-radius: 9px;
+
+            font-weight: 700;
+
+            transition: .2s;
+
+            box-shadow:
+                0 7px 16px rgba(95,57,202,.25);
+        }
+
+        .add-button:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           DASHBOARD GRID
+        ===================================================== */
+
+        .dashboard-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                230px;
+
+            gap: 20px;
+
+            margin-top: 5px;
+        }
+
+
+        /* =====================================================
+           TIMETABLE
+        ===================================================== */
+
+        .timetable-card {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 5px 20px rgba(40,35,90,.04);
+        }
+
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0 5px;
+
+            width: 100%;
+
+            min-width: 800px;
+
+            padding: 8px;
+        }
+
+        thead th {
+            padding: 10px;
+
+            font-size: 13px;
+
+            color: white;
+
+            font-weight: 700;
+        }
+
+        thead th:first-child {
+            background: #f7f6fb;
+            color: #25253a;
+        }
+
+        thead th:nth-child(2) {
+            background: #c7efc4;
+            color: #218228;
+        }
+
+        thead th:nth-child(3) {
+            background: #ffd36c;
+            color: #9a5a0c;
+        }
+
+        thead th:nth-child(4) {
+            background: #65a9ed;
+        }
+
+        thead th:nth-child(5) {
+            background: #b76ade;
+        }
+
+        thead th:nth-child(6) {
+            background: #ed7fa2;
+        }
+
+        thead th:nth-child(7) {
+            background: #44c1bb;
+        }
+
+        thead th:first-child {
+            width: 105px;
+        }
+
+        tbody td {
+            padding: 0 4px;
+        }
+
+        tbody td:first-child {
+            text-align: center;
+
+            font-size: 11px;
+
+            color: #38394b;
+
+            font-weight: 600;
+        }
+
+        .class-box {
+            min-height: 59px;
+
+            border-radius: 9px;
+
+            padding: 9px 10px;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+
+            transition: .2s;
+
+            cursor: pointer;
+        }
+
+        .class-box:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 12px rgba(0,0,0,.08);
+        }
+
+        .class-box b {
+            font-size: 12px;
+        }
+
+        .class-box small {
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .green {
+            background: #e6f8e3;
+            color: #287f30;
+        }
+
+        .orange {
+            background: #fff2d9;
+            color: #b76b0c;
+        }
+
+        .blue {
+            background: #e4f0ff;
+            color: #226dc0;
+        }
+
+        .purple {
+            background: #f3e4fb;
+            color: #8245b1;
+        }
+
+        .pink {
+            background: #ffe5ec;
+            color: #c54c72;
+        }
+
+        .teal {
+            background: #e0f6f4;
+            color: #168b84;
+        }
+
+        .lunch-row td {
+            padding: 8px;
+
+            background: #fff6df;
+
+            color: #a86c15;
+
+            text-align: center;
+
+            font-weight: 600;
+
+            border-radius: 8px;
+        }
+
+
+        /* =====================================================
+           RIGHT COLUMN
+        ===================================================== */
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+        }
+
+        .side-card {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            padding: 16px;
+
+            box-shadow:
+                0 5px 20px rgba(40,35,90,.04);
+        }
+
+        .side-card-title h3 {
+            font-size: 15px;
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .side-card-title h3 i {
+            color: #6844c7;
+        }
+
+        .side-card-title small {
+            display: block;
+
+            color: #858596;
+
+            margin-top: 5px;
+            margin-left: 27px;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           SCHEDULE
+        ===================================================== */
+
+        .schedule-list {
+            margin-top: 13px;
+        }
+
+        .schedule-item {
+            display: grid;
+
+            grid-template-columns: 70px 1fr;
+
+            position: relative;
+
+            padding: 10px 0;
+
+            border-left: 2px solid #e4e1ee;
+        }
+
+        .schedule-item::before {
+            content: "";
+
+            position: absolute;
+
+            left: -5px;
+            top: 13px;
+
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #3985e9;
+        }
+
+        .schedule-item time {
+            font-size: 10px;
+
+            color: #555668;
+
+            padding-left: 7px;
+        }
+
+        .schedule-item b {
+            display: block;
+            font-size: 11px;
+        }
+
+        .schedule-item small {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #858596;
+
+            font-size: 9px;
+        }
+
+        .full-day {
+            width: 100%;
+
+            border: none;
+
+            background: #f1eaff;
+
+            color: #6641bf;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            font-weight: 700;
+
+            margin-top: 7px;
+        }
+
+
+        /* =====================================================
+           REMINDERS
+        ===================================================== */
+
+        .reminders {
+            margin-top: 8px;
+        }
+
+        .reminder {
+            display: grid;
+
+            grid-template-columns:
+                27px 1fr 15px;
+
+            gap: 8px;
+
+            align-items: center;
+
+            padding: 11px 0;
+
+            border-bottom: 1px solid #eeeef4;
+        }
+
+        .reminder:last-child {
+            border-bottom: none;
+        }
+
+        .reminder-icon {
+            width: 23px;
+            height: 23px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid currentColor;
+
+            font-size: 10px;
+        }
+
+        .reminder b {
+            display: block;
+            font-size: 10px;
+        }
+
+        .reminder small {
+            display: block;
+
+            color: #858596;
+
+            font-size: 9px;
+
+            margin-top: 3px;
+        }
+
+        .reminder button {
+            border: none;
+            background: transparent;
+
+            color: inherit;
+
+            font-size: 15px;
+        }
+
+        .green-reminder {
+            color: #28a261;
+        }
+
+        .orange-reminder {
+            color: #ed941d;
+        }
+
+        .pink-reminder {
+            color: #e44d79;
+        }
+
+
+        /* =====================================================
+           MOTIVATION
+        ===================================================== */
+
+        .motivation {
+            min-height: 150px;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6242ca,
+                    #c13fd0 70%,
+                    #f0a348
+                );
+
+            color: white;
+
+            padding: 20px;
+
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+
+            box-shadow:
+                0 10px 25px rgba(95,53,190,.25);
+        }
+
+        .trophy {
+            font-size: 28px;
+        }
+
+        .motivation h3 {
+            margin-top: 5px;
+            font-size: 15px;
+        }
+
+        .motivation p {
+            margin-top: 5px;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            background: #25233b;
+
+            color: white;
+
+            padding: 13px 18px;
+
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            transform: translateY(120px);
+
+            opacity: 0;
+
+            transition: .3s;
+
+            z-index: 500;
+
+            font-size: 13px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+
+        /* =====================================================
+           DARK MODE
+        ===================================================== */
+
+        body.dark {
+            --background: #101125;
+            --card: #191a31;
+            --text: #f4f3fa;
+            --muted: #aaa9bc;
+            --border: #2b2c45;
+        }
+
+        body.dark .add-class-card,
+        body.dark .timetable-card,
+        body.dark .side-card {
+            background: var(--card);
+        }
+
+        body.dark .select-wrapper,
+        body.dark .time-input,
+        body.dark .room-input {
+            background: #111225;
+            border-color: #33344e;
+        }
+
+        body.dark select,
+        body.dark input {
+            color: #ddd;
+        }
+
+        body.dark .icon-button,
+        body.dark .notification-button,
+        body.dark .mobile-menu {
+            color: white;
+        }
+
+        body.dark tbody td:first-child {
+            color: #ddd;
+        }
+
+        body.dark .schedule-item time {
+            color: #ddd;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1250px) {
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .right-column {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .class-form {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .add-button {
+                min-height: 43px;
+            }
+        }
+
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .topbar {
+                justify-content: space-between;
+            }
+
+            .content {
+                padding: 0 18px 25px;
+            }
+
+            .title-row h2 {
+                font-size: 30px;
+            }
+
+            .right-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .top-actions {
+                gap: 13px;
+            }
+
+            .greeting {
+                font-size: 13px;
+            }
+
+            .title-row h2 {
+                font-size: 25px;
+            }
+
+            .sparkle {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 12px;
+            }
+
+            .add-class-card {
+                padding: 13px;
+            }
+
+            .add-class-header {
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .weekly-button {
+                font-size: 11px;
+            }
+
+            .class-form {
+                grid-template-columns: 1fr;
+            }
+
+            .add-button {
+                height: 43px;
+            }
+
+            .dashboard-grid {
+                margin-top: 15px;
+            }
+
+            .avatar {
+                width: 36px;
+                height: 36px;
+
+                font-size: 11px;
+            }
+        }
+    </style>
 </head>
+
 
 <body>
 
 <div class="app">
 
-    <!-- ================= SIDEBAR ================= -->
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
     <aside class="sidebar" id="sidebar">
 
         <div class="brand">
+
             <div class="brand-icon">
                 <i class="fa-solid fa-graduation-cap"></i>
             </div>
@@ -36,7 +1288,9 @@
                 <h1>StudySmart</h1>
                 <p>Plan • Focus • Achieve</p>
             </div>
+
         </div>
+
 
         <nav class="navigation">
 
@@ -77,12 +1331,16 @@
 
         </nav>
 
+
+        <!-- Decorative section -->
+
         <div class="sidebar-decoration">
 
             <div class="floating-star star1">✦</div>
             <div class="floating-star star2">✦</div>
 
             <div class="pencil-cup">
+
                 <div class="pencils">
                     <span>✏️</span>
                     <span>🖍️</span>
@@ -91,7 +1349,9 @@
                 </div>
 
                 <div class="cup"></div>
+
             </div>
+
 
             <div class="books">
                 <div></div>
@@ -99,7 +1359,9 @@
                 <div></div>
             </div>
 
+
             <div class="quote">
+
                 <strong>
                     “Discipline today<br>
                     leads to freedom<br>
@@ -107,6 +1369,7 @@
                 </strong>
 
                 <small>– Unknown</small>
+
             </div>
 
         </div>
@@ -114,7 +1377,9 @@
     </aside>
 
 
-    <!-- ================= MAIN ================= -->
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
     <main class="main">
 
@@ -122,20 +1387,34 @@
 
         <header class="topbar">
 
-            <button class="mobile-menu" id="mobileMenu">
+            <button
+                class="mobile-menu"
+                id="mobileMenu"
+                aria-label="Open menu"
+            >
                 <i class="fa-solid fa-bars"></i>
             </button>
 
+
             <div class="top-actions">
 
-                <button class="icon-button" id="themeToggle">
+                <button
+                    class="icon-button"
+                    id="themeToggle"
+                    title="Toggle dark mode"
+                >
                     <i class="fa-regular fa-sun"></i>
                 </button>
 
-                <button class="notification-button">
+
+                <button
+                    class="notification-button"
+                    title="Notifications"
+                >
                     <i class="fa-regular fa-bell"></i>
                     <span>3</span>
                 </button>
+
 
                 <div class="profile">
                     <div class="avatar">
@@ -148,9 +1427,14 @@
         </header>
 
 
-        <!-- ================= PAGE CONTENT ================= -->
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
 
         <section class="content">
+
+
+            <!-- WELCOME -->
 
             <div class="welcome">
 
@@ -159,8 +1443,15 @@
                 </p>
 
                 <div class="title-row">
-                    <h2>Your Student Timetable</h2>
-                    <span class="sparkle">✧</span>
+
+                    <h2>
+                        Your Student Timetable
+                    </h2>
+
+                    <span class="sparkle">
+                        ✧
+                    </span>
+
                 </div>
 
                 <p class="subtitle">
@@ -170,7 +1461,9 @@
             </div>
 
 
-            <!-- ================= ADD CLASS ================= -->
+            <!-- =================================================
+                 ADD CLASS
+            ================================================== -->
 
             <section class="add-class-card">
 
@@ -181,36 +1474,82 @@
                         Add New Class
                     </h3>
 
-                    <button class="weekly-button" id="weeklyButton">
+                    <button
+                        class="weekly-button"
+                        id="weeklyButton"
+                    >
                         <i class="fa-regular fa-calendar"></i>
                         View Weekly
                     </button>
 
                 </div>
 
+
                 <div class="class-form">
+
+
+                    <!-- SUBJECT -->
 
                     <div class="select-wrapper">
 
                         <i class="fa-solid fa-book-open"></i>
 
                         <select id="subject">
-                            <option value="">Subject</option>
-                            <option>Mathematics</option>
-                            <option>English</option>
-                            <option>Physics</option>
-                            <option>Chemistry</option>
-                            <option>Biology</option>
-                            <option>French</option>
-                            <option>History</option>
-                            <option>Geography</option>
-                            <option>ICT</option>
-                            <option>Study Time</option>
-                            <option>Sports</option>
+
+                            <option value="">
+                                Subject
+                            </option>
+
+                            <option>
+                                Mathematics
+                            </option>
+
+                            <option>
+                                English
+                            </option>
+
+                            <option>
+                                Physics
+                            </option>
+
+                            <option>
+                                Chemistry
+                            </option>
+
+                            <option>
+                                Biology
+                            </option>
+
+                            <option>
+                                French
+                            </option>
+
+                            <option>
+                                History
+                            </option>
+
+                            <option>
+                                Geography
+                            </option>
+
+                            <option>
+                                ICT
+                            </option>
+
+                            <option>
+                                Study Time
+                            </option>
+
+                            <option>
+                                Sports
+                            </option>
+
                         </select>
 
                     </div>
 
+
+                    <!-- DAY -->
 
                     <div class="select-wrapper">
 
@@ -218,7 +1557,10 @@
 
                         <select id="day">
 
-                            <option value="">Day</option>
+                            <option value="">
+                                Day
+                            </option>
+
                             <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>
@@ -230,6 +1572,8 @@
 
                     </div>
 
+
+                    <!-- TIME -->
 
                     <div class="time-input">
 
@@ -244,6 +1588,8 @@
                     </div>
 
 
+                    <!-- ROOM -->
+
                     <div class="room-input">
 
                         <i class="fa-solid fa-location-dot"></i>
@@ -257,9 +1603,17 @@
                     </div>
 
 
-                    <button class="add-button" id="addClass">
+                    <!-- ADD -->
+
+                    <button
+                        class="add-button"
+                        id="addClass"
+                    >
+
                         <i class="fa-solid fa-plus"></i>
+
                         Add Class
+
                     </button>
 
                 </div>
@@ -267,12 +1621,16 @@
             </section>
 
 
-            <!-- ================= DASHBOARD GRID ================= -->
+            <!-- =================================================
+                 DASHBOARD
+            ================================================== -->
 
             <div class="dashboard-grid">
 
 
-                <!-- ================= TIMETABLE ================= -->
+                <!-- =================================================
+                     TIMETABLE
+                ================================================== -->
 
                 <section class="timetable-card">
 
@@ -300,9 +1658,14 @@
 
                             <tbody>
 
-                                <tr data-time="7:00 – 8:00">
 
-                                    <td>7:00 – 8:00</td>
+                                <!-- 7-8 -->
+
+                                <tr data-time="7:00 - 8:00">
+
+                                    <td>
+                                        7:00 – 8:00
+                                    </td>
 
                                     <td>
                                         <div class="class-box green">
@@ -349,9 +1712,13 @@
                                 </tr>
 
 
-                                <tr data-time="8:00 – 9:00">
+                                <!-- 8-9 -->
 
-                                    <td>8:00 – 9:00</td>
+                                <tr data-time="8:00 - 9:00">
+
+                                    <td>
+                                        8:00 – 9:00
+                                    </td>
 
                                     <td>
                                         <div class="class-box green">
@@ -398,9 +1765,13 @@
                                 </tr>
 
 
-                                <tr data-time="9:00 – 10:00">
+                                <!-- 9-10 -->
 
-                                    <td>9:00 – 10:00</td>
+                                <tr data-time="9:00 - 10:00">
+
+                                    <td>
+                                        9:00 – 10:00
+                                    </td>
 
                                     <td>
                                         <div class="class-box green">
@@ -447,9 +1818,13 @@
                                 </tr>
 
 
-                                <tr data-time="10:00 – 11:00">
+                                <!-- 10-11 -->
 
-                                    <td>10:00 – 11:00</td>
+                                <tr data-time="10:00 - 11:00">
+
+                                    <td>
+                                        10:00 – 11:00
+                                    </td>
 
                                     <td>
                                         <div class="class-box green">
@@ -496,9 +1871,13 @@
                                 </tr>
 
 
-                                <tr data-time="11:00 – 12:00">
+                                <!-- 11-12 -->
 
-                                    <td>11:00 – 12:00</td>
+                                <tr data-time="11:00 - 12:00">
+
+                                    <td>
+                                        11:00 – 12:00
+                                    </td>
 
                                     <td>
                                         <div class="class-box green">
@@ -545,22 +1924,28 @@
                                 </tr>
 
 
+                                <!-- LUNCH -->
+
                                 <tr class="lunch-row">
 
-                                    <td>12:00 – 1:00</td>
+                                    <td>
+                                        12:00 – 1:00
+                                    </td>
 
                                     <td colspan="6">
-
                                         🍴 Lunch Break
-
                                     </td>
 
                                 </tr>
 
 
-                                <tr data-time="1:00 – 2:00">
+                                <!-- 1-2 -->
 
-                                    <td>1:00 – 2:00</td>
+                                <tr data-time="1:00 - 2:00">
+
+                                    <td>
+                                        1:00 – 2:00
+                                    </td>
 
                                     <td>
                                         <div class="class-box green">
@@ -607,9 +1992,13 @@
                                 </tr>
 
 
-                                <tr data-time="2:00 – 3:00">
+                                <!-- 2-3 -->
 
-                                    <td>2:00 – 3:00</td>
+                                <tr data-time="2:00 - 3:00">
+
+                                    <td>
+                                        2:00 – 3:00
+                                    </td>
 
                                     <td>
                                         <div class="class-box green">
@@ -656,9 +2045,13 @@
                                 </tr>
 
 
-                                <tr data-time="3:00 – 4:00">
+                                <!-- 3-4 -->
 
-                                    <td>3:00 – 4:00</td>
+                                <tr data-time="3:00 - 4:00">
+
+                                    <td>
+                                        3:00 – 4:00
+                                    </td>
 
                                     <td>
                                         <div class="class-box green">
@@ -705,9 +2098,13 @@
                                 </tr>
 
 
-                                <tr data-time="4:00 – 5:00">
+                                <!-- 4-5 -->
 
-                                    <td>4:00 – 5:00</td>
+                                <tr data-time="4:00 - 5:00">
+
+                                    <td>
+                                        4:00 – 5:00
+                                    </td>
 
                                     <td>
                                         <div class="class-box green">
@@ -762,12 +2159,14 @@
                 </section>
 
 
-                <!-- ================= RIGHT COLUMN ================= -->
+                <!-- =================================================
+                     RIGHT COLUMN
+                ================================================== -->
 
                 <aside class="right-column">
 
 
-                    <!-- TODAY -->
+                    <!-- TODAY'S SCHEDULE -->
 
                     <section class="side-card">
 
@@ -778,7 +2177,9 @@
                                 Today's Schedule
                             </h3>
 
-                            <small>Wednesday, 15 May</small>
+                            <small id="todayDate">
+                                Wednesday, 2 September
+                            </small>
 
                         </div>
 
@@ -847,7 +2248,10 @@
                         </div>
 
 
-                        <button class="full-day">
+                        <button
+                            class="full-day"
+                            id="fullDay"
+                        >
                             View Full Day
                         </button>
 
@@ -870,6 +2274,7 @@
 
                         <div class="reminders">
 
+
                             <div class="reminder green-reminder">
 
                                 <div class="reminder-icon">
@@ -881,7 +2286,9 @@
                                     <small>Due tomorrow</small>
                                 </div>
 
-                                <button>○</button>
+                                <button class="complete-reminder">
+                                    ○
+                                </button>
 
                             </div>
 
@@ -897,7 +2304,9 @@
                                     <small>May 20, 2024</small>
                                 </div>
 
-                                <button>○</button>
+                                <button class="complete-reminder">
+                                    ○
+                                </button>
 
                             </div>
 
@@ -913,7 +2322,9 @@
                                     <small>May 25, 2024</small>
                                 </div>
 
-                                <button>○</button>
+                                <button class="complete-reminder">
+                                    ○
+                                </button>
 
                             </div>
 
@@ -952,15 +2363,722 @@
 </div>
 
 
-<!-- ================= TOAST ================= -->
+<!-- =====================================================
+     TOAST
+====================================================== -->
 
-<div class="toast" id="toast">
+<div
+    class="toast"
+    id="toast"
+>
     <i class="fa-solid fa-check"></i>
-    <span>Class added successfully!</span>
+    <span>Success!</span>
 </div>
 
 
-<script src="script.js"></script>
+<script>
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+    const addClassButton =
+        document.getElementById("addClass");
+
+    const subjectInput =
+        document.getElementById("subject");
+
+    const dayInput =
+        document.getElementById("day");
+
+    const timeInput =
+        document.getElementById("time");
+
+    const roomInput =
+        document.getElementById("room");
+
+    const toast =
+        document.getElementById("toast");
+
+    const navItems =
+        document.querySelectorAll(".nav-item");
+
+
+    /* =====================================================
+       MOBILE MENU
+    ===================================================== */
+
+    mobileMenu.addEventListener("click", () => {
+
+        sidebar.classList.toggle("open");
+
+    });
+
+
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
+
+    navItems.forEach(item => {
+
+        item.addEventListener("click", () => {
+
+            navItems.forEach(nav => {
+                nav.classList.remove("active");
+            });
+
+            item.classList.add("active");
+
+            const page =
+                item.dataset.page;
+
+            showToast(
+                `${capitalize(page)} section selected`
+            );
+
+            if (window.innerWidth <= 900) {
+
+                sidebar.classList.remove("open");
+
+            }
+
+        });
+
+    });
+
+
+    function capitalize(text) {
+
+        return text.charAt(0).toUpperCase()
+            + text.slice(1);
+
+    }
+
+
+    /* =====================================================
+       DARK MODE
+    ===================================================== */
+
+    const savedTheme =
+        localStorage.getItem(
+            "studysmart-theme"
+        );
+
+
+    if (savedTheme === "dark") {
+
+        document.body.classList.add("dark");
+
+        themeToggle.innerHTML =
+            '<i class="fa-regular fa-moon"></i>';
+
+    }
+
+
+    themeToggle.addEventListener("click", () => {
+
+        document.body.classList.toggle("dark");
+
+        const darkMode =
+            document.body.classList.contains("dark");
+
+
+        localStorage.setItem(
+            "studysmart-theme",
+            darkMode ? "dark" : "light"
+        );
+
+
+        if (darkMode) {
+
+            themeToggle.innerHTML =
+                '<i class="fa-regular fa-moon"></i>';
+
+        } else {
+
+            themeToggle.innerHTML =
+                '<i class="fa-regular fa-sun"></i>';
+
+        }
+
+    });
+
+
+    /* =====================================================
+       ADD CLASS
+    ===================================================== */
+
+    addClassButton.addEventListener(
+        "click",
+        () => {
+
+            const subject =
+                subjectInput.value;
+
+            const day =
+                dayInput.value;
+
+            const time =
+                timeInput.value.trim();
+
+            const room =
+                roomInput.value.trim();
+
+
+            /* Validation */
+
+            if (!subject) {
+
+                showToast(
+                    "Please select a subject."
+                );
+
+                subjectInput.focus();
+
+                return;
+
+            }
+
+
+            if (!day) {
+
+                showToast(
+                    "Please select a day."
+                );
+
+                dayInput.focus();
+
+                return;
+
+            }
+
+
+            if (!time) {
+
+                showToast(
+                    "Please enter a time."
+                );
+
+                timeInput.focus();
+
+                return;
+
+            }
+
+
+            /*
+                Convert the selected day
+                into the timetable column.
+            */
+
+            const dayIndex = {
+
+                Monday: 1,
+                Tuesday: 2,
+                Wednesday: 3,
+                Thursday: 4,
+                Friday: 5,
+                Saturday: 6
+
+            };
+
+
+            const columnIndex =
+                dayIndex[day];
+
+
+            /*
+                Normalize the time entered
+                by the user.
+            */
+
+            const normalizedInputTime =
+                normalizeTime(time);
+
+
+            const rows =
+                document.querySelectorAll(
+                    "#timetable tbody tr[data-time]"
+                );
+
+
+            let targetRow = null;
+
+
+            rows.forEach(row => {
+
+                const rowTime =
+                    normalizeTime(
+                        row.dataset.time
+                    );
+
+
+                if (
+                    rowTime ===
+                    normalizedInputTime
+                ) {
+
+                    targetRow = row;
+
+                }
+
+            });
+
+
+            /*
+                If the exact time doesn't exist,
+                tell the user instead of putting
+                it in the wrong location.
+            */
+
+            if (!targetRow) {
+
+                showToast(
+                    "Time not found. Use a timetable time such as 7:00 - 8:00."
+                );
+
+                return;
+
+            }
+
+
+            const targetCell =
+                targetRow.children[columnIndex];
+
+
+            if (!targetCell) {
+
+                showToast(
+                    "Unable to add this class."
+                );
+
+                return;
+
+            }
+
+
+            /* Choose color */
+
+            const colors = [
+                "green",
+                "orange",
+                "blue",
+                "purple",
+                "pink",
+                "teal"
+            ];
+
+
+            const randomColor =
+                colors[
+                    Math.floor(
+                        Math.random() *
+                        colors.length
+                    )
+                ];
+
+
+            /* Create class */
+
+            const classBox =
+                document.createElement("div");
+
+
+            classBox.className =
+                `class-box ${randomColor}`;
+
+
+            classBox.innerHTML = `
+
+                <b>
+                    ${escapeHTML(subject)}
+                </b>
+
+                <small>
+                    ${escapeHTML(
+                        room || "No room"
+                    )}
+                </small>
+
+            `;
+
+
+            /*
+                Replace existing class
+                in the selected cell.
+            */
+
+            targetCell.innerHTML = "";
+
+            targetCell.appendChild(
+                classBox
+            );
+
+
+            /* Save */
+
+            saveTimetable();
+
+
+            /* Clear form */
+
+            subjectInput.value = "";
+            dayInput.value = "";
+            timeInput.value = "";
+            roomInput.value = "";
+
+
+            showToast(
+                `${subject} added to ${day}!`
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       NORMALIZE TIME
+    ===================================================== */
+
+    function normalizeTime(value) {
+
+        return value
+            .toLowerCase()
+            .replace(/[–—]/g, "-")
+            .replace(/\s+/g, "")
+            .trim();
+
+    }
+
+
+    /* =====================================================
+       HTML ESCAPE
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value;
+
+        return div.innerHTML;
+
+    }
+
+
+    /* =====================================================
+       SAVE TIMETABLE
+    ===================================================== */
+
+    function saveTimetable() {
+
+        const timetable =
+            document.getElementById(
+                "timetable"
+            );
+
+
+        localStorage.setItem(
+            "studysmart-timetable",
+            timetable.querySelector("tbody").innerHTML
+        );
+
+    }
+
+
+    /* =====================================================
+       LOAD TIMETABLE
+    ===================================================== */
+
+    function loadTimetable() {
+
+        const saved =
+            localStorage.getItem(
+                "studysmart-timetable"
+            );
+
+
+        if (!saved) {
+            return;
+        }
+
+
+        const tbody =
+            document.querySelector(
+                "#timetable tbody"
+            );
+
+
+        tbody.innerHTML =
+            saved;
+
+    }
+
+
+    /* =====================================================
+       REMOVE CLASS
+    ===================================================== */
+
+    document
+        .getElementById("timetable")
+        .addEventListener(
+            "dblclick",
+            event => {
+
+                const classBox =
+                    event.target.closest(
+                        ".class-box"
+                    );
+
+
+                if (!classBox) {
+                    return;
+                }
+
+
+                const confirmed =
+                    confirm(
+                        "Remove this class from the timetable?"
+                    );
+
+
+                if (!confirmed) {
+                    return;
+                }
+
+
+                classBox.remove();
+
+                saveTimetable();
+
+                showToast(
+                    "Class removed."
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       CLASS CLICK
+    ===================================================== */
+
+    document
+        .getElementById("timetable")
+        .addEventListener(
+            "click",
+            event => {
+
+                const classBox =
+                    event.target.closest(
+                        ".class-box"
+                    );
+
+
+                if (!classBox) {
+                    return;
+                }
+
+
+                const subject =
+                    classBox.querySelector("b")
+                    ?.textContent;
+
+
+                showToast(
+                    `${subject} selected`
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    let toastTimer;
+
+
+    function showToast(message) {
+
+        const toastText =
+            toast.querySelector("span");
+
+
+        toastText.textContent =
+            message;
+
+
+        toast.classList.add("show");
+
+
+        clearTimeout(
+            toastTimer
+        );
+
+
+        toastTimer =
+            setTimeout(
+                () => {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                2500
+            );
+
+    }
+
+
+    /* =====================================================
+       WEEKLY BUTTON
+    ===================================================== */
+
+    document
+        .getElementById("weeklyButton")
+        .addEventListener(
+            "click",
+            () => {
+
+                showToast(
+                    "You are viewing the weekly timetable."
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       FULL DAY BUTTON
+    ===================================================== */
+
+    document
+        .getElementById("fullDay")
+        .addEventListener(
+            "click",
+            () => {
+
+                showToast(
+                    "Full day schedule opened."
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       REMINDER BUTTONS
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            ".complete-reminder"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const reminder =
+                        button.closest(
+                            ".reminder"
+                        );
+
+
+                    reminder.style.opacity =
+                        "0.45";
+
+
+                    button.innerHTML =
+                        "✓";
+
+
+                    showToast(
+                        "Reminder completed!"
+                    );
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       NOTIFICATION BUTTON
+    ===================================================== */
+
+    document
+        .querySelector(
+            ".notification-button"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                showToast(
+                    "You have 3 notifications."
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       UPDATE DATE
+    ===================================================== */
+
+    function updateDate() {
+
+        const dateElement =
+            document.getElementById(
+                "todayDate"
+            );
+
+
+        const today =
+            new Date();
+
+
+        const options = {
+            weekday: "long",
+            day: "numeric",
+            month: "long"
+        };
+
+
+        dateElement.textContent =
+            today.toLocaleDateString(
+                "en-US",
+                options
+            );
+
+    }
+
+
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    loadTimetable();
+
+    updateDate();
+
+</script>
 
 </body>
 </html>
