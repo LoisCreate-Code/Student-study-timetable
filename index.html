@@ -1,1270 +1,1586 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>StudySmart - Student Timetable</title>
-
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome Icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        /* =====================================================
-           GLOBAL
-        ===================================================== */
+<title>StudySmart</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #5d3fd3;
-            --primary-dark: #39218e;
-            --sidebar: #11152f;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-            --background: #f5f4fb;
-            --card: #ffffff;
-
-            --text: #151936;
-            --muted: #74758b;
-
-            --border: #e9e7f1;
-
-            --green: #45a853;
-            --orange: #ef9d27;
-            --blue: #3f8ee8;
-            --purple: #9b56d4;
-            --pink: #e96a91;
-            --teal: #2bb7af;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        body {
-            font-family: "Inter", sans-serif;
-            background: var(--background);
-            color: var(--text);
-            overflow-x: hidden;
-            transition: background .3s, color .3s;
-        }
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
 
-        button,
-        input,
-        select {
-            font-family: inherit;
-        }
+<style>
 
-        button {
-            cursor: pointer;
-        }
+/* =========================================================
+   RESET
+========================================================= */
 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        /* =====================================================
-           APP
-        ===================================================== */
+:root{
 
-        .app {
-            display: flex;
-            min-height: 100vh;
-        }
+    --primary:#6246d8;
+    --primary-dark:#4528a8;
 
+    --sidebar:#11152f;
 
-        /* =====================================================
-           SIDEBAR
-        ===================================================== */
+    --bg:#f6f5fb;
+    --card:#ffffff;
 
-        .sidebar {
-            width: 238px;
-            min-height: 100vh;
+    --text:#181a35;
+    --muted:#77798d;
 
-            background:
-                radial-gradient(
-                    circle at 30% 10%,
-                    rgba(90, 55, 190, .18),
-                    transparent 30%
-                ),
-                var(--sidebar);
+    --border:#e7e5ef;
 
-            color: white;
+    --green:#43a047;
+    --orange:#ef9d27;
+    --blue:#3e8de4;
+    --purple:#9b59d0;
+    --pink:#e66c91;
+    --teal:#27b5ad;
 
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
+    --shadow:0 8px 25px rgba(35,30,80,.06);
+}
 
-            z-index: 100;
+html{
+    scroll-behavior:smooth;
+}
 
-            padding: 25px 20px;
+body{
+    font-family:"Inter",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
 
-            overflow: hidden;
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
 
-            transition: transform .3s ease;
-        }
+button{
+    cursor:pointer;
+}
 
+button:focus,
+input:focus,
+select:focus,
+textarea:focus{
+    outline:3px solid rgba(98,70,216,.22);
+    outline-offset:2px;
+}
 
-        /* BRAND */
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 42px;
-        }
+/* =========================================================
+   APP
+========================================================= */
 
-        .brand-icon {
-            width: 44px;
-            height: 44px;
+.app{
+    display:flex;
+    min-height:100vh;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
 
-            font-size: 28px;
-            color: #3287ff;
-        }
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
-        .brand h1 {
-            font-size: 21px;
-            font-weight: 800;
-        }
+.sidebar{
+    width:240px;
+    height:100vh;
 
-        .brand p {
-            color: #d4caff;
-            font-size: 11px;
-            margin-top: 2px;
-        }
+    position:fixed;
+    left:0;
+    top:0;
 
+    background:var(--sidebar);
+    color:white;
 
-        /* NAVIGATION */
+    padding:24px 18px;
 
-        .navigation {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
+    z-index:1000;
 
-        .nav-item {
-            border: none;
-            background: transparent;
+    overflow-y:auto;
 
-            color: #f0eff7;
+    transition:transform .3s ease;
+}
 
-            width: 100%;
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
 
-            display: flex;
-            align-items: center;
-            gap: 17px;
+    margin-bottom:35px;
+}
 
-            padding: 13px 15px;
+.brand-icon{
+    font-size:38px;
+    color:#388bff;
+}
 
-            border-radius: 12px;
+.brand h1{
+    font-size:21px;
+}
 
-            font-size: 15px;
-            font-weight: 500;
+.brand p{
+    font-size:10px;
+    color:#c7c2ef;
+    margin-top:3px;
+}
 
-            text-align: left;
+.navigation{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
 
-            transition: .25s;
-        }
+.nav-item{
+    width:100%;
 
-        .nav-item i {
-            width: 20px;
-            font-size: 19px;
-        }
+    border:0;
+    background:transparent;
 
-        .nav-item:hover {
-            background: rgba(255,255,255,.08);
-        }
+    color:#efeff7;
 
-        .nav-item.active {
-            background: linear-gradient(
-                135deg,
-                #3868ee,
-                #7041df
-            );
+    display:flex;
+    align-items:center;
 
-            box-shadow:
-                0 8px 22px rgba(74, 62, 206, .35);
-        }
+    gap:15px;
 
+    padding:13px 14px;
 
-        /* =====================================================
-           SIDEBAR DECORATION
-        ===================================================== */
+    border-radius:11px;
 
-        .sidebar-decoration {
-            position: absolute;
-            left: 20px;
-            right: 20px;
-            bottom: 25px;
-        }
+    font-size:14px;
 
-        .floating-star {
-            position: absolute;
-            color: #ffc93c;
-        }
-
-        .star1 {
-            top: -70px;
-            left: 12px;
-        }
-
-        .star2 {
-            top: -100px;
-            right: 12px;
-        }
-
-        .pencil-cup {
-            width: 120px;
-            height: 105px;
-            margin: auto;
-            position: relative;
-        }
+    text-align:left;
 
-        .pencils {
-            position: absolute;
-            top: -40px;
-            left: 20px;
-
-            font-size: 32px;
-
-            display: flex;
-            gap: 2px;
-
-            transform: rotate(-5deg);
-        }
-
-        .pencils span:nth-child(2) {
-            transform: translateY(-12px);
-        }
-
-        .pencils span:nth-child(3) {
-            transform: translateY(4px);
-        }
-
-        .cup {
-            position: absolute;
-            bottom: 0;
-            left: 10px;
-
-            width: 100px;
-            height: 70px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #d73dc9,
-                    #7030cf
-                );
+    transition:.2s;
+}
 
-            border-radius: 15px 15px 35px 35px;
-
-            box-shadow:
-                inset 0 5px 10px rgba(255,255,255,.2),
-                0 12px 30px rgba(0,0,0,.25);
-        }
+.nav-item i{
+    width:22px;
+    text-align:center;
+    font-size:17px;
+}
 
-        .books {
-            margin: -5px auto 20px;
-            width: 160px;
-        }
+.nav-item:hover{
+    background:rgba(255,255,255,.09);
+}
 
-        .books div {
-            height: 18px;
-            border-radius: 5px;
-            margin-top: 4px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #353a8e,
-                    #7755cf
-                );
-        }
-
-        .books div:nth-child(2) {
-            width: 140px;
-            margin-left: 10px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #4b337c,
-                    #8c60dc
-                );
-        }
+.nav-item.active{
+    background:linear-gradient(
+        135deg,
+        #3971ee,
+        #7140dc
+    );
 
-        .books div:nth-child(3) {
-            width: 170px;
-            margin-left: -5px;
+    box-shadow:0 8px 20px rgba(74,63,210,.3);
+}
 
-            background:
-                linear-gradient(
-                    90deg,
-                    #293475,
-                    #534ca8
-                );
-        }
 
-        .quote {
-            padding: 18px 14px;
+/* SIDEBAR QUOTE */
 
-            border-radius: 12px;
+.sidebar-bottom{
+    margin-top:50px;
+}
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #5c38bd,
-                    #913bca
-                );
+.quote{
+    background:linear-gradient(
+        135deg,
+        #5b39bb,
+        #963dcc
+    );
 
-            text-align: left;
+    border-radius:12px;
 
-            box-shadow:
-                0 15px 30px rgba(0,0,0,.2);
-        }
+    padding:18px 14px;
 
-        .quote strong {
-            display: block;
-            font-size: 13px;
-            line-height: 1.55;
-        }
+    font-size:12px;
+    line-height:1.6;
+}
 
-        .quote small {
-            display: block;
-            margin-top: 10px;
-            font-size: 11px;
-        }
+.quote small{
+    display:block;
+    margin-top:10px;
+}
 
 
-        /* =====================================================
-           MAIN
-        ===================================================== */
+/* =========================================================
+   MAIN
+========================================================= */
 
-        .main {
-            margin-left: 238px;
-            width: calc(100% - 238px);
+.main{
+    margin-left:240px;
+    width:calc(100% - 240px);
+    min-height:100vh;
+}
 
-            min-height: 100vh;
 
-            background:
-                radial-gradient(
-                    circle at 70% 0%,
-                    rgba(174, 141, 255, .15),
-                    transparent 30%
-                );
-        }
+/* =========================================================
+   TOPBAR
+========================================================= */
 
+.topbar{
+    height:72px;
 
-        /* =====================================================
-           TOP BAR
-        ===================================================== */
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-        .topbar {
-            height: 76px;
+    padding:0 30px;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+.mobile-menu{
+    display:none;
 
-            padding: 0 30px;
-        }
+    border:0;
+    background:none;
 
-        .top-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+    font-size:22px;
 
-        .icon-button,
-        .notification-button {
-            border: none;
-            background: transparent;
+    color:var(--text);
+}
 
-            font-size: 22px;
-            color: var(--text);
+.top-actions{
+    margin-left:auto;
 
-            position: relative;
-        }
+    display:flex;
+    align-items:center;
 
-        .notification-button span {
-            position: absolute;
+    gap:20px;
+}
 
-            top: -9px;
-            right: -9px;
+.top-btn{
+    border:0;
+    background:transparent;
 
-            width: 18px;
-            height: 18px;
+    color:var(--text);
 
-            border-radius: 50%;
+    font-size:20px;
 
-            background: #e43e67;
-            color: white;
+    position:relative;
+}
 
-            font-size: 10px;
+.notification-badge{
+    position:absolute;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    top:-7px;
+    right:-8px;
 
-        .avatar {
-            width: 43px;
-            height: 43px;
+    width:18px;
+    height:18px;
 
-            border-radius: 50%;
+    border-radius:50%;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #be739d,
-                    #54375d
-                );
+    background:#e74768;
 
-            color: white;
+    color:white;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    font-size:9px;
 
-            font-weight: 700;
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
 
-        .mobile-menu {
-            display: none;
+.avatar{
+    width:42px;
+    height:42px;
 
-            border: none;
-            background: transparent;
+    border-radius:50%;
 
-            font-size: 22px;
-            color: var(--text);
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
+    background:linear-gradient(
+        135deg,
+        #bc719a,
+        #573957
+    );
 
-        /* =====================================================
-           CONTENT
-        ===================================================== */
+    color:white;
 
-        .content {
-            padding: 0 35px 35px;
-        }
+    font-weight:700;
+}
 
-        .greeting {
-            color: #6045bd;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
 
-        .title-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+/* =========================================================
+   CONTENT
+========================================================= */
 
-        .title-row h2 {
-            font-size: 38px;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-        }
+.content{
+    padding:5px 32px 40px;
+}
 
-        .sparkle {
-            color: #f5ad28;
-            font-size: 43px;
-        }
+.page{
+    display:none;
+}
 
-        .subtitle {
-            color: var(--muted);
-            margin-top: 7px;
-        }
+.page.active{
+    display:block;
+}
 
+.greeting{
+    color:#6147bd;
+    font-weight:700;
+    font-size:14px;
+    margin-bottom:10px;
+}
 
-        /* =====================================================
-           ADD CLASS
-        ===================================================== */
+.page-heading{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
 
-        .add-class-card {
-            background: rgba(255,255,255,.9);
+.page-heading h2{
+    font-size:37px;
+    letter-spacing:-1px;
+}
 
-            border: 1px solid var(--border);
+.sparkle{
+    font-size:38px;
+    color:#f2ae2c;
+}
 
-            border-radius: 16px;
+.subtitle{
+    color:var(--muted);
+    margin-top:7px;
+    font-size:14px;
+}
 
-            padding: 15px 20px;
 
-            margin-top: 22px;
+/* =========================================================
+   CARDS
+========================================================= */
 
-            box-shadow:
-                0 5px 20px rgba(40,35,90,.05);
-        }
+.card{
+    background:var(--card);
 
-        .add-class-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+    border:1px solid var(--border);
 
-            margin-bottom: 12px;
-        }
+    border-radius:15px;
 
-        .add-class-header h3 {
-            font-size: 16px;
+    box-shadow:var(--shadow);
+}
 
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.card-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-        .add-class-header h3 i {
-            color: var(--primary);
-        }
+    gap:15px;
 
-        .weekly-button {
-            border: none;
+    margin-bottom:18px;
+}
 
-            background: #f1edff;
+.card-header h3{
+    font-size:16px;
+}
 
-            color: #5740bd;
 
-            padding: 10px 14px;
+/* =========================================================
+   DASHBOARD STATS
+========================================================= */
 
-            border-radius: 9px;
+.stats{
+    display:grid;
 
-            font-weight: 600;
-        }
+    grid-template-columns:
+        repeat(4,1fr);
 
-        .class-form {
-            display: grid;
+    gap:15px;
 
-            grid-template-columns:
-                1.15fr
-                1fr
-                1fr
-                1.15fr
-                auto;
+    margin-top:25px;
+}
 
-            gap: 12px;
-        }
+.stat-card{
+    padding:20px;
 
-        .select-wrapper,
-        .time-input,
-        .room-input {
-            height: 43px;
+    display:flex;
+    align-items:center;
 
-            border: 1px solid #dddbe8;
+    gap:15px;
+}
 
-            border-radius: 9px;
+.stat-icon{
+    width:45px;
+    height:45px;
 
-            display: flex;
-            align-items: center;
+    border-radius:11px;
 
-            padding: 0 12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            color: #737487;
+    font-size:20px;
 
-            background: white;
-        }
+    background:#eeeaff;
+    color:var(--primary);
+}
 
-        .select-wrapper i,
-        .time-input i,
-        .room-input i {
-            margin-right: 9px;
-        }
+.stat-card h3{
+    font-size:24px;
+}
 
-        select,
-        input {
-            border: none;
-            outline: none;
+.stat-card p{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:3px;
+}
 
-            background: transparent;
 
-            width: 100%;
+/* =========================================================
+   ADD CLASS
+========================================================= */
 
-            color: #55576b;
-        }
+.add-class{
+    padding:18px;
 
-        .add-button {
-            border: none;
+    margin-top:22px;
+}
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #6940d9,
-                    #6236ce
-                );
+.form-grid{
+    display:grid;
 
-            color: white;
+    grid-template-columns:
+        repeat(4,1fr)
+        auto;
 
-            padding: 0 19px;
+    gap:10px;
+}
 
-            border-radius: 9px;
+.input-group{
+    height:43px;
 
-            font-weight: 700;
+    border:1px solid var(--border);
 
-            transition: .2s;
+    border-radius:9px;
 
-            box-shadow:
-                0 7px 16px rgba(95,57,202,.25);
-        }
+    display:flex;
+    align-items:center;
 
-        .add-button:hover {
-            transform: translateY(-2px);
-        }
+    padding:0 11px;
 
+    background:var(--card);
+}
 
-        /* =====================================================
-           DASHBOARD GRID
-        ===================================================== */
+.input-group i{
+    color:#777;
+    margin-right:8px;
+}
 
-        .dashboard-grid {
-            display: grid;
+.input-group input,
+.input-group select{
+    border:0;
+    outline:0;
 
-            grid-template-columns:
-                minmax(0, 1fr)
-                230px;
+    width:100%;
 
-            gap: 20px;
+    background:transparent;
 
-            margin-top: 5px;
-        }
+    color:var(--text);
+}
 
+.primary-btn{
+    border:0;
 
-        /* =====================================================
-           TIMETABLE
-        ===================================================== */
+    background:linear-gradient(
+        135deg,
+        #6843d8,
+        #5832c7
+    );
 
-        .timetable-card {
-            background: white;
+    color:white;
 
-            border: 1px solid var(--border);
+    border-radius:9px;
 
-            border-radius: 15px;
+    padding:0 18px;
 
-            overflow: hidden;
+    font-weight:700;
+}
 
-            box-shadow:
-                0 5px 20px rgba(40,35,90,.04);
-        }
+.secondary-btn{
+    border:0;
 
-        .table-scroll {
-            width: 100%;
-            overflow-x: auto;
-        }
+    background:#eeeaff;
 
-        table {
-            border-collapse: separate;
-            border-spacing: 0 5px;
+    color:#5d42bd;
 
-            width: 100%;
+    padding:10px 15px;
 
-            min-width: 800px;
+    border-radius:8px;
 
-            padding: 8px;
-        }
+    font-weight:600;
+}
 
-        thead th {
-            padding: 10px;
+.danger-btn{
+    border:0;
 
-            font-size: 13px;
+    background:#ffe9ed;
 
-            color: white;
+    color:#d44769;
 
-            font-weight: 700;
-        }
+    padding:8px 11px;
 
-        thead th:first-child {
-            background: #f7f6fb;
-            color: #25253a;
-        }
+    border-radius:7px;
+}
 
-        thead th:nth-child(2) {
-            background: #c7efc4;
-            color: #218228;
-        }
 
-        thead th:nth-child(3) {
-            background: #ffd36c;
-            color: #9a5a0c;
-        }
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
 
-        thead th:nth-child(4) {
-            background: #65a9ed;
-        }
+.dashboard-grid{
+    display:grid;
 
-        thead th:nth-child(5) {
-            background: #b76ade;
-        }
+    grid-template-columns:
+        minmax(0,1fr)
+        270px;
 
-        thead th:nth-child(6) {
-            background: #ed7fa2;
-        }
+    gap:18px;
 
-        thead th:nth-child(7) {
-            background: #44c1bb;
-        }
+    margin-top:18px;
+}
 
-        thead th:first-child {
-            width: 105px;
-        }
 
-        tbody td {
-            padding: 0 4px;
-        }
+/* =========================================================
+   TIMETABLE
+========================================================= */
 
-        tbody td:first-child {
-            text-align: center;
+.timetable-card{
+    padding:10px;
 
-            font-size: 11px;
+    overflow:hidden;
+}
 
-            color: #38394b;
+.table-wrapper{
+    overflow-x:auto;
 
-            font-weight: 600;
-        }
+    width:100%;
+}
 
-        .class-box {
-            min-height: 59px;
+table{
+    width:100%;
 
-            border-radius: 9px;
+    border-collapse:separate;
+    border-spacing:4px;
 
-            padding: 9px 10px;
+    min-width:720px;
+}
 
-            display: flex;
-            flex-direction: column;
+th{
+    padding:11px 7px;
 
-            justify-content: center;
+    font-size:12px;
 
-            transition: .2s;
+    color:white;
 
-            cursor: pointer;
-        }
+    border-radius:7px;
+}
 
-        .class-box:hover {
-            transform: translateY(-2px);
+th:first-child{
+    background:#f1f0f6;
+    color:var(--text);
+}
 
-            box-shadow:
-                0 5px 12px rgba(0,0,0,.08);
-        }
+th:nth-child(2){background:#64bd60;}
+th:nth-child(3){background:#e8a437;}
+th:nth-child(4){background:#4c91dd;}
+th:nth-child(5){background:#a25bc9;}
+th:nth-child(6){background:#dd6c91;}
+th:nth-child(7){background:#2db2ac;}
 
-        .class-box b {
-            font-size: 12px;
-        }
+td{
+    padding:2px;
+}
 
-        .class-box small {
-            font-size: 10px;
-            margin-top: 4px;
-        }
+.time-cell{
+    text-align:center;
 
-        .green {
-            background: #e6f8e3;
-            color: #287f30;
-        }
+    font-size:10px;
 
-        .orange {
-            background: #fff2d9;
-            color: #b76b0c;
-        }
+    font-weight:600;
 
-        .blue {
-            background: #e4f0ff;
-            color: #226dc0;
-        }
+    min-width:75px;
+}
 
-        .purple {
-            background: #f3e4fb;
-            color: #8245b1;
-        }
+.class-box{
+    min-height:57px;
 
-        .pink {
-            background: #ffe5ec;
-            color: #c54c72;
-        }
+    padding:8px;
 
-        .teal {
-            background: #e0f6f4;
-            color: #168b84;
-        }
+    border-radius:8px;
 
-        .lunch-row td {
-            padding: 8px;
+    cursor:pointer;
 
-            background: #fff6df;
+    transition:.2s;
+}
 
-            color: #a86c15;
+.class-box:hover{
+    transform:translateY(-2px);
 
-            text-align: center;
+    box-shadow:0 5px 14px rgba(0,0,0,.1);
+}
 
-            font-weight: 600;
+.class-box b{
+    display:block;
 
-            border-radius: 8px;
-        }
+    font-size:11px;
+}
 
+.class-box small{
+    display:block;
 
-        /* =====================================================
-           RIGHT COLUMN
-        ===================================================== */
+    font-size:9px;
 
-        .right-column {
-            display: flex;
-            flex-direction: column;
-            gap: 17px;
-        }
+    margin-top:4px;
+}
 
-        .side-card {
-            background: white;
+.green{background:#e5f7e2;color:#287e31;}
+.orange{background:#fff0d5;color:#b76b0c;}
+.blue{background:#e3efff;color:#246dbd;}
+.purple{background:#f1e1fa;color:#8145af;}
+.pink{background:#ffe3eb;color:#c44c72;}
+.teal{background:#def5f2;color:#188b84;}
 
-            border: 1px solid var(--border);
+.lunch{
+    background:#fff4da;
+    color:#a96c13;
 
-            border-radius: 15px;
+    text-align:center;
 
-            padding: 16px;
+    padding:9px;
 
-            box-shadow:
-                0 5px 20px rgba(40,35,90,.04);
-        }
+    border-radius:8px;
 
-        .side-card-title h3 {
-            font-size: 15px;
+    font-size:11px;
 
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    font-weight:700;
+}
 
-        .side-card-title h3 i {
-            color: #6844c7;
-        }
 
-        .side-card-title small {
-            display: block;
+/* =========================================================
+   RIGHT SIDE
+========================================================= */
 
-            color: #858596;
+.right-column{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
 
-            margin-top: 5px;
-            margin-left: 27px;
+.schedule-card,
+.reminder-card,
+.motivation{
+    padding:17px;
+}
 
-            font-size: 11px;
-        }
+.schedule-item{
+    display:grid;
 
+    grid-template-columns:65px 1fr;
 
-        /* =====================================================
-           SCHEDULE
-        ===================================================== */
+    border-left:2px solid #e4e2ed;
 
-        .schedule-list {
-            margin-top: 13px;
-        }
+    position:relative;
 
-        .schedule-item {
-            display: grid;
+    padding:9px 0;
+}
 
-            grid-template-columns: 70px 1fr;
+.schedule-item:before{
+    content:"";
 
-            position: relative;
+    position:absolute;
 
-            padding: 10px 0;
+    left:-5px;
+    top:13px;
 
-            border-left: 2px solid #e4e1ee;
-        }
+    width:7px;
+    height:7px;
 
-        .schedule-item::before {
-            content: "";
+    background:#3985e9;
 
-            position: absolute;
+    border-radius:50%;
+}
 
-            left: -5px;
-            top: 13px;
+.schedule-item time{
+    font-size:9px;
+    padding-left:7px;
+}
 
-            width: 8px;
-            height: 8px;
+.schedule-item b{
+    font-size:11px;
+}
 
-            border-radius: 50%;
+.schedule-item small{
+    display:block;
 
-            background: #3985e9;
-        }
+    color:var(--muted);
 
-        .schedule-item time {
-            font-size: 10px;
+    font-size:9px;
 
-            color: #555668;
+    margin-top:3px;
+}
 
-            padding-left: 7px;
-        }
 
-        .schedule-item b {
-            display: block;
-            font-size: 11px;
-        }
+/* =========================================================
+   MOTIVATION
+========================================================= */
 
-        .schedule-item small {
-            display: block;
+.motivation{
+    color:white;
 
-            margin-top: 3px;
+    text-align:center;
 
-            color: #858596;
+    background:linear-gradient(
+        135deg,
+        #6041c8,
+        #bd3fce,
+        #ee9c44
+    );
+}
 
-            font-size: 9px;
-        }
+.motivation .trophy{
+    font-size:30px;
+}
 
-        .full-day {
-            width: 100%;
+.motivation h3{
+    margin-top:5px;
+}
 
-            border: none;
+.motivation p{
+    font-size:10px;
+    margin-top:5px;
+}
 
-            background: #f1eaff;
 
-            color: #6641bf;
+/* =========================================================
+   PAGE TOOLBAR
+========================================================= */
 
-            padding: 10px;
+.page-toolbar{
+    display:flex;
 
-            border-radius: 8px;
+    align-items:center;
+    justify-content:space-between;
 
-            font-weight: 700;
+    gap:15px;
 
-            margin-top: 7px;
-        }
+    margin-top:25px;
 
+    margin-bottom:15px;
+}
 
-        /* =====================================================
-           REMINDERS
-        ===================================================== */
+.search-box{
+    height:42px;
 
-        .reminders {
-            margin-top: 8px;
-        }
+    border:1px solid var(--border);
 
-        .reminder {
-            display: grid;
+    background:var(--card);
 
-            grid-template-columns:
-                27px 1fr 15px;
+    border-radius:8px;
 
-            gap: 8px;
+    display:flex;
+    align-items:center;
 
-            align-items: center;
+    padding:0 12px;
 
-            padding: 11px 0;
+    max-width:300px;
 
-            border-bottom: 1px solid #eeeef4;
-        }
+    width:100%;
+}
 
-        .reminder:last-child {
-            border-bottom: none;
-        }
+.search-box i{
+    color:#888;
+    margin-right:8px;
+}
 
-        .reminder-icon {
-            width: 23px;
-            height: 23px;
+.search-box input{
+    border:0;
+    outline:0;
 
-            border-radius: 50%;
+    width:100%;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    background:transparent;
 
-            border: 1px solid currentColor;
+    color:var(--text);
+}
 
-            font-size: 10px;
-        }
 
-        .reminder b {
-            display: block;
-            font-size: 10px;
-        }
+/* =========================================================
+   SUBJECTS
+========================================================= */
 
-        .reminder small {
-            display: block;
+.subject-grid{
+    display:grid;
 
-            color: #858596;
+    grid-template-columns:
+        repeat(3,1fr);
 
-            font-size: 9px;
+    gap:15px;
+}
 
-            margin-top: 3px;
-        }
+.subject-card{
+    padding:18px;
 
-        .reminder button {
-            border: none;
-            background: transparent;
+    position:relative;
+}
 
-            color: inherit;
+.subject-icon{
+    width:45px;
+    height:45px;
 
-            font-size: 15px;
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-        .green-reminder {
-            color: #28a261;
-        }
+    border-radius:10px;
 
-        .orange-reminder {
-            color: #ed941d;
-        }
+    background:#eeeaff;
 
-        .pink-reminder {
-            color: #e44d79;
-        }
+    color:var(--primary);
 
+    margin-bottom:12px;
+}
 
-        /* =====================================================
-           MOTIVATION
-        ===================================================== */
+.subject-card h3{
+    font-size:15px;
+}
 
-        .motivation {
-            min-height: 150px;
+.subject-card p{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:5px;
+}
 
-            border-radius: 15px;
+.progress{
+    height:7px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #6242ca,
-                    #c13fd0 70%,
-                    #f0a348
-                );
+    background:#eeeef4;
 
-            color: white;
+    border-radius:20px;
 
-            padding: 20px;
+    overflow:hidden;
 
-            text-align: center;
+    margin-top:13px;
+}
 
-            display: flex;
-            flex-direction: column;
+.progress div{
+    height:100%;
 
-            justify-content: center;
+    background:var(--primary);
 
-            box-shadow:
-                0 10px 25px rgba(95,53,190,.25);
-        }
+    border-radius:20px;
+}
 
-        .trophy {
-            font-size: 28px;
-        }
 
-        .motivation h3 {
-            margin-top: 5px;
-            font-size: 15px;
-        }
+/* =========================================================
+   TASKS
+========================================================= */
 
-        .motivation p {
-            margin-top: 5px;
+.task-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
 
-            font-size: 10px;
+.task{
+    background:var(--card);
 
-            line-height: 1.5;
-        }
+    border:1px solid var(--border);
 
+    border-radius:10px;
 
-        /* =====================================================
-           TOAST
-        ===================================================== */
+    padding:15px;
 
-        .toast {
-            position: fixed;
+    display:flex;
+    align-items:center;
 
-            right: 25px;
-            bottom: 25px;
+    gap:12px;
+}
 
-            background: #25233b;
+.task-check{
+    width:24px;
+    height:24px;
 
-            color: white;
+    border-radius:50%;
 
-            padding: 13px 18px;
+    border:2px solid var(--primary);
 
-            border-radius: 9px;
+    background:white;
 
-            display: flex;
-            align-items: center;
-            gap: 10px;
+    color:white;
+}
 
-            transform: translateY(120px);
+.task.completed .task-check{
+    background:var(--primary);
+}
 
-            opacity: 0;
+.task.completed .task-title{
+    text-decoration:line-through;
+    opacity:.5;
+}
 
-            transition: .3s;
+.task-info{
+    flex:1;
+}
 
-            z-index: 500;
+.task-title{
+    font-size:13px;
+    font-weight:700;
+}
 
-            font-size: 13px;
-        }
+.task-meta{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:4px;
+}
 
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
 
+/* =========================================================
+   REMINDERS
+========================================================= */
 
-        /* =====================================================
-           DARK MODE
-        ===================================================== */
+.reminder-list{
+    display:flex;
 
-        body.dark {
-            --background: #101125;
-            --card: #191a31;
-            --text: #f4f3fa;
-            --muted: #aaa9bc;
-            --border: #2b2c45;
-        }
+    flex-direction:column;
 
-        body.dark .add-class-card,
-        body.dark .timetable-card,
-        body.dark .side-card {
-            background: var(--card);
-        }
+    gap:10px;
+}
 
-        body.dark .select-wrapper,
-        body.dark .time-input,
-        body.dark .room-input {
-            background: #111225;
-            border-color: #33344e;
-        }
+.reminder{
+    padding:15px;
 
-        body.dark select,
-        body.dark input {
-            color: #ddd;
-        }
+    background:var(--card);
 
-        body.dark .icon-button,
-        body.dark .notification-button,
-        body.dark .mobile-menu {
-            color: white;
-        }
+    border:1px solid var(--border);
 
-        body.dark tbody td:first-child {
-            color: #ddd;
-        }
+    border-radius:10px;
 
-        body.dark .schedule-item time {
-            color: #ddd;
-        }
+    display:flex;
 
+    align-items:center;
 
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
+    gap:12px;
+}
 
-        @media (max-width: 1250px) {
+.reminder-icon{
+    width:38px;
+    height:38px;
 
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+    border-radius:50%;
 
-            .right-column {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-            }
+    background:#eeeaff;
 
-            .class-form {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    color:var(--primary);
 
-            .add-button {
-                min-height: 43px;
-            }
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
 
+.reminder-info{
+    flex:1;
+}
 
-        @media (max-width: 900px) {
+.reminder-info b{
+    font-size:13px;
+}
 
-            .sidebar {
-                transform: translateX(-100%);
-            }
+.reminder-info p{
+    color:var(--muted);
 
-            .sidebar.open {
-                transform: translateX(0);
-            }
+    font-size:10px;
 
-            .main {
-                margin-left: 0;
-                width: 100%;
-            }
+    margin-top:4px;
+}
 
-            .mobile-menu {
-                display: block;
-            }
 
-            .topbar {
-                justify-content: space-between;
-            }
+/* =========================================================
+   CALENDAR
+========================================================= */
 
-            .content {
-                padding: 0 18px 25px;
-            }
+.calendar{
+    padding:20px;
+}
 
-            .title-row h2 {
-                font-size: 30px;
-            }
+.calendar-header{
+    display:flex;
 
-            .right-column {
-                grid-template-columns: 1fr;
-            }
-        }
+    justify-content:space-between;
 
+    align-items:center;
 
-        @media (max-width: 600px) {
+    margin-bottom:20px;
+}
 
-            .topbar {
-                padding: 0 18px;
-            }
+.calendar-header h3{
+    font-size:20px;
+}
 
-            .top-actions {
-                gap: 13px;
-            }
+.calendar-controls{
+    display:flex;
+    gap:7px;
+}
 
-            .greeting {
-                font-size: 13px;
-            }
+.calendar-controls button{
+    border:0;
 
-            .title-row h2 {
-                font-size: 25px;
-            }
+    width:35px;
+    height:35px;
 
-            .sparkle {
-                font-size: 28px;
-            }
+    border-radius:7px;
 
-            .subtitle {
-                font-size: 12px;
-            }
+    background:#eeeaff;
 
-            .add-class-card {
-                padding: 13px;
-            }
+    color:var(--primary);
+}
 
-            .add-class-header {
-                align-items: flex-start;
-                gap: 10px;
-            }
+.calendar-grid{
+    display:grid;
 
-            .weekly-button {
-                font-size: 11px;
-            }
+    grid-template-columns:
+        repeat(7,1fr);
 
-            .class-form {
-                grid-template-columns: 1fr;
-            }
+    gap:6px;
+}
 
-            .add-button {
-                height: 43px;
-            }
+.calendar-day-name{
+    text-align:center;
 
-            .dashboard-grid {
-                margin-top: 15px;
-            }
+    font-size:10px;
 
-            .avatar {
-                width: 36px;
-                height: 36px;
+    font-weight:700;
 
-                font-size: 11px;
-            }
-        }
-    </style>
+    color:var(--muted);
+
+    padding:7px;
+}
+
+.calendar-day{
+    min-height:90px;
+
+    padding:8px;
+
+    border:1px solid var(--border);
+
+    border-radius:8px;
+
+    background:var(--card);
+
+    font-size:11px;
+}
+
+.calendar-day.today{
+    border:2px solid var(--primary);
+}
+
+.calendar-day span{
+    font-weight:700;
+}
+
+.calendar-event{
+    margin-top:8px;
+
+    padding:4px;
+
+    background:#eeeaff;
+
+    color:var(--primary);
+
+    border-radius:5px;
+
+    font-size:8px;
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+.settings-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:15px;
+
+    margin-top:25px;
+}
+
+.settings-card{
+    padding:20px;
+}
+
+.setting-row{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:15px 0;
+
+    border-bottom:1px solid var(--border);
+}
+
+.setting-row:last-child{
+    border-bottom:0;
+}
+
+.setting-info b{
+    font-size:13px;
+}
+
+.setting-info p{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.toggle{
+    width:42px;
+    height:23px;
+
+    border:0;
+
+    background:#ccc;
+
+    border-radius:20px;
+
+    position:relative;
+}
+
+.toggle:before{
+    content:"";
+
+    width:17px;
+    height:17px;
+
+    background:white;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    top:3px;
+    left:3px;
+
+    transition:.2s;
+}
+
+.toggle.on{
+    background:var(--primary);
+}
+
+.toggle.on:before{
+    left:22px;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-card{
+    max-width:650px;
+
+    padding:25px;
+
+    margin-top:25px;
+}
+
+.profile-avatar{
+    width:80px;
+    height:80px;
+
+    background:linear-gradient(
+        135deg,
+        #bc719a,
+        #573957
+    );
+
+    color:white;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:25px;
+
+    font-weight:700;
+
+    margin-bottom:15px;
+}
+
+.profile-form{
+    display:grid;
+    gap:12px;
+}
+
+.profile-form label{
+    font-size:11px;
+    font-weight:600;
+}
+
+.profile-form input{
+    height:42px;
+
+    border:1px solid var(--border);
+
+    border-radius:8px;
+
+    padding:0 12px;
+
+    background:var(--card);
+
+    color:var(--text);
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:2000;
+
+    padding:20px;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:430px;
+
+    background:var(--card);
+
+    border-radius:14px;
+
+    padding:22px;
+}
+
+.modal-header{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:20px;
+}
+
+.modal-header button{
+    border:0;
+    background:transparent;
+
+    font-size:20px;
+
+    color:var(--text);
+}
+
+.modal-form{
+    display:grid;
+    gap:12px;
+}
+
+.modal-form input,
+.modal-form select{
+    height:42px;
+
+    border:1px solid var(--border);
+
+    border-radius:8px;
+
+    padding:0 10px;
+
+    background:var(--card);
+
+    color:var(--text);
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    background:#25243b;
+
+    color:white;
+
+    padding:12px 17px;
+
+    border-radius:8px;
+
+    opacity:0;
+
+    transform:translateY(30px);
+
+    transition:.3s;
+
+    z-index:3000;
+
+    font-size:12px;
+}
+
+.toast.show{
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark{
+    --bg:#101125;
+    --card:#191a31;
+
+    --text:#f4f3fa;
+    --muted:#aaaabd;
+
+    --border:#2d2e47;
+}
+
+body.dark .input-group,
+body.dark .search-box,
+body.dark .profile-form input,
+body.dark .modal-form input,
+body.dark .modal-form select{
+    background:#121327;
+}
+
+body.dark .task-check{
+    background:#191a31;
+}
+
+
+/* =========================================================
+   RESPONSIVE TABLET
+========================================================= */
+
+@media(max-width:1100px){
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+    .right-column{
+        display:grid;
+
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .subject-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .primary-btn{
+        height:43px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+
+        width:100%;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .topbar{
+        padding:0 18px;
+    }
+
+    .content{
+        padding:5px 15px 30px;
+    }
+
+    .page-heading h2{
+        font-size:27px;
+    }
+
+    .subtitle{
+        font-size:12px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .right-column{
+        grid-template-columns:1fr;
+    }
+
+    .settings-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-toolbar{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .search-box{
+        max-width:none;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media(max-width:520px){
+
+    .topbar{
+        height:62px;
+    }
+
+    .top-actions{
+        gap:12px;
+    }
+
+    .avatar{
+        width:35px;
+        height:35px;
+        font-size:10px;
+    }
+
+    .page-heading h2{
+        font-size:23px;
+    }
+
+    .sparkle{
+        font-size:27px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .stat-card{
+        padding:15px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .subject-grid{
+        grid-template-columns:1fr;
+    }
+
+    .calendar-day{
+        min-height:60px;
+
+        font-size:9px;
+    }
+
+    .calendar-event{
+        display:none;
+    }
+
+    .calendar-grid{
+        gap:3px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL
+========================================================= */
+
+@media(max-width:380px){
+
+    .content{
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .page-heading h2{
+        font-size:20px;
+    }
+
+    .top-actions{
+        gap:8px;
+    }
+
+}
+
+</style>
 </head>
 
 
@@ -1272,1811 +1588,3091 @@
 
 <div class="app">
 
-    <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
 
-    <aside class="sidebar" id="sidebar">
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
-        <div class="brand">
+<aside class="sidebar" id="sidebar">
 
-            <div class="brand-icon">
-                <i class="fa-solid fa-graduation-cap"></i>
+    <div class="brand">
+
+        <div class="brand-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+
+        <div>
+            <h1>StudySmart</h1>
+            <p>Plan • Focus • Achieve</p>
+        </div>
+
+    </div>
+
+
+    <nav class="navigation" aria-label="Main navigation">
+
+        <button class="nav-item active" data-page="dashboard">
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
+        </button>
+
+        <button class="nav-item" data-page="timetable">
+            <i class="fa-solid fa-table-cells"></i>
+            <span>Timetable</span>
+        </button>
+
+        <button class="nav-item" data-page="subjects">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Subjects</span>
+        </button>
+
+        <button class="nav-item" data-page="tasks">
+            <i class="fa-solid fa-square-check"></i>
+            <span>Tasks</span>
+        </button>
+
+        <button class="nav-item" data-page="reminders">
+            <i class="fa-regular fa-bell"></i>
+            <span>Reminders</span>
+        </button>
+
+        <button class="nav-item" data-page="calendar">
+            <i class="fa-regular fa-calendar"></i>
+            <span>Calendar</span>
+        </button>
+
+        <button class="nav-item" data-page="settings">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+        </button>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="quote">
+
+            <strong>
+                “Discipline today leads to freedom tomorrow.”
+            </strong>
+
+            <small>– Unknown</small>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+<header class="topbar">
+
+    <button
+        class="mobile-menu"
+        id="mobileMenu"
+        aria-label="Open navigation menu"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+
+    <div class="top-actions">
+
+        <button
+            class="top-btn"
+            id="themeToggle"
+            aria-label="Toggle dark mode"
+        >
+            <i class="fa-regular fa-sun"></i>
+        </button>
+
+
+        <button
+            class="top-btn"
+            id="notificationButton"
+            aria-label="Notifications"
+        >
+
+            <i class="fa-regular fa-bell"></i>
+
+            <span
+                class="notification-badge"
+                id="notificationCount"
+            >
+                3
+            </span>
+
+        </button>
+
+
+        <button
+            class="avatar"
+            id="profileButton"
+            aria-label="Open profile"
+        >
+            DA
+        </button>
+
+    </div>
+
+</header>
+
+
+<section class="content">
+
+
+<!-- =====================================================
+     DASHBOARD PAGE
+===================================================== -->
+
+<div class="page active" id="dashboard">
+
+    <p class="greeting">
+        Good morning, David! 👋
+    </p>
+
+    <div class="page-heading">
+
+        <h2>Your Student Timetable</h2>
+
+        <span class="sparkle">✧</span>
+
+    </div>
+
+    <p class="subtitle">
+        Stay organized. Stay consistent. Make it happen! 🚀
+    </p>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="card stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-book"></i>
             </div>
 
             <div>
-                <h1>StudySmart</h1>
-                <p>Plan • Focus • Achieve</p>
+                <h3 id="statSubjects">10</h3>
+                <p>Subjects</p>
             </div>
 
         </div>
 
 
-        <nav class="navigation">
+        <div class="card stat-card">
 
-            <button class="nav-item active" data-page="dashboard">
-                <i class="fa-solid fa-house"></i>
-                <span>Dashboard</span>
-            </button>
-
-            <button class="nav-item" data-page="timetable">
-                <i class="fa-solid fa-table-cells"></i>
-                <span>Timetable</span>
-            </button>
-
-            <button class="nav-item" data-page="subjects">
-                <i class="fa-solid fa-book-open"></i>
-                <span>Subjects</span>
-            </button>
-
-            <button class="nav-item" data-page="tasks">
-                <i class="fa-solid fa-square-check"></i>
-                <span>Tasks</span>
-            </button>
-
-            <button class="nav-item" data-page="reminders">
-                <i class="fa-regular fa-bell"></i>
-                <span>Reminders</span>
-            </button>
-
-            <button class="nav-item" data-page="calendar">
-                <i class="fa-regular fa-calendar"></i>
-                <span>Calendar</span>
-            </button>
-
-            <button class="nav-item" data-page="settings">
-                <i class="fa-solid fa-gear"></i>
-                <span>Settings</span>
-            </button>
-
-        </nav>
-
-
-        <!-- Decorative section -->
-
-        <div class="sidebar-decoration">
-
-            <div class="floating-star star1">✦</div>
-            <div class="floating-star star2">✦</div>
-
-            <div class="pencil-cup">
-
-                <div class="pencils">
-                    <span>✏️</span>
-                    <span>🖍️</span>
-                    <span>✏️</span>
-                    <span>🖊️</span>
-                </div>
-
-                <div class="cup"></div>
-
+            <div class="stat-icon">
+                <i class="fa-solid fa-calendar-days"></i>
             </div>
 
-
-            <div class="books">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-
-
-            <div class="quote">
-
-                <strong>
-                    “Discipline today<br>
-                    leads to freedom<br>
-                    tomorrow.”
-                </strong>
-
-                <small>– Unknown</small>
-
+            <div>
+                <h3 id="statClasses">54</h3>
+                <p>Classes</p>
             </div>
 
         </div>
 
-    </aside>
+
+        <div class="card stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-list-check"></i>
+            </div>
+
+            <div>
+                <h3 id="statTasks">4</h3>
+                <p>Pending Tasks</p>
+            </div>
+
+        </div>
 
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
+        <div class="card stat-card">
 
-    <main class="main">
+            <div class="stat-icon">
+                <i class="fa-solid fa-bell"></i>
+            </div>
 
-        <!-- TOP BAR -->
+            <div>
+                <h3 id="statReminders">3</h3>
+                <p>Reminders</p>
+            </div>
 
-        <header class="topbar">
+        </div>
+
+    </div>
+
+
+    <!-- ADD CLASS -->
+
+    <div class="card add-class">
+
+        <div class="card-header">
+
+            <h3>
+                <i class="fa-regular fa-square-plus"></i>
+                Add New Class
+            </h3>
 
             <button
-                class="mobile-menu"
-                id="mobileMenu"
-                aria-label="Open menu"
+                class="secondary-btn"
+                onclick="showPage('timetable')"
             >
-                <i class="fa-solid fa-bars"></i>
+                View Weekly
             </button>
 
-
-            <div class="top-actions">
-
-                <button
-                    class="icon-button"
-                    id="themeToggle"
-                    title="Toggle dark mode"
-                >
-                    <i class="fa-regular fa-sun"></i>
-                </button>
+        </div>
 
 
-                <button
-                    class="notification-button"
-                    title="Notifications"
-                >
-                    <i class="fa-regular fa-bell"></i>
-                    <span>3</span>
-                </button>
+        <div class="form-grid">
 
+            <div class="input-group">
 
-                <div class="profile">
-                    <div class="avatar">
-                        DA
-                    </div>
-                </div>
+                <i class="fa-solid fa-book"></i>
 
-            </div>
+                <select id="classSubject">
 
-        </header>
+                    <option value="">Subject</option>
 
+                    <option>Mathematics</option>
+                    <option>English</option>
+                    <option>Physics</option>
+                    <option>Chemistry</option>
+                    <option>Biology</option>
+                    <option>French</option>
+                    <option>History</option>
+                    <option>Geography</option>
+                    <option>ICT</option>
 
-        <!-- =================================================
-             CONTENT
-        ================================================== -->
-
-        <section class="content">
-
-
-            <!-- WELCOME -->
-
-            <div class="welcome">
-
-                <p class="greeting">
-                    Good morning, Adeola! 👋
-                </p>
-
-                <div class="title-row">
-
-                    <h2>
-                        Your Student Timetable
-                    </h2>
-
-                    <span class="sparkle">
-                        ✧
-                    </span>
-
-                </div>
-
-                <p class="subtitle">
-                    Stay organized. Stay consistent. Make it happen! 🚀
-                </p>
+                </select>
 
             </div>
 
 
-            <!-- =================================================
-                 ADD CLASS
-            ================================================== -->
+            <div class="input-group">
 
-            <section class="add-class-card">
+                <i class="fa-regular fa-calendar"></i>
 
-                <div class="add-class-header">
+                <select id="classDay">
 
-                    <h3>
-                        <i class="fa-regular fa-square-plus"></i>
-                        Add New Class
-                    </h3>
+                    <option value="">Day</option>
 
-                    <button
-                        class="weekly-button"
-                        id="weeklyButton"
-                    >
-                        <i class="fa-regular fa-calendar"></i>
-                        View Weekly
-                    </button>
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
 
-                </div>
+                </select>
 
+            </div>
 
-                <div class="class-form">
 
+            <div class="input-group">
 
-                    <!-- SUBJECT -->
+                <i class="fa-regular fa-clock"></i>
 
-                    <div class="select-wrapper">
+                <input
+                    id="classTime"
+                    placeholder="7:00 - 8:00"
+                >
 
-                        <i class="fa-solid fa-book-open"></i>
+            </div>
 
-                        <select id="subject">
 
-                            <option value="">
-                                Subject
-                            </option>
+            <div class="input-group">
 
-                            <option>
-                                Mathematics
-                            </option>
+                <i class="fa-solid fa-location-dot"></i>
 
-                            <option>
-                                English
-                            </option>
+                <input
+                    id="classRoom"
+                    placeholder="Room"
+                >
 
-                            <option>
-                                Physics
-                            </option>
+            </div>
 
-                            <option>
-                                Chemistry
-                            </option>
 
-                            <option>
-                                Biology
-                            </option>
+            <button
+                class="primary-btn"
+                id="addClassButton"
+            >
+                <i class="fa-solid fa-plus"></i>
+                Add Class
+            </button>
 
-                            <option>
-                                French
-                            </option>
+        </div>
 
-                            <option>
-                                History
-                            </option>
+    </div>
 
-                            <option>
-                                Geography
-                            </option>
 
-                            <option>
-                                ICT
-                            </option>
+    <!-- DASHBOARD GRID -->
 
-                            <option>
-                                Study Time
-                            </option>
+    <div class="dashboard-grid">
 
-                            <option>
-                                Sports
-                            </option>
 
-                        </select>
+        <!-- TABLE -->
 
-                    </div>
+        <div class="card timetable-card">
 
+            <div class="table-wrapper">
 
-                    <!-- DAY -->
+                <table id="dashboardTable">
 
-                    <div class="select-wrapper">
+                    <thead>
 
-                        <i class="fa-regular fa-calendar"></i>
+                        <tr>
 
-                        <select id="day">
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
 
-                            <option value="">
-                                Day
-                            </option>
+                        </tr>
 
-                            <option>Monday</option>
-                            <option>Tuesday</option>
-                            <option>Wednesday</option>
-                            <option>Thursday</option>
-                            <option>Friday</option>
-                            <option>Saturday</option>
+                    </thead>
 
-                        </select>
 
-                    </div>
+                    <tbody>
 
+                        <tr data-time="7:00 - 8:00">
 
-                    <!-- TIME -->
+                            <td class="time-cell">
+                                7:00 – 8:00
+                            </td>
 
-                    <div class="time-input">
-
-                        <i class="fa-regular fa-clock"></i>
-
-                        <input
-                            type="text"
-                            id="time"
-                            placeholder="Time e.g. 7:00 - 8:00"
-                        >
-
-                    </div>
-
-
-                    <!-- ROOM -->
-
-                    <div class="room-input">
-
-                        <i class="fa-solid fa-location-dot"></i>
-
-                        <input
-                            type="text"
-                            id="room"
-                            placeholder="Room (Optional)"
-                        >
-
-                    </div>
-
-
-                    <!-- ADD -->
-
-                    <button
-                        class="add-button"
-                        id="addClass"
-                    >
-
-                        <i class="fa-solid fa-plus"></i>
-
-                        Add Class
-
-                    </button>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 DASHBOARD
-            ================================================== -->
-
-            <div class="dashboard-grid">
-
-
-                <!-- =================================================
-                     TIMETABLE
-                ================================================== -->
-
-                <section class="timetable-card">
-
-                    <div class="table-scroll">
-
-                        <table id="timetable">
-
-                            <thead>
-
-                                <tr>
-
-                                    <th>Time</th>
-
-                                    <th>Monday</th>
-                                    <th>Tuesday</th>
-                                    <th>Wednesday</th>
-                                    <th>Thursday</th>
-                                    <th>Friday</th>
-                                    <th>Saturday</th>
-
-                                </tr>
-
-                            </thead>
-
-
-                            <tbody>
-
-
-                                <!-- 7-8 -->
-
-                                <tr data-time="7:00 - 8:00">
-
-                                    <td>
-                                        7:00 – 8:00
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box green">
-                                            <b>Mathematics</b>
-                                            <small>Room 12A</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box orange">
-                                            <b>English</b>
-                                            <small>Room 15B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box blue">
-                                            <b>Physics</b>
-                                            <small>Room 21C</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box purple">
-                                            <b>French</b>
-                                            <small>Room 18D</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box pink">
-                                            <b>Mathematics</b>
-                                            <small>Room 12A</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box teal">
-                                            <b>Sports</b>
-                                            <small>Field</small>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <!-- 8-9 -->
-
-                                <tr data-time="8:00 - 9:00">
-
-                                    <td>
-                                        8:00 – 9:00
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box green">
-                                            <b>Chemistry</b>
-                                            <small>Lab 3</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box orange">
-                                            <b>Biology</b>
-                                            <small>Lab 2</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box blue">
-                                            <b>History</b>
-                                            <small>Room 9B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box purple">
-                                            <b>Geography</b>
-                                            <small>Room 10C</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box pink">
-                                            <b>English</b>
-                                            <small>Room 15B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box teal">
-                                            <b>Study Time</b>
-                                            <small>Library</small>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <!-- 9-10 -->
-
-                                <tr data-time="9:00 - 10:00">
-
-                                    <td>
-                                        9:00 – 10:00
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box green">
-                                            <b>English</b>
-                                            <small>Room 15B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box orange">
-                                            <b>Mathematics</b>
-                                            <small>Room 12A</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box blue">
-                                            <b>Chemistry</b>
-                                            <small>Lab 3</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box purple">
-                                            <b>Physics</b>
-                                            <small>Room 21C</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box pink">
-                                            <b>ICT</b>
-                                            <small>Computer Lab</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box teal">
-                                            <b>Free Time</b>
-                                            <small>–</small>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <!-- 10-11 -->
-
-                                <tr data-time="10:00 - 11:00">
-
-                                    <td>
-                                        10:00 – 11:00
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box green">
-                                            <b>Physics</b>
-                                            <small>Room 21C</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box orange">
-                                            <b>French</b>
-                                            <small>Room 18D</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box blue">
-                                            <b>Mathematics</b>
-                                            <small>Room 12A</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box purple">
-                                            <b>English</b>
-                                            <small>Room 15B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box pink">
-                                            <b>History</b>
-                                            <small>Room 9B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box teal">
-                                            <b>Club Activity</b>
-                                            <small>–</small>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <!-- 11-12 -->
-
-                                <tr data-time="11:00 - 12:00">
-
-                                    <td>
-                                        11:00 – 12:00
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box green">
-                                            <b>Geography</b>
-                                            <small>Room 10C</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box orange">
-                                            <b>ICT</b>
-                                            <small>Computer Lab</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box blue">
-                                            <b>French</b>
-                                            <small>Room 18D</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box purple">
-                                            <b>Chemistry</b>
-                                            <small>Lab 3</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box pink">
-                                            <b>Biology</b>
-                                            <small>Lab 2</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box teal">
-                                            <b>Debate Club</b>
-                                            <small>Room 7A</small>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <!-- LUNCH -->
-
-                                <tr class="lunch-row">
-
-                                    <td>
-                                        12:00 – 1:00
-                                    </td>
-
-                                    <td colspan="6">
-                                        🍴 Lunch Break
-                                    </td>
-
-                                </tr>
-
-
-                                <!-- 1-2 -->
-
-                                <tr data-time="1:00 - 2:00">
-
-                                    <td>
-                                        1:00 – 2:00
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box green">
-                                            <b>Biology</b>
-                                            <small>Lab 2</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box orange">
-                                            <b>History</b>
-                                            <small>Room 9B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box blue">
-                                            <b>ICT</b>
-                                            <small>Computer Lab</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box purple">
-                                            <b>Mathematics</b>
-                                            <small>Room 12A</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box pink">
-                                            <b>French</b>
-                                            <small>Room 18D</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box teal">
-                                            <b>Study Time</b>
-                                            <small>Library</small>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <!-- 2-3 -->
-
-                                <tr data-time="2:00 - 3:00">
-
-                                    <td>
-                                        2:00 – 3:00
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box green">
-                                            <b>French</b>
-                                            <small>Room 18D</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box orange">
-                                            <b>Physics</b>
-                                            <small>Room 21C</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box blue">
-                                            <b>English</b>
-                                            <small>Room 15B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box purple">
-                                            <b>History</b>
-                                            <small>Room 9B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box pink">
-                                            <b>Geography</b>
-                                            <small>Room 10C</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box teal">
-                                            <b>Free Time</b>
-                                            <small>–</small>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <!-- 3-4 -->
-
-                                <tr data-time="3:00 - 4:00">
-
-                                    <td>
-                                        3:00 – 4:00
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box green">
-                                            <b>ICT</b>
-                                            <small>Computer Lab</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box orange">
-                                            <b>Geography</b>
-                                            <small>Room 10C</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box blue">
-                                            <b>Biology</b>
-                                            <small>Lab 2</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box purple">
-                                            <b>French</b>
-                                            <small>Room 18D</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box pink">
-                                            <b>Mathematics</b>
-                                            <small>Room 12A</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box teal">
-                                            <b>Sports</b>
-                                            <small>Field</small>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <!-- 4-5 -->
-
-                                <tr data-time="4:00 - 5:00">
-
-                                    <td>
-                                        4:00 – 5:00
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box green">
-                                            <b>Study Time</b>
-                                            <small>Library</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box orange">
-                                            <b>Debate Club</b>
-                                            <small>Room 7A</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box blue">
-                                            <b>Quiz Club</b>
-                                            <small>Room 7B</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box purple">
-                                            <b>Music</b>
-                                            <small>Room 4A</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box pink">
-                                            <b>Coding Club</b>
-                                            <small>Lab 1</small>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="class-box teal">
-                                            <b>Free Time</b>
-                                            <small>–</small>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </section>
-
-
-                <!-- =================================================
-                     RIGHT COLUMN
-                ================================================== -->
-
-                <aside class="right-column">
-
-
-                    <!-- TODAY'S SCHEDULE -->
-
-                    <section class="side-card">
-
-                        <div class="side-card-title">
-
-                            <h3>
-                                <i class="fa-regular fa-calendar"></i>
-                                Today's Schedule
-                            </h3>
-
-                            <small id="todayDate">
-                                Wednesday, 2 September
-                            </small>
-
-                        </div>
-
-
-                        <div class="schedule-list">
-
-                            <div class="schedule-item">
-
-                                <time>8:00 AM</time>
-
-                                <div>
-                                    <b>Physics</b>
-                                    <small>Room 21C</small>
-                                </div>
-
-                            </div>
-
-
-                            <div class="schedule-item">
-
-                                <time>9:00 AM</time>
-
-                                <div>
-                                    <b>History</b>
-                                    <small>Room 9B</small>
-                                </div>
-
-                            </div>
-
-
-                            <div class="schedule-item">
-
-                                <time>10:00 AM</time>
-
-                                <div>
+                            <td>
+                                <div class="class-box green">
                                     <b>Mathematics</b>
                                     <small>Room 12A</small>
                                 </div>
+                            </td>
 
-                            </div>
+                            <td>
+                                <div class="class-box orange">
+                                    <b>English</b>
+                                    <small>Room 15B</small>
+                                </div>
+                            </td>
 
+                            <td>
+                                <div class="class-box blue">
+                                    <b>Physics</b>
+                                    <small>Room 21C</small>
+                                </div>
+                            </td>
 
-                            <div class="schedule-item">
-
-                                <time>11:00 AM</time>
-
-                                <div>
+                            <td>
+                                <div class="class-box purple">
                                     <b>French</b>
                                     <small>Room 18D</small>
                                 </div>
+                            </td>
 
-                            </div>
+                            <td>
+                                <div class="class-box pink">
+                                    <b>Mathematics</b>
+                                    <small>Room 12A</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box teal">
+                                    <b>Sports</b>
+                                    <small>Field</small>
+                                </div>
+                            </td>
+
+                        </tr>
 
 
-                            <div class="schedule-item">
+                        <tr data-time="8:00 - 9:00">
 
-                                <time>1:00 PM</time>
+                            <td class="time-cell">
+                                8:00 – 9:00
+                            </td>
 
-                                <div>
+                            <td>
+                                <div class="class-box green">
+                                    <b>Chemistry</b>
+                                    <small>Lab 3</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box orange">
+                                    <b>Biology</b>
+                                    <small>Lab 2</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box blue">
+                                    <b>History</b>
+                                    <small>Room 9B</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box purple">
+                                    <b>Geography</b>
+                                    <small>Room 10C</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box pink">
+                                    <b>English</b>
+                                    <small>Room 15B</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box teal">
+                                    <b>Study Time</b>
+                                    <small>Library</small>
+                                </div>
+                            </td>
+
+                        </tr>
+
+
+                        <tr data-time="9:00 - 10:00">
+
+                            <td class="time-cell">
+                                9:00 – 10:00
+                            </td>
+
+                            <td>
+                                <div class="class-box green">
+                                    <b>English</b>
+                                    <small>Room 15B</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box orange">
+                                    <b>Mathematics</b>
+                                    <small>Room 12A</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box blue">
+                                    <b>Chemistry</b>
+                                    <small>Lab 3</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box purple">
+                                    <b>Physics</b>
+                                    <small>Room 21C</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box pink">
                                     <b>ICT</b>
                                     <small>Computer Lab</small>
                                 </div>
+                            </td>
 
-                            </div>
+                            <td>
+                                <div class="class-box teal">
+                                    <b>Free Time</b>
+                                    <small>—</small>
+                                </div>
+                            </td>
 
-                        </div>
-
-
-                        <button
-                            class="full-day"
-                            id="fullDay"
-                        >
-                            View Full Day
-                        </button>
-
-                    </section>
+                        </tr>
 
 
-                    <!-- REMINDERS -->
+                        <tr data-time="10:00 - 11:00">
 
-                    <section class="side-card">
+                            <td class="time-cell">
+                                10:00 – 11:00
+                            </td>
 
-                        <div class="side-card-title">
+                            <td>
+                                <div class="class-box green">
+                                    <b>Physics</b>
+                                    <small>Room 21C</small>
+                                </div>
+                            </td>
 
-                            <h3>
-                                <i class="fa-regular fa-bell"></i>
-                                Reminders
-                            </h3>
+                            <td>
+                                <div class="class-box orange">
+                                    <b>French</b>
+                                    <small>Room 18D</small>
+                                </div>
+                            </td>
 
-                        </div>
+                            <td>
+                                <div class="class-box blue">
+                                    <b>Mathematics</b>
+                                    <small>Room 12A</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box purple">
+                                    <b>English</b>
+                                    <small>Room 15B</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box pink">
+                                    <b>History</b>
+                                    <small>Room 9B</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box teal">
+                                    <b>Club Activity</b>
+                                    <small>—</small>
+                                </div>
+                            </td>
+
+                        </tr>
 
 
-                        <div class="reminders">
+                        <tr data-time="11:00 - 12:00">
+
+                            <td class="time-cell">
+                                11:00 – 12:00
+                            </td>
+
+                            <td>
+                                <div class="class-box green">
+                                    <b>Geography</b>
+                                    <small>Room 10C</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box orange">
+                                    <b>ICT</b>
+                                    <small>Computer Lab</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box blue">
+                                    <b>French</b>
+                                    <small>Room 18D</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box purple">
+                                    <b>Chemistry</b>
+                                    <small>Lab 3</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box pink">
+                                    <b>Biology</b>
+                                    <small>Lab 2</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box teal">
+                                    <b>Debate Club</b>
+                                    <small>Room 7A</small>
+                                </div>
+                            </td>
+
+                        </tr>
 
 
-                            <div class="reminder green-reminder">
+                        <tr>
 
-                                <div class="reminder-icon">
-                                    <i class="fa-solid fa-check"></i>
+                            <td class="time-cell">
+                                12:00 – 1:00
+                            </td>
+
+                            <td colspan="6">
+
+                                <div class="lunch">
+                                    🍴 Lunch Break
                                 </div>
 
-                                <div>
-                                    <b>Math Assignment</b>
-                                    <small>Due tomorrow</small>
+                            </td>
+
+                        </tr>
+
+
+                        <tr data-time="1:00 - 2:00">
+
+                            <td class="time-cell">
+                                1:00 – 2:00
+                            </td>
+
+                            <td>
+                                <div class="class-box green">
+                                    <b>Biology</b>
+                                    <small>Lab 2</small>
                                 </div>
+                            </td>
 
-                                <button class="complete-reminder">
-                                    ○
-                                </button>
-
-                            </div>
-
-
-                            <div class="reminder orange-reminder">
-
-                                <div class="reminder-icon">
-                                    <i class="fa-regular fa-clock"></i>
+                            <td>
+                                <div class="class-box orange">
+                                    <b>History</b>
+                                    <small>Room 9B</small>
                                 </div>
+                            </td>
 
-                                <div>
-                                    <b>French Speaking Test</b>
-                                    <small>May 20, 2024</small>
+                            <td>
+                                <div class="class-box blue">
+                                    <b>ICT</b>
+                                    <small>Computer Lab</small>
                                 </div>
+                            </td>
 
-                                <button class="complete-reminder">
-                                    ○
-                                </button>
-
-                            </div>
-
-
-                            <div class="reminder pink-reminder">
-
-                                <div class="reminder-icon">
-                                    <i class="fa-solid fa-star"></i>
+                            <td>
+                                <div class="class-box purple">
+                                    <b>Mathematics</b>
+                                    <small>Room 12A</small>
                                 </div>
+                            </td>
 
-                                <div>
-                                    <b>Science Project</b>
-                                    <small>May 25, 2024</small>
+                            <td>
+                                <div class="class-box pink">
+                                    <b>French</b>
+                                    <small>Room 18D</small>
                                 </div>
+                            </td>
 
-                                <button class="complete-reminder">
-                                    ○
-                                </button>
+                            <td>
+                                <div class="class-box teal">
+                                    <b>Study Time</b>
+                                    <small>Library</small>
+                                </div>
+                            </td>
 
-                            </div>
-
-                        </div>
-
-                    </section>
+                        </tr>
 
 
-                    <!-- MOTIVATION -->
+                        <tr data-time="2:00 - 3:00">
 
-                    <section class="motivation">
+                            <td class="time-cell">
+                                2:00 – 3:00
+                            </td>
 
-                        <div class="trophy">
-                            🏆
-                        </div>
+                            <td>
+                                <div class="class-box green">
+                                    <b>French</b>
+                                    <small>Room 18D</small>
+                                </div>
+                            </td>
 
-                        <h3>
-                            Keep going, Adeola!
-                        </h3>
+                            <td>
+                                <div class="class-box orange">
+                                    <b>Physics</b>
+                                    <small>Room 21C</small>
+                                </div>
+                            </td>
 
-                        <p>
-                            You're building your<br>
-                            future one day at a time.
-                        </p>
+                            <td>
+                                <div class="class-box blue">
+                                    <b>English</b>
+                                    <small>Room 15B</small>
+                                </div>
+                            </td>
 
-                    </section>
+                            <td>
+                                <div class="class-box purple">
+                                    <b>History</b>
+                                    <small>Room 9B</small>
+                                </div>
+                            </td>
 
-                </aside>
+                            <td>
+                                <div class="class-box pink">
+                                    <b>Geography</b>
+                                    <small>Room 10C</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box teal">
+                                    <b>Free Time</b>
+                                    <small>—</small>
+                                </div>
+                            </td>
+
+                        </tr>
+
+
+                        <tr data-time="3:00 - 4:00">
+
+                            <td class="time-cell">
+                                3:00 – 4:00
+                            </td>
+
+                            <td>
+                                <div class="class-box green">
+                                    <b>ICT</b>
+                                    <small>Computer Lab</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box orange">
+                                    <b>Geography</b>
+                                    <small>Room 10C</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box blue">
+                                    <b>Biology</b>
+                                    <small>Lab 2</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box purple">
+                                    <b>French</b>
+                                    <small>Room 18D</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box pink">
+                                    <b>Mathematics</b>
+                                    <small>Room 12A</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box teal">
+                                    <b>Sports</b>
+                                    <small>Field</small>
+                                </div>
+                            </td>
+
+                        </tr>
+
+
+                        <tr data-time="4:00 - 5:00">
+
+                            <td class="time-cell">
+                                4:00 – 5:00
+                            </td>
+
+                            <td>
+                                <div class="class-box green">
+                                    <b>Study Time</b>
+                                    <small>Library</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box orange">
+                                    <b>Debate Club</b>
+                                    <small>Room 7A</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box blue">
+                                    <b>Quiz Club</b>
+                                    <small>Room 7B</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box purple">
+                                    <b>Music</b>
+                                    <small>Room 4A</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box pink">
+                                    <b>Coding Club</b>
+                                    <small>Lab 1</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="class-box teal">
+                                    <b>Free Time</b>
+                                    <small>—</small>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+
+        <!-- RIGHT -->
+
+        <div class="right-column">
+
+
+            <div class="card schedule-card">
+
+                <div class="card-header">
+
+                    <h3>
+                        <i class="fa-regular fa-calendar"></i>
+                        Today's Schedule
+                    </h3>
+
+                </div>
+
+                <div class="schedule-item">
+
+                    <time>8:00 AM</time>
+
+                    <div>
+                        <b>Physics</b>
+                        <small>Room 21C</small>
+                    </div>
+
+                </div>
+
+                <div class="schedule-item">
+
+                    <time>9:00 AM</time>
+
+                    <div>
+                        <b>History</b>
+                        <small>Room 9B</small>
+                    </div>
+
+                </div>
+
+                <div class="schedule-item">
+
+                    <time>10:00 AM</time>
+
+                    <div>
+                        <b>Mathematics</b>
+                        <small>Room 12A</small>
+                    </div>
+
+                </div>
+
+                <div class="schedule-item">
+
+                    <time>11:00 AM</time>
+
+                    <div>
+                        <b>French</b>
+                        <small>Room 18D</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card motivation">
+
+                <div class="trophy">
+                    🏆
+                </div>
+
+                <h3>
+                    Keep going, David!
+                </h3>
+
+                <p>
+                    You're building your future<br>
+                    one day at a time.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 
 <!-- =====================================================
-     TOAST
-====================================================== -->
+     TIMETABLE PAGE
+===================================================== -->
+
+<div class="page" id="timetable">
+
+    <div class="page-heading">
+
+        <h2>My Timetable</h2>
+
+        <span class="sparkle">📅</span>
+
+    </div>
+
+    <p class="subtitle">
+        Manage your weekly classes and study periods.
+    </p>
+
+
+    <div class="card timetable-card" style="margin-top:25px">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="timetablePageBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SUBJECTS PAGE
+===================================================== -->
+
+<div class="page" id="subjects">
+
+    <div class="page-heading">
+
+        <h2>My Subjects</h2>
+
+        <span class="sparkle">📚</span>
+
+    </div>
+
+    <p class="subtitle">
+        Track all your subjects and your study progress.
+    </p>
+
+
+    <div class="page-toolbar">
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-search"></i>
+
+            <input
+                id="subjectSearch"
+                placeholder="Search subjects..."
+            >
+
+        </div>
+
+        <button
+            class="primary-btn"
+            id="addSubjectButton"
+        >
+            <i class="fa-solid fa-plus"></i>
+            Add Subject
+        </button>
+
+    </div>
+
+
+    <div
+        class="subject-grid"
+        id="subjectGrid"
+    ></div>
+
+</div>
+
+
+<!-- =====================================================
+     TASKS PAGE
+===================================================== -->
+
+<div class="page" id="tasks">
+
+    <div class="page-heading">
+
+        <h2>My Tasks</h2>
+
+        <span class="sparkle">✅</span>
+
+    </div>
+
+    <p class="subtitle">
+        Keep track of assignments, projects and revision.
+    </p>
+
+
+    <div class="page-toolbar">
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-search"></i>
+
+            <input
+                id="taskSearch"
+                placeholder="Search tasks..."
+            >
+
+        </div>
+
+        <button
+            class="primary-btn"
+            id="addTaskButton"
+        >
+            <i class="fa-solid fa-plus"></i>
+            Add Task
+        </button>
+
+    </div>
+
+
+    <div
+        class="task-list"
+        id="taskList"
+    ></div>
+
+</div>
+
+
+<!-- =====================================================
+     REMINDERS PAGE
+===================================================== -->
+
+<div class="page" id="reminders">
+
+    <div class="page-heading">
+
+        <h2>Reminders</h2>
+
+        <span class="sparkle">🔔</span>
+
+    </div>
+
+    <p class="subtitle">
+        Never forget an important school activity.
+    </p>
+
+
+    <div class="page-toolbar">
+
+        <div></div>
+
+        <button
+            class="primary-btn"
+            id="addReminderButton"
+        >
+            <i class="fa-solid fa-plus"></i>
+            Add Reminder
+        </button>
+
+    </div>
+
+
+    <div
+        class="reminder-list"
+        id="reminderList"
+    ></div>
+
+</div>
+
+
+<!-- =====================================================
+     CALENDAR PAGE
+===================================================== -->
+
+<div class="page" id="calendar">
+
+    <div class="page-heading">
+
+        <h2>Calendar</h2>
+
+        <span class="sparkle">🗓️</span>
+
+    </div>
+
+    <p class="subtitle">
+        View your school activities and important dates.
+    </p>
+
+
+    <div class="card calendar" style="margin-top:25px">
+
+        <div class="calendar-header">
+
+            <h3 id="calendarMonth">
+                September 2026
+            </h3>
+
+            <div class="calendar-controls">
+
+                <button id="previousMonth">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <button id="nextMonth">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SETTINGS PAGE
+===================================================== -->
+
+<div class="page" id="settings">
+
+    <div class="page-heading">
+
+        <h2>Settings</h2>
+
+        <span class="sparkle">⚙️</span>
+
+    </div>
+
+    <p class="subtitle">
+        Customize your StudySmart experience.
+    </p>
+
+
+    <div class="settings-grid">
+
+
+        <div class="card settings-card">
+
+            <h3>Preferences</h3>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <b>Dark Mode</b>
+
+                    <p>
+                        Use a darker appearance.
+                    </p>
+
+                </div>
+
+                <button
+                    class="toggle"
+                    id="darkToggle"
+                ></button>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <b>Notifications</b>
+
+                    <p>
+                        Receive reminder notifications.
+                    </p>
+
+                </div>
+
+                <button
+                    class="toggle on"
+                    id="notificationToggle"
+                ></button>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <b>Auto Save</b>
+
+                    <p>
+                        Automatically save your changes.
+                    </p>
+
+                </div>
+
+                <button
+                    class="toggle on"
+                ></button>
+
+            </div>
+
+        </div>
+
+
+        <div class="card settings-card">
+
+            <h3>Account</h3>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <b>Profile</b>
+
+                    <p>
+                        Update your student information.
+                    </p>
+
+                </div>
+
+                <button
+                    class="secondary-btn"
+                    onclick="showProfile()"
+                >
+                    Edit
+                </button>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <b>Clear Data</b>
+
+                    <p>
+                        Delete saved StudySmart data.
+                    </p>
+
+                </div>
+
+                <button
+                    class="danger-btn"
+                    id="clearData"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="modalOverlay"
+>
+
+    <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div class="modal-header">
+
+            <h3 id="modalTitle">
+                Add Item
+            </h3>
+
+            <button id="closeModal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div
+            class="modal-form"
+            id="modalForm"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
 
 <div
     class="toast"
     id="toast"
->
-    <i class="fa-solid fa-check"></i>
-    <span>Success!</span>
-</div>
+></div>
 
 
 <script>
 
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
 
-    const sidebar =
-        document.getElementById("sidebar");
+let subjects =
+JSON.parse(
+    localStorage.getItem("studysmartSubjects")
+) || [
 
-    const mobileMenu =
-        document.getElementById("mobileMenu");
+    {
+        name:"Mathematics",
+        teacher:"Mr. Ade",
+        progress:85
+    },
 
-    const themeToggle =
-        document.getElementById("themeToggle");
+    {
+        name:"English",
+        teacher:"Mrs. James",
+        progress:72
+    },
 
-    const addClassButton =
-        document.getElementById("addClass");
+    {
+        name:"Physics",
+        teacher:"Mr. Bello",
+        progress:65
+    },
 
-    const subjectInput =
-        document.getElementById("subject");
+    {
+        name:"Chemistry",
+        teacher:"Mrs. Grace",
+        progress:70
+    },
 
-    const dayInput =
-        document.getElementById("day");
+    {
+        name:"Biology",
+        teacher:"Mr. Samuel",
+        progress:78
+    },
 
-    const timeInput =
-        document.getElementById("time");
+    {
+        name:"French",
+        teacher:"Mme. Marie",
+        progress:55
+    },
 
-    const roomInput =
-        document.getElementById("room");
+    {
+        name:"Economics",
+        teacher:"Mr. John",
+        progress:82
+    },
+
+    {
+        name:"Further Mathematics",
+        teacher:"Mr. Peter",
+        progress:60
+    }
+
+];
+
+
+let tasks =
+JSON.parse(
+    localStorage.getItem("studysmartTasks")
+) || [
+
+    {
+        id:1,
+        title:"Complete Mathematics Assignment",
+        subject:"Mathematics",
+        due:"Tomorrow",
+        completed:false
+    },
+
+    {
+        id:2,
+        title:"Revise Physics",
+        subject:"Physics",
+        due:"Friday",
+        completed:false
+    },
+
+    {
+        id:3,
+        title:"Read English Chapter",
+        subject:"English",
+        due:"Thursday",
+        completed:true
+    },
+
+    {
+        id:4,
+        title:"Prepare Chemistry Notes",
+        subject:"Chemistry",
+        due:"Monday",
+        completed:false
+    }
+
+];
+
+
+let reminders =
+JSON.parse(
+    localStorage.getItem("studysmartReminders")
+) || [
+
+    {
+        id:1,
+        title:"Math Assignment",
+        date:"Tomorrow",
+        completed:false
+    },
+
+    {
+        id:2,
+        title:"Physics Revision",
+        date:"Friday",
+        completed:false
+    },
+
+    {
+        id:3,
+        title:"Science Project",
+        date:"Next Monday",
+        completed:false
+    }
+
+];
+
+
+let currentCalendarDate =
+new Date();
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+const navItems =
+document.querySelectorAll(".nav-item");
+
+
+navItems.forEach(item => {
+
+    item.addEventListener("click", () => {
+
+        showPage(item.dataset.page);
+
+    });
+
+});
+
+
+function showPage(pageName){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+
+            page.classList.remove("active");
+
+        });
+
+
+    const page =
+        document.getElementById(pageName);
+
+
+    if(page){
+
+        page.classList.add("active");
+
+    }
+
+
+    navItems.forEach(item => {
+
+        item.classList.toggle(
+            "active",
+            item.dataset.page === pageName
+        );
+
+    });
+
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+
+    if(pageName === "timetable"){
+        renderTimetable();
+    }
+
+    if(pageName === "subjects"){
+        renderSubjects();
+    }
+
+    if(pageName === "tasks"){
+        renderTasks();
+    }
+
+    if(pageName === "reminders"){
+        renderReminders();
+    }
+
+    if(pageName === "calendar"){
+        renderCalendar();
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+document
+.getElementById("mobileMenu")
+.addEventListener("click", () => {
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+});
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+const themeToggle =
+document.getElementById("themeToggle");
+
+const darkToggle =
+document.getElementById("darkToggle");
+
+
+function applyDarkMode(enabled){
+
+    document.body.classList.toggle(
+        "dark",
+        enabled
+    );
+
+
+    localStorage.setItem(
+        "studysmartDark",
+        enabled
+    );
+
+
+    if(darkToggle){
+
+        darkToggle.classList.toggle(
+            "on",
+            enabled
+        );
+
+    }
+
+
+    themeToggle.innerHTML =
+        enabled
+        ? '<i class="fa-regular fa-moon"></i>'
+        : '<i class="fa-regular fa-sun"></i>';
+
+}
+
+
+const savedDark =
+localStorage.getItem("studysmartDark")
+=== "true";
+
+
+applyDarkMode(savedDark);
+
+
+themeToggle.addEventListener(
+    "click",
+    () => {
+
+        applyDarkMode(
+            !document.body.classList.contains("dark")
+        );
+
+    }
+);
+
+
+darkToggle.addEventListener(
+    "click",
+    () => {
+
+        applyDarkMode(
+            !document.body.classList.contains("dark")
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimeout;
+
+
+function showToast(message){
 
     const toast =
         document.getElementById("toast");
 
-    const navItems =
-        document.querySelectorAll(".nav-item");
+
+    toast.textContent =
+        message;
 
 
-    /* =====================================================
-       MOBILE MENU
-    ===================================================== */
-
-    mobileMenu.addEventListener("click", () => {
-
-        sidebar.classList.toggle("open");
-
-    });
+    toast.classList.add("show");
 
 
-    /* =====================================================
-       NAVIGATION
-    ===================================================== */
-
-    navItems.forEach(item => {
-
-        item.addEventListener("click", () => {
-
-            navItems.forEach(nav => {
-                nav.classList.remove("active");
-            });
-
-            item.classList.add("active");
-
-            const page =
-                item.dataset.page;
-
-            showToast(
-                `${capitalize(page)} section selected`
-            );
-
-            if (window.innerWidth <= 900) {
-
-                sidebar.classList.remove("open");
-
-            }
-
-        });
-
-    });
+    clearTimeout(toastTimeout);
 
 
-    function capitalize(text) {
+    toastTimeout =
+        setTimeout(() => {
 
-        return text.charAt(0).toUpperCase()
-            + text.slice(1);
+            toast.classList.remove("show");
 
-    }
+        },2500);
 
-
-    /* =====================================================
-       DARK MODE
-    ===================================================== */
-
-    const savedTheme =
-        localStorage.getItem(
-            "studysmart-theme"
-        );
+}
 
 
-    if (savedTheme === "dark") {
+/* =========================================================
+   MODAL
+========================================================= */
 
-        document.body.classList.add("dark");
+const modalOverlay =
+document.getElementById("modalOverlay");
 
-        themeToggle.innerHTML =
-            '<i class="fa-regular fa-moon"></i>';
+const modalTitle =
+document.getElementById("modalTitle");
 
-    }
-
-
-    themeToggle.addEventListener("click", () => {
-
-        document.body.classList.toggle("dark");
-
-        const darkMode =
-            document.body.classList.contains("dark");
+const modalForm =
+document.getElementById("modalForm");
 
 
-        localStorage.setItem(
-            "studysmart-theme",
-            darkMode ? "dark" : "light"
-        );
+document
+.getElementById("closeModal")
+.addEventListener(
+    "click",
+    closeModal
+);
 
 
-        if (darkMode) {
+modalOverlay.addEventListener(
+    "click",
+    e => {
 
-            themeToggle.innerHTML =
-                '<i class="fa-regular fa-moon"></i>';
+        if(e.target === modalOverlay){
 
-        } else {
-
-            themeToggle.innerHTML =
-                '<i class="fa-regular fa-sun"></i>';
+            closeModal();
 
         }
 
-    });
+    }
+);
 
 
-    /* =====================================================
-       ADD CLASS
-    ===================================================== */
+function openModal(title,content){
 
-    addClassButton.addEventListener(
-        "click",
-        () => {
+    modalTitle.textContent =
+        title;
 
-            const subject =
-                subjectInput.value;
+    modalForm.innerHTML =
+        content;
 
-            const day =
-                dayInput.value;
+    modalOverlay.classList.add("show");
 
-            const time =
-                timeInput.value.trim();
+}
 
-            const room =
-                roomInput.value.trim();
 
+function closeModal(){
 
-            /* Validation */
+    modalOverlay.classList.remove(
+        "show"
+    );
 
-            if (!subject) {
+}
 
-                showToast(
-                    "Please select a subject."
-                );
 
-                subjectInput.focus();
+/* =========================================================
+   ADD CLASS
+========================================================= */
 
-                return;
+document
+.getElementById("addClassButton")
+.addEventListener(
+    "click",
+    addClass
+);
 
-            }
 
+function addClass(){
 
-            if (!day) {
+    const subject =
+        document.getElementById("classSubject").value;
 
-                showToast(
-                    "Please select a day."
-                );
+    const day =
+        document.getElementById("classDay").value;
 
-                dayInput.focus();
+    const time =
+        document.getElementById("classTime").value.trim();
 
-                return;
+    const room =
+        document.getElementById("classRoom").value.trim();
 
-            }
 
+    if(!subject || !day || !time){
 
-            if (!time) {
+        showToast(
+            "Please complete subject, day and time."
+        );
 
-                showToast(
-                    "Please enter a time."
-                );
+        return;
 
-                timeInput.focus();
+    }
 
-                return;
 
-            }
+    const dayIndex = {
 
+        Monday:1,
+        Tuesday:2,
+        Wednesday:3,
+        Thursday:4,
+        Friday:5,
+        Saturday:6
 
-            /*
-                Convert the selected day
-                into the timetable column.
-            */
+    };
 
-            const dayIndex = {
 
-                Monday: 1,
-                Tuesday: 2,
-                Wednesday: 3,
-                Thursday: 4,
-                Friday: 5,
-                Saturday: 6
+    const rows =
+        document.querySelectorAll(
+            "#dashboardTable tbody tr[data-time]"
+        );
 
-            };
 
+    let found = false;
 
-            const columnIndex =
-                dayIndex[day];
 
+    rows.forEach(row => {
 
-            /*
-                Normalize the time entered
-                by the user.
-            */
+        const rowTime =
+            row.dataset.time
+                .replace(/\s/g,"")
+                .replace("–","-");
 
-            const normalizedInputTime =
-                normalizeTime(time);
 
+        const enteredTime =
+            time
+                .replace(/\s/g,"")
+                .replace("–","-");
 
-            const rows =
-                document.querySelectorAll(
-                    "#timetable tbody tr[data-time]"
-                );
 
+        if(rowTime === enteredTime){
 
-            let targetRow = null;
-
-
-            rows.forEach(row => {
-
-                const rowTime =
-                    normalizeTime(
-                        row.dataset.time
-                    );
-
-
-                if (
-                    rowTime ===
-                    normalizedInputTime
-                ) {
-
-                    targetRow = row;
-
-                }
-
-            });
-
-
-            /*
-                If the exact time doesn't exist,
-                tell the user instead of putting
-                it in the wrong location.
-            */
-
-            if (!targetRow) {
-
-                showToast(
-                    "Time not found. Use a timetable time such as 7:00 - 8:00."
-                );
-
-                return;
-
-            }
-
-
-            const targetCell =
-                targetRow.children[columnIndex];
-
-
-            if (!targetCell) {
-
-                showToast(
-                    "Unable to add this class."
-                );
-
-                return;
-
-            }
-
-
-            /* Choose color */
-
-            const colors = [
-                "green",
-                "orange",
-                "blue",
-                "purple",
-                "pink",
-                "teal"
-            ];
-
-
-            const randomColor =
-                colors[
-                    Math.floor(
-                        Math.random() *
-                        colors.length
-                    )
+            const cell =
+                row.children[
+                    dayIndex[day]
                 ];
 
 
-            /* Create class */
+            if(cell){
 
-            const classBox =
-                document.createElement("div");
+                cell.innerHTML = `
 
+                    <div class="class-box blue">
 
-            classBox.className =
-                `class-box ${randomColor}`;
+                        <b>${escapeHTML(subject)}</b>
 
+                        <small>
+                            ${escapeHTML(
+                                room || "No room"
+                            )}
+                        </small>
 
-            classBox.innerHTML = `
+                    </div>
 
-                <b>
-                    ${escapeHTML(subject)}
-                </b>
+                `;
 
-                <small>
-                    ${escapeHTML(
-                        room || "No room"
-                    )}
-                </small>
+                found = true;
 
-            `;
-
-
-            /*
-                Replace existing class
-                in the selected cell.
-            */
-
-            targetCell.innerHTML = "";
-
-            targetCell.appendChild(
-                classBox
-            );
-
-
-            /* Save */
-
-            saveTimetable();
-
-
-            /* Clear form */
-
-            subjectInput.value = "";
-            dayInput.value = "";
-            timeInput.value = "";
-            roomInput.value = "";
-
-
-            showToast(
-                `${subject} added to ${day}!`
-            );
+            }
 
         }
+
+    });
+
+
+    if(!found){
+
+        showToast(
+            "Use a timetable time such as 7:00 - 8:00."
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById("classSubject")
+        .value = "";
+
+    document
+        .getElementById("classDay")
+        .value = "";
+
+    document
+        .getElementById("classTime")
+        .value = "";
+
+    document
+        .getElementById("classRoom")
+        .value = "";
+
+
+    saveTable();
+
+
+    updateStats();
+
+
+    showToast(
+        `${subject} added successfully!`
     );
 
+}
 
-    /* =====================================================
-       NORMALIZE TIME
-    ===================================================== */
 
-    function normalizeTime(value) {
+/* =========================================================
+   SAVE TABLE
+========================================================= */
 
-        return value
-            .toLowerCase()
-            .replace(/[–—]/g, "-")
-            .replace(/\s+/g, "")
-            .trim();
+function saveTable(){
+
+    localStorage.setItem(
+        "studysmartTable",
+        document
+            .querySelector("#dashboardTable tbody")
+            .innerHTML
+    );
+
+}
+
+
+function loadTable(){
+
+    const saved =
+        localStorage.getItem(
+            "studysmartTable"
+        );
+
+
+    if(saved){
+
+        document
+            .querySelector("#dashboardTable tbody")
+            .innerHTML =
+                saved;
 
     }
 
+}
 
-    /* =====================================================
-       HTML ESCAPE
-    ===================================================== */
 
-    function escapeHTML(value) {
+/* =========================================================
+   TIMETABLE PAGE
+========================================================= */
 
-        const div =
-            document.createElement("div");
+function renderTimetable(){
 
-        div.textContent =
-            value;
+    const source =
+        document.querySelector(
+            "#dashboardTable tbody"
+        );
 
-        return div.innerHTML;
+
+    const target =
+        document.getElementById(
+            "timetablePageBody"
+        );
+
+
+    target.innerHTML =
+        source.innerHTML;
+
+}
+
+
+/* =========================================================
+   SUBJECTS
+========================================================= */
+
+function saveSubjects(){
+
+    localStorage.setItem(
+        "studysmartSubjects",
+        JSON.stringify(subjects)
+    );
+
+}
+
+
+function renderSubjects(){
+
+    const grid =
+        document.getElementById(
+            "subjectGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    subjects.forEach((subject,index) => {
+
+        grid.innerHTML += `
+
+            <div class="card subject-card">
+
+                <div class="subject-icon">
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                </div>
+
+                <h3>
+                    ${escapeHTML(subject.name)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(subject.teacher)}
+                </p>
+
+                <div class="progress">
+
+                    <div
+                        style="width:${subject.progress}%"
+                    ></div>
+
+                </div>
+
+                <p>
+                    ${subject.progress}% progress
+                </p>
+
+                <button
+                    class="danger-btn"
+                    style="margin-top:10px"
+                    onclick="deleteSubject(${index})"
+                >
+                    Delete
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+
+    updateStats();
+
+}
+
+
+document
+.getElementById("addSubjectButton")
+.addEventListener(
+    "click",
+    () => {
+
+        openModal(
+            "Add Subject",
+
+            `
+
+            <input
+                id="newSubjectName"
+                placeholder="Subject name"
+            >
+
+            <input
+                id="newSubjectTeacher"
+                placeholder="Teacher"
+            >
+
+            <input
+                id="newSubjectProgress"
+                type="number"
+                min="0"
+                max="100"
+                placeholder="Progress %"
+            >
+
+            <button
+                class="primary-btn"
+                onclick="createSubject()"
+            >
+                Add Subject
+            </button>
+
+            `
+        );
 
     }
+);
 
 
-    /* =====================================================
-       SAVE TIMETABLE
-    ===================================================== */
+function createSubject(){
 
-    function saveTimetable() {
+    const name =
+        document.getElementById(
+            "newSubjectName"
+        ).value.trim();
 
-        const timetable =
+
+    const teacher =
+        document.getElementById(
+            "newSubjectTeacher"
+        ).value.trim();
+
+
+    const progress =
+        Number(
             document.getElementById(
-                "timetable"
-            );
+                "newSubjectProgress"
+            ).value
+        ) || 0;
 
 
-        localStorage.setItem(
-            "studysmart-timetable",
-            timetable.querySelector("tbody").innerHTML
+    if(!name){
+
+        showToast(
+            "Enter a subject name."
+        );
+
+        return;
+
+    }
+
+
+    subjects.push({
+
+        name,
+        teacher:teacher || "Teacher not assigned",
+        progress:Math.min(
+            Math.max(progress,0),
+            100
+        )
+
+    });
+
+
+    saveSubjects();
+
+    renderSubjects();
+
+    closeModal();
+
+    showToast(
+        "Subject added!"
+    );
+
+}
+
+
+function deleteSubject(index){
+
+    if(
+        confirm(
+            "Delete this subject?"
+        )
+    ){
+
+        subjects.splice(index,1);
+
+        saveSubjects();
+
+        renderSubjects();
+
+        showToast(
+            "Subject deleted."
         );
 
     }
 
+}
 
-    /* =====================================================
-       LOAD TIMETABLE
-    ===================================================== */
 
-    function loadTimetable() {
+/* SUBJECT SEARCH */
 
-        const saved =
-            localStorage.getItem(
-                "studysmart-timetable"
+document
+.getElementById("subjectSearch")
+.addEventListener(
+    "input",
+    e => {
+
+        const search =
+            e.target.value.toLowerCase();
+
+
+        document
+            .querySelectorAll(".subject-card")
+            .forEach(card => {
+
+                card.style.display =
+                    card.textContent
+                        .toLowerCase()
+                        .includes(search)
+                        ? ""
+                        : "none";
+
+            });
+
+    }
+);
+
+
+/* =========================================================
+   TASKS
+========================================================= */
+
+function saveTasks(){
+
+    localStorage.setItem(
+        "studysmartTasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+function renderTasks(){
+
+    const list =
+        document.getElementById(
+            "taskList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    tasks.forEach(task => {
+
+        list.innerHTML += `
+
+            <div
+                class="task ${
+                    task.completed
+                    ? "completed"
+                    : ""
+                }"
+            >
+
+                <button
+                    class="task-check"
+                    onclick="toggleTask(${task.id})"
+                    aria-label="Complete task"
+                >
+                    ${
+                        task.completed
+                        ? "✓"
+                        : ""
+                    }
+                </button>
+
+
+                <div class="task-info">
+
+                    <div class="task-title">
+                        ${escapeHTML(task.title)}
+                    </div>
+
+                    <div class="task-meta">
+                        ${escapeHTML(task.subject)}
+                        • Due ${escapeHTML(task.due)}
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="danger-btn"
+                    onclick="deleteTask(${task.id})"
+                >
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+
+    updateStats();
+
+}
+
+
+document
+.getElementById("addTaskButton")
+.addEventListener(
+    "click",
+    () => {
+
+        openModal(
+            "Add Task",
+
+            `
+
+            <input
+                id="newTaskTitle"
+                placeholder="Task title"
+            >
+
+            <input
+                id="newTaskSubject"
+                placeholder="Subject"
+            >
+
+            <input
+                id="newTaskDue"
+                placeholder="Due date"
+            >
+
+            <button
+                class="primary-btn"
+                onclick="createTask()"
+            >
+                Add Task
+            </button>
+
+            `
+        );
+
+    }
+);
+
+
+function createTask(){
+
+    const title =
+        document
+            .getElementById("newTaskTitle")
+            .value.trim();
+
+
+    const subject =
+        document
+            .getElementById("newTaskSubject")
+            .value.trim();
+
+
+    const due =
+        document
+            .getElementById("newTaskDue")
+            .value.trim();
+
+
+    if(!title){
+
+        showToast(
+            "Enter a task title."
+        );
+
+        return;
+
+    }
+
+
+    tasks.push({
+
+        id:Date.now(),
+
+        title,
+
+        subject:
+            subject || "General",
+
+        due:
+            due || "No due date",
+
+        completed:false
+
+    });
+
+
+    saveTasks();
+
+    renderTasks();
+
+    closeModal();
+
+    showToast(
+        "Task added!"
+    );
+
+}
+
+
+function toggleTask(id){
+
+    const task =
+        tasks.find(
+            t => t.id === id
+        );
+
+
+    if(task){
+
+        task.completed =
+            !task.completed;
+
+        saveTasks();
+
+        renderTasks();
+
+        showToast(
+            task.completed
+            ? "Task completed!"
+            : "Task reopened."
+        );
+
+    }
+
+}
+
+
+function deleteTask(id){
+
+    tasks =
+        tasks.filter(
+            t => t.id !== id
+        );
+
+
+    saveTasks();
+
+    renderTasks();
+
+    showToast(
+        "Task deleted."
+    );
+
+}
+
+
+/* TASK SEARCH */
+
+document
+.getElementById("taskSearch")
+.addEventListener(
+    "input",
+    e => {
+
+        const search =
+            e.target.value.toLowerCase();
+
+
+        document
+            .querySelectorAll(".task")
+            .forEach(task => {
+
+                task.style.display =
+                    task.textContent
+                        .toLowerCase()
+                        .includes(search)
+                        ? ""
+                        : "none";
+
+            });
+
+    }
+);
+
+
+/* =========================================================
+   REMINDERS
+========================================================= */
+
+function saveReminders(){
+
+    localStorage.setItem(
+        "studysmartReminders",
+        JSON.stringify(reminders)
+    );
+
+}
+
+
+function renderReminders(){
+
+    const list =
+        document.getElementById(
+            "reminderList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    reminders.forEach(reminder => {
+
+        list.innerHTML += `
+
+            <div class="reminder">
+
+                <div class="reminder-icon">
+
+                    <i class="fa-regular fa-bell"></i>
+
+                </div>
+
+
+                <div class="reminder-info">
+
+                    <b>
+                        ${escapeHTML(reminder.title)}
+                    </b>
+
+                    <p>
+                        ${escapeHTML(reminder.date)}
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="secondary-btn"
+                    onclick="completeReminder(${reminder.id})"
+                >
+                    ${
+                        reminder.completed
+                        ? "Completed"
+                        : "Complete"
+                    }
+                </button>
+
+
+                <button
+                    class="danger-btn"
+                    onclick="deleteReminder(${reminder.id})"
+                >
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+
+    updateStats();
+
+}
+
+
+document
+.getElementById("addReminderButton")
+.addEventListener(
+    "click",
+    () => {
+
+        openModal(
+            "Add Reminder",
+
+            `
+
+            <input
+                id="newReminderTitle"
+                placeholder="Reminder"
+            >
+
+            <input
+                id="newReminderDate"
+                placeholder="Date or time"
+            >
+
+            <button
+                class="primary-btn"
+                onclick="createReminder()"
+            >
+                Add Reminder
+            </button>
+
+            `
+        );
+
+    }
+);
+
+
+function createReminder(){
+
+    const title =
+        document
+            .getElementById(
+                "newReminderTitle"
+            )
+            .value.trim();
+
+
+    const date =
+        document
+            .getElementById(
+                "newReminderDate"
+            )
+            .value.trim();
+
+
+    if(!title){
+
+        showToast(
+            "Enter a reminder."
+        );
+
+        return;
+
+    }
+
+
+    reminders.push({
+
+        id:Date.now(),
+
+        title,
+
+        date:
+            date || "No date",
+
+        completed:false
+
+    });
+
+
+    saveReminders();
+
+    renderReminders();
+
+    closeModal();
+
+    showToast(
+        "Reminder added!"
+    );
+
+}
+
+
+function completeReminder(id){
+
+    const reminder =
+        reminders.find(
+            r => r.id === id
+        );
+
+
+    if(reminder){
+
+        reminder.completed =
+            !reminder.completed;
+
+        saveReminders();
+
+        renderReminders();
+
+        showToast(
+            "Reminder updated."
+        );
+
+    }
+
+}
+
+
+function deleteReminder(id){
+
+    reminders =
+        reminders.filter(
+            r => r.id !== id
+        );
+
+
+    saveReminders();
+
+    renderReminders();
+
+    showToast(
+        "Reminder deleted."
+    );
+
+}
+
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+function renderCalendar(){
+
+    const grid =
+        document.getElementById(
+            "calendarGrid"
+        );
+
+
+    const monthTitle =
+        document.getElementById(
+            "calendarMonth"
+        );
+
+
+    const year =
+        currentCalendarDate.getFullYear();
+
+
+    const month =
+        currentCalendarDate.getMonth();
+
+
+    const monthName =
+        currentCalendarDate.toLocaleString(
+            "en-US",
+            {
+                month:"long"
+            }
+        );
+
+
+    monthTitle.textContent =
+        `${monthName} ${year}`;
+
+
+    grid.innerHTML = "";
+
+
+    const days = [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+    ];
+
+
+    days.forEach(day => {
+
+        grid.innerHTML += `
+
+            <div class="calendar-day-name">
+                ${day}
+            </div>
+
+        `;
+
+    });
+
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+
+    const daysInMonth =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    for(
+        let i=0;
+        i<firstDay;
+        i++
+    ){
+
+        grid.innerHTML +=
+            `<div></div>`;
+
+    }
+
+
+    const today =
+        new Date();
+
+
+    for(
+        let day=1;
+        day<=daysInMonth;
+        day++
+    ){
+
+        const isToday =
+            day === today.getDate()
+            &&
+            month === today.getMonth()
+            &&
+            year === today.getFullYear();
+
+
+        grid.innerHTML += `
+
+            <div
+                class="calendar-day ${
+                    isToday ? "today" : ""
+                }"
+            >
+
+                <span>${day}</span>
+
+                ${
+                    day === 10
+                    ? `
+                        <div class="calendar-event">
+                            Physics Test
+                        </div>
+                    `
+                    : ""
+                }
+
+                ${
+                    day === 20
+                    ? `
+                        <div class="calendar-event">
+                            Assignment
+                        </div>
+                    `
+                    : ""
+                }
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+document
+.getElementById("previousMonth")
+.addEventListener(
+    "click",
+    () => {
+
+        currentCalendarDate.setMonth(
+            currentCalendarDate.getMonth()-1
+        );
+
+        renderCalendar();
+
+    }
+);
+
+
+document
+.getElementById("nextMonth")
+.addEventListener(
+    "click",
+    () => {
+
+        currentCalendarDate.setMonth(
+            currentCalendarDate.getMonth()+1
+        );
+
+        renderCalendar();
+
+    }
+);
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function showProfile(){
+
+    openModal(
+        "My Profile",
+
+        `
+
+        <div class="profile-avatar">
+            DA
+        </div>
+
+        <input
+            id="profileName"
+            placeholder="Your name"
+            value="David"
+        >
+
+        <input
+            id="profileSchool"
+            placeholder="School"
+            value="Destiny International College"
+        >
+
+        <input
+            id="profileGrade"
+            placeholder="Grade"
+            value="Grade 10"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="saveProfile()"
+        >
+            Save Profile
+        </button>
+
+        `
+    );
+
+}
+
+
+document
+.getElementById("profileButton")
+.addEventListener(
+    "click",
+    showProfile
+);
+
+
+function saveProfile(){
+
+    const name =
+        document
+            .getElementById("profileName")
+            .value.trim();
+
+
+    if(name){
+
+        showToast(
+            `Profile saved for ${name}!`
+        );
+
+    }
+
+    closeModal();
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+document
+.getElementById("notificationButton")
+.addEventListener(
+    "click",
+    () => {
+
+        showToast(
+            "You have 3 pending reminders."
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CLEAR DATA
+========================================================= */
+
+document
+.getElementById("clearData")
+.addEventListener(
+    "click",
+    () => {
+
+        const confirmDelete =
+            confirm(
+                "Clear all saved StudySmart data?"
             );
 
 
-        if (!saved) {
+        if(!confirmDelete){
             return;
         }
 
 
-        const tbody =
-            document.querySelector(
-                "#timetable tbody"
-            );
+        localStorage.removeItem(
+            "studysmartSubjects"
+        );
+
+        localStorage.removeItem(
+            "studysmartTasks"
+        );
+
+        localStorage.removeItem(
+            "studysmartReminders"
+        );
+
+        localStorage.removeItem(
+            "studysmartTable"
+        );
 
 
-        tbody.innerHTML =
-            saved;
+        location.reload();
 
     }
+);
 
 
-    /* =====================================================
-       REMOVE CLASS
-    ===================================================== */
+/* =========================================================
+   UPDATE STATISTICS
+========================================================= */
 
-    document
-        .getElementById("timetable")
-        .addEventListener(
-            "dblclick",
-            event => {
-
-                const classBox =
-                    event.target.closest(
-                        ".class-box"
-                    );
-
-
-                if (!classBox) {
-                    return;
-                }
-
-
-                const confirmed =
-                    confirm(
-                        "Remove this class from the timetable?"
-                    );
-
-
-                if (!confirmed) {
-                    return;
-                }
-
-
-                classBox.remove();
-
-                saveTimetable();
-
-                showToast(
-                    "Class removed."
-                );
-
-            }
-        );
-
-
-    /* =====================================================
-       CLASS CLICK
-    ===================================================== */
+function updateStats(){
 
     document
-        .getElementById("timetable")
-        .addEventListener(
-            "click",
-            event => {
-
-                const classBox =
-                    event.target.closest(
-                        ".class-box"
-                    );
+        .getElementById("statSubjects")
+        .textContent =
+            subjects.length;
 
 
-                if (!classBox) {
-                    return;
-                }
+    const classes =
+        document.querySelectorAll(
+            "#dashboardTable .class-box"
+        ).length;
 
-
-                const subject =
-                    classBox.querySelector("b")
-                    ?.textContent;
-
-
-                showToast(
-                    `${subject} selected`
-                );
-
-            }
-        );
-
-
-    /* =====================================================
-       TOAST
-    ===================================================== */
-
-    let toastTimer;
-
-
-    function showToast(message) {
-
-        const toastText =
-            toast.querySelector("span");
-
-
-        toastText.textContent =
-            message;
-
-
-        toast.classList.add("show");
-
-
-        clearTimeout(
-            toastTimer
-        );
-
-
-        toastTimer =
-            setTimeout(
-                () => {
-
-                    toast.classList.remove(
-                        "show"
-                    );
-
-                },
-                2500
-            );
-
-    }
-
-
-    /* =====================================================
-       WEEKLY BUTTON
-    ===================================================== */
 
     document
-        .getElementById("weeklyButton")
-        .addEventListener(
-            "click",
-            () => {
-
-                showToast(
-                    "You are viewing the weekly timetable."
-                );
-
-            }
-        );
+        .getElementById("statClasses")
+        .textContent =
+            classes;
 
 
-    /* =====================================================
-       FULL DAY BUTTON
-    ===================================================== */
+    const pendingTasks =
+        tasks.filter(
+            task => !task.completed
+        ).length;
+
 
     document
-        .getElementById("fullDay")
-        .addEventListener(
-            "click",
-            () => {
-
-                showToast(
-                    "Full day schedule opened."
-                );
-
-            }
-        );
+        .getElementById("statTasks")
+        .textContent =
+            pendingTasks;
 
 
-    /* =====================================================
-       REMINDER BUTTONS
-    ===================================================== */
+    const pendingReminders =
+        reminders.filter(
+            reminder =>
+                !reminder.completed
+        ).length;
+
 
     document
-        .querySelectorAll(
-            ".complete-reminder"
-        )
-        .forEach(button => {
+        .getElementById("statReminders")
+        .textContent =
+            pendingReminders;
 
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const reminder =
-                        button.closest(
-                            ".reminder"
-                        );
+}
 
 
-                    reminder.style.opacity =
-                        "0.45";
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value;
+
+    return div.innerHTML;
+
+}
 
 
-                    button.innerHTML =
-                        "✓";
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
+loadTable();
 
-                    showToast(
-                        "Reminder completed!"
-                    );
+renderSubjects();
 
-                }
-            );
+renderTasks();
 
-        });
+renderReminders();
 
+renderCalendar();
 
-    /* =====================================================
-       NOTIFICATION BUTTON
-    ===================================================== */
-
-    document
-        .querySelector(
-            ".notification-button"
-        )
-        .addEventListener(
-            "click",
-            () => {
-
-                showToast(
-                    "You have 3 notifications."
-                );
-
-            }
-        );
-
-
-    /* =====================================================
-       UPDATE DATE
-    ===================================================== */
-
-    function updateDate() {
-
-        const dateElement =
-            document.getElementById(
-                "todayDate"
-            );
-
-
-        const today =
-            new Date();
-
-
-        const options = {
-            weekday: "long",
-            day: "numeric",
-            month: "long"
-        };
-
-
-        dateElement.textContent =
-            today.toLocaleDateString(
-                "en-US",
-                options
-            );
-
-    }
-
-
-    /* =====================================================
-       INITIALIZE
-    ===================================================== */
-
-    loadTimetable();
-
-    updateDate();
+updateStats();
 
 </script>
 
