@@ -5,7 +5,7 @@
 
 header('Content-Type: application/json; charset=utf-8');
 
-const MISTRAL_API_KEY = 'PASTE_NEW_MISTRAL_API_KEY_HERE';
+const MISTRAL_API_KEY = 'frQ5qDCN3S6eYU1jDGO7x1z7TnZzZJA3';
 const MISTRAL_MODEL = 'mistral-small-latest';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -26,7 +26,7 @@ if (!$prompt) {
     exit;
 }
 
-if (MISTRAL_API_KEY === 'PASTE_NEW_MISTRAL_API_KEY_HERE') {
+if (MISTRAL_API_KEY === 'frQ5qDCN3S6eYU1jDGO7x1z7TnZzZJA3') {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Mistral API key is not configured on the server.']);
     exit;
