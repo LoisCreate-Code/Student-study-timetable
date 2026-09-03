@@ -72,6 +72,20 @@ button:focus-visible,input:focus-visible,select:focus-visible,.class-box:focus-v
 @media(max-width:520px){
   .profile-mini span{display:none}.topbar{gap:8px}.form-row{grid-template-columns:1fr}.timetable{min-width:690px}.side-stack{display:block}.mini-card{margin-bottom:14px}.cal-grid div{min-height:55px;padding:5px}.heading-actions{width:100%}.heading-actions .btn{flex:1}.page-heading{margin-bottom:16px}
 }
+
+/* Scroll & responsive fixes */
+html,body{min-height:100%;overflow-x:hidden;}
+body{overflow-y:auto;}
+.sidebar{height:100dvh;max-height:100vh;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;}
+.sidebar-quote{flex:0 0 auto;margin-top:24px;}
+.main{min-height:100vh;}
+.content{padding-bottom:40px;}
+.schedule-wrap{-webkit-overflow-scrolling:touch;scrollbar-width:auto;}
+@media(max-width:800px){
+  .sidebar{height:100dvh;max-height:100dvh;}
+  .sidebar-quote{margin-top:24px;}
+  .content{padding-bottom:60px;}
+}
 </style>
 </head>
 <body>
