@@ -485,12 +485,12 @@ function addAiMessage(role,text){
   const div=document.createElement("div");div.className=`ai-msg ${role}`;div.textContent=text;box.appendChild(div);box.scrollTop=box.scrollHeight;
 }
 function setAiStatus(text){const el=document.getElementById("aiStatus");if(el)el.textContent=text||""}
-const MISTRAL_API_KEY = "frQ5qDCN3S6eYU1jDGO7x1z7TnZzZJA3";
+const MISTRAL_API_KEY = "H3defnRE1fQCoP8fiV9ZW8YJzBigUwF3";
 const MISTRAL_MODEL = "mistral-small-latest";
 async function callStudyAI(prompt, action="chat"){
   setAiStatus("Thinking…");
   try{
-    if(!MISTRAL_API_KEY || MISTRAL_API_KEY === "frQ5qDCN3S6eYU1jDGO7x1z7TnZzZJA3"){
+    if(!MISTRAL_API_KEY || MISTRAL_API_KEY === "H3defnRE1fQCoP8fiV9ZW8YJzBigUwF3"){
       throw new Error("Mistral API key is not configured.");
     }
     const context={name:data.name||"Student",grade:data.grade||"Grade 10",subjects:data.subjects.map(s=>s.name),tasks:data.tasks.map(t=>({title:t.title,due:t.due,done:t.done})),classes:data.classes.map(c=>({subject:c.subject,day:c.day,time:c.time,room:c.room}))};
